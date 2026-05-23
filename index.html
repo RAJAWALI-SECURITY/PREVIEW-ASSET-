@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PREVIEW ASSET</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#080810; --surface:#11111c; --surface2:#18182a;
+    --border:rgba(255,255,255,0.07); --accent:#e8ff47; --accent2:#7b5cfa;
+    --text:#f0f0f8; --muted:#5a5a72; --danger:#ff4d6d; --success:#47ffb2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.5;}
+
+  .screen{display:none;animation:fadeS .35s ease;}
+  .screen.active{display:block;}
+  #splash-screen.active{display:flex;}
+  #admin-login-screen.active{display:flex;}
+  @keyframes fadeS{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+  /* SPLASH */
+  #splash-screen{min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:2rem;position:relative;overflow:hidden;}
+  .blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;}
+  .blob-1{width:500px;height:500px;background:var(--accent2);opacity:.12;top:-120px;left:-120px;}
+  .blob-2{width:400px;height:400px;background:var(--accent);opacity:.07;bottom:-80px;right:-80px;}
+  .splash-logo{font-family:'Syne',sans-serif;font-size:clamp(2rem,6vw,3.2rem);font-weight:800;letter-spacing:.25em;text-transform:uppercase;text-align:center;margin-bottom:.5rem;}
+  .splash-logo span{color:var(--accent);}
+  .splash-tagline{color:var(--muted);font-size:.9rem;text-align:center;margin-bottom:3.5rem;letter-spacing:.04em;}
+  .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;width:100%;max-width:560px;position:relative;}
+  @media(max-width:520px){.choice-grid{grid-template-columns:1fr;max-width:340px;}}
+  .choice-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.25rem 1.75rem;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+  .choice-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;}
+  .choice-card.admin::before{background:radial-gradient(circle at 50% 0%,rgba(123,92,250,.25),transparent 70%);}
+  .choice-card.viewer::before{background:radial-gradient(circle at 50% 0%,rgba(232,255,71,.15),transparent 70%);}
+  .choice-card:hover::before{opacity:1;}
+  .choice-card:hover{transform:translateY(-5px);}
+  .choice-card.admin:hover{border-color:rgba(123,92,250,.5);box-shadow:0 20px 50px rgba(123,92,250,.15);}
+  .choice-card.viewer:hover{border-color:rgba(232,255,71,.4);box-shadow:0 20px 50px rgba(232,255,71,.1);}
+  .choice-icon{font-size:2.4rem;margin-bottom:1rem;display:block;}
+  .choice-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:.4rem;}
+  .choice-sub{color:var(--muted);font-size:.82rem;line-height:1.5;}
+  .choice-badge{display:inline-block;margin-top:1.1rem;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .85rem;border-radius:99px;}
+  .badge-purple{background:rgba(123,92,250,.18);color:var(--accent2);border:1px solid rgba(123,92,250,.35);}
+  .badge-yellow{background:rgba(232,255,71,.12);color:var(--accent);border:1px solid rgba(232,255,71,.3);}
+  .divider-or{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--surface2);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--muted);z-index:2;}
+  @media(max-width:520px){.divider-or{display:none;}}
+
+  /* ADMIN LOGIN */
+  #admin-login-screen{min-height:100vh;align-items:center;justify-content:center;padding:2rem;}
+  .login-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem;position:relative;overflow:hidden;}
+  .login-card::before{content:'';position:absolute;top:-60px;left:-60px;width:180px;height:180px;background:var(--accent2);border-radius:50%;filter:blur(80px);opacity:.28;}
+  .login-back{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:var(--muted);cursor:pointer;margin-bottom:1.5rem;transition:color .2s;background:none;border:none;}
+  .login-back:hover{color:var(--text);}
+  .login-title{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:.35rem;}
+  .login-sub{color:var(--muted);font-size:.88rem;margin-bottom:2rem;}
+  .form-group{margin-bottom:1.25rem;}
+  .form-label{display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:.5rem;letter-spacing:.07em;text-transform:uppercase;}
+  .form-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.78rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;outline:none;transition:border-color .2s;}
+  .form-input:focus{border-color:var(--accent2);}
+  .form-input::placeholder{color:var(--muted);}
+  .login-error{background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);border-radius:8px;padding:.6rem 1rem;font-size:.84rem;color:var(--danger);margin-bottom:1rem;display:none;}
+
+  /* BUTTONS */
+  .btn{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;padding:.6rem 1.4rem;border-radius:9px;border:none;cursor:pointer;transition:all .2s;letter-spacing:.02em;}
+  .btn-accent{background:var(--accent);color:#08080f;font-weight:800;}
+  .btn-accent:hover{background:#d4eb30;transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,255,71,.3);}
+  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border);}
+  .btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+  .btn-danger{background:rgba(255,77,109,.12);color:var(--danger);border:1px solid rgba(255,77,109,.3);}
+  .btn-danger:hover{background:rgba(255,77,109,.22);}
+  .btn-full{width:100%;padding:.85rem;font-size:.95rem;border-radius:10px;}
+  .btn-sm{font-size:.74rem;padding:.32rem .7rem;border-radius:6px;}
+
+  /* NAVBAR */
+  nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(8,8,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;}
+  .logo span{color:var(--text);}
+  .nav-right{display:flex;gap:.75rem;align-items:center;}
+  .badge-pill{font-size:.7rem;font-weight:700;letter-spacing:.08em;padding:.22rem .75rem;border-radius:99px;text-transform:uppercase;}
+  .pill-admin{background:rgba(123,92,250,.18);color:var(--accent2);border:1px solid rgba(123,92,250,.3);}
+  .pill-viewer{background:rgba(71,255,178,.1);color:var(--success);border:1px solid rgba(71,255,178,.25);}
+
+  /* MAIN */
+  #main-screen{padding:2.5rem;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;}
+  .page-title{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1;}
+  .page-title span{color:var(--accent);}
+  .page-sub{color:var(--muted);font-size:.88rem;margin-top:.4rem;}
+
+  /* ADD VIDEO FORM (admin) */
+  .add-video-box{background:var(--surface);border:1px solid rgba(232,255,71,.25);border-radius:16px;padding:1.75rem;margin-bottom:2.25rem;}
+  .add-video-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:.6rem;}
+  .add-video-title span{color:var(--accent);}
+  .input-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:600px){.input-row{grid-template-columns:1fr;}}
+  .add-actions{display:flex;gap:.75rem;margin-top:1.2rem;}
+
+  /* EMBED PREVIEW */
+  .embed-preview{margin-top:1rem;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--bg);display:none;}
+  .embed-preview iframe{width:100%;height:100%;border:none;}
+  .embed-preview.visible{display:block;}
+
+  /* SECTION LABEL */
+  .section-label{font-size:.73rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;display:flex;align-items:center;gap:.75rem;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* GRID */
+  .video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem;}
+  .video-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .3s;animation:fadeIn .4s ease both;}
+  .video-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.15);box-shadow:0 16px 40px rgba(0,0,0,.4);}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  .card-thumb{width:100%;aspect-ratio:16/9;background:var(--bg);position:relative;overflow:hidden;}
+  .card-thumb img{width:100%;height:100%;object-fit:cover;}
+  .card-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:opacity .2s;}
+  .video-card:hover .card-play-overlay{opacity:1;}
+  .play-circle{width:50px;height:50px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#08080f;font-size:1.1rem;transform:scale(.85);transition:transform .2s;}
+  .video-card:hover .play-circle{transform:scale(1);}
+  .card-source-badge{position:absolute;top:.5rem;left:.5rem;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .55rem;border-radius:5px;backdrop-filter:blur(6px);}
+  .src-yt{background:rgba(255,0,0,.75);color:#fff;}
+  .src-gd{background:rgba(66,133,244,.75);color:#fff;}
+  .src-other{background:rgba(0,0,0,.6);color:#fff;}
+  .card-body{padding:.9rem 1.1rem 1rem;}
+  .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .card-meta{font-size:.76rem;color:var(--muted);display:flex;align-items:center;gap:.45rem;}
+  .card-dot{width:3px;height:3px;background:var(--muted);border-radius:50%;}
+  .card-admin-actions{display:flex;gap:.5rem;margin-top:.7rem;}
+
+  .empty-state{grid-column:1/-1;text-align:center;padding:5rem 2rem;}
+  .empty-icon{font-size:3rem;opacity:.3;margin-bottom:.75rem;}
+  .empty-text{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;opacity:.25;margin-bottom:.4rem;}
+  .empty-sub{font-size:.83rem;color:var(--muted);opacity:.5;}
+
+  /* LOADING SKELETON */
+  .skeleton-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .skeleton-thumb{width:100%;aspect-ratio:16/9;background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+  .skeleton-body{padding:.9rem 1.1rem 1rem;}
+  .skeleton-line{height:12px;border-radius:6px;background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;margin-bottom:.6rem;}
+  .skeleton-line.short{width:55%;}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:1.5rem;}
+  .modal-overlay.active{display:flex;animation:fadeOverlay .2s ease;}
+  @keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
+  .modal-card{width:100%;max-width:860px;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;animation:scaleIn .25s ease;}
+  @keyframes scaleIn{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
+  .modal-vid-wrap{background:#000;position:relative;aspect-ratio:16/9;}
+  .modal-vid-wrap iframe{width:100%;height:100%;border:none;}
+  .modal-close{position:absolute;top:.75rem;right:.75rem;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:.9rem;z-index:1;transition:background .2s;}
+  .modal-close:hover{background:rgba(0,0,0,.95);}
+  .modal-info{padding:1.2rem 1.5rem 1.5rem;}
+  .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:.3rem;}
+  .modal-meta{font-size:.8rem;color:var(--muted);}
+  .modal-desc{margin-top:.65rem;font-size:.88rem;color:rgba(240,240,248,.65);line-height:1.6;}
+
+  /* TOAST */
+  .toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;display:flex;flex-direction:column;gap:.5rem;}
+  .toast{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.83rem;display:flex;align-items:center;gap:.55rem;animation:toastIn .3s ease;max-width:300px;}
+  @keyframes toastIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+  .toast.success{border-color:rgba(71,255,178,.3);}
+  .toast.success .ti{color:var(--success);}
+  .toast.error{border-color:rgba(255,77,109,.3);}
+  .toast.error .ti{color:var(--danger);}
+  .toast.info{border-color:rgba(123,92,250,.3);}
+  .toast.info .ti{color:var(--accent2);}
+
+  @media(max-width:600px){
+    nav{padding:0 1.2rem;}
+    #main-screen{padding:1.5rem 1.2rem;}
+    .page-title{font-size:1.6rem;}
+    .video-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LAYAR 1A: SPLASH -->
+<div id="splash-screen" class="screen">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="splash-logo">Preview<span>Asset</span></div>
+  <p class="splash-tagline">Silakan pilih mode masuk</p>
+  <div class="choice-grid">
+    <div class="choice-card admin" onclick="goAdminLogin()">
+      <span class="choice-icon">🛡️</span>
+      <div class="choice-title">Admin</div>
+      <p class="choice-sub">Kelola & tambahkan video asset ke platform</p>
+      <span class="choice-badge badge-purple">Login dengan password</span>
+    </div>
+    <div class="divider-or">atau</div>
+    <div class="choice-card viewer" onclick="goViewer()">
+      <span class="choice-icon">🎬</span>
+      <div class="choice-title">Preview Asset</div>
+      <p class="choice-sub">Lihat semua video yang tersedia</p>
+      <span class="choice-badge badge-yellow">Masuk langsung</span>
+    </div>
+  </div>
+</div>
+
+<!-- LAYAR 1B: ADMIN LOGIN -->
+<div id="admin-login-screen" class="screen">
+  <div class="login-card">
+    <button class="login-back" onclick="goSplash()">← Kembali</button>
+    <div class="login-title">Login Admin</div>
+    <p class="login-sub">Masukkan password untuk mengakses panel admin.</p>
+    <div class="login-error" id="login-error">Password salah. Coba lagi.</div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="admin-password" type="password" placeholder="••••••••••" autocomplete="off">
+    </div>
+    <button class="btn btn-accent btn-full" onclick="doAdminLogin()">Masuk sebagai Admin</button>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar" style="display:none">
+  <div class="logo">Preview<span>Asset</span></div>
+  <div class="nav-right" id="nav-right"></div>
+</nav>
+
+<!-- LAYAR 2: GALLERY -->
+<div id="main-screen" class="screen">
+
+  <!-- ADMIN: tambah video -->
+  <div id="admin-section" style="display:none">
+    <div class="add-video-box">
+      <div class="add-video-title">➕ <span>Tambah Video</span> dari YouTube / Google Drive</div>
+      <div class="input-row">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Link Video</label>
+          <input class="form-input" id="vid-url" type="url" placeholder="https://youtube.com/watch?v=... atau https://drive.google.com/..." oninput="previewEmbed()">
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Judul Video</label>
+          <input class="form-input" id="vid-title" type="text" placeholder="Nama asset...">
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:1rem;margin-bottom:0">
+        <label class="form-label">Deskripsi (opsional)</label>
+        <input class="form-input" id="vid-desc" type="text" placeholder="Keterangan singkat...">
+      </div>
+      <div class="embed-preview" id="embed-preview">
+        <iframe id="embed-frame" allowfullscreen></iframe>
+      </div>
+      <div class="add-actions">
+        <button class="btn btn-accent" onclick="addVideo()">✓ Publikasikan</button>
+        <button class="btn btn-ghost" onclick="clearForm()">Bersihkan</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-header">
+    <div>
+      <div class="page-title">Video <span>Gallery</span></div>
+      <div class="page-sub" id="page-sub"></div>
+    </div>
+    <div id="count-badge" style="font-size:.85rem;color:var(--muted)"></div>
+  </div>
+
+  <div class="section-label">Asset Tersedia</div>
+  <div class="video-grid" id="video-grid">
+    <!-- skeleton loading -->
+    <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+  </div>
+</div>
+
+<!-- MODAL PLAYER -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-vid-wrap">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <iframe id="modal-iframe" allowfullscreen></iframe>
+    </div>
+    <div class="modal-info">
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-meta"  id="modal-meta"></div>
+      <div class="modal-desc"  id="modal-desc"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="tc"></div>
+
+<script>
+// ── CONFIG ─────────────────────────────────────
+const BIN_ID  = '6a1149986610dd3ae89006d7';
+const API_KEY = '$2a$10$t3RmmHl3xr0eQNxDOIbAVer4cRHGTmc5oFRYkk.WVw.g93JHsaYom';
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const ADMIN_PASS = btoa('595080470');
+
+// ── STATE ──────────────────────────────────────
+let role = null;
+let videos = [];
+
+// ── BOOT ───────────────────────────────────────
+window.onload = () => {
+  const saved = sessionStorage.getItem('pa_role');
+  if (saved === 'admin')   { role='admin';  enterMain(); }
+  else if (saved==='viewer'){ role='viewer'; enterMain(); }
+  else showScreen('splash-screen');
+};
+
+// ── SCREENS ────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('navbar').style.display = id==='main-screen' ? 'flex' : 'none';
+}
+function goSplash()      { showScreen('splash-screen'); }
+function goAdminLogin()  { showScreen('admin-login-screen'); setTimeout(()=>document.getElementById('admin-password').focus(),200); }
+function goViewer()      { role='viewer'; sessionStorage.setItem('pa_role','viewer'); enterMain(); }
+
+// ── AUTH ───────────────────────────────────────
+function doAdminLogin() {
+  const pw  = document.getElementById('admin-password').value;
+  const err = document.getElementById('login-error');
+  if (btoa(pw) === ADMIN_PASS) {
+    err.style.display='none';
+    document.getElementById('admin-password').value='';
+    role='admin'; sessionStorage.setItem('pa_role','admin');
+    enterMain(); toast('Selamat datang, Admin!','success');
+  } else {
+    err.style.display='block';
+    document.getElementById('admin-password').value='';
+  }
+}
+function logout() {
+  sessionStorage.removeItem('pa_role'); role=null;
+  showScreen('splash-screen'); toast('Berhasil keluar','success');
+}
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && document.getElementById('admin-login-screen').classList.contains('active')) doAdminLogin();
+  if(e.key==='Escape') closeModal({target:document.getElementById('modal')});
+});
+
+// ── MAIN ───────────────────────────────────────
+function enterMain() {
+  showScreen('main-screen');
+  updateNavbar();
+  loadVideos();
+}
+function updateNavbar() {
+  const nr = document.getElementById('nav-right');
+  document.getElementById('admin-section').style.display = role==='admin' ? 'block' : 'none';
+  document.getElementById('page-sub').textContent = role==='admin'
+    ? 'Mode Admin — tambah & kelola video asset'
+    : 'Mode Viewer — semua video tersedia untuk ditonton';
+  nr.innerHTML = role==='admin'
+    ? `<span class="badge-pill pill-admin">● Admin</span><button class="btn btn-danger btn-sm" onclick="logout()">Keluar</button>`
+    : `<span class="badge-pill pill-viewer">● Preview Asset</span><button class="btn btn-ghost btn-sm" onclick="logout()">Keluar</button>`;
+}
+
+// ── JSONBIN API ────────────────────────────────
+async function loadVideos() {
+  try {
+    const res = await fetch(BIN_URL+'/latest', {
+      headers:{'X-Master-Key': API_KEY, 'X-Bin-Meta':'false'}
+    });
+    const data = await res.json();
+    videos = Array.isArray(data.videos) ? data.videos : [];
+    renderGrid();
+  } catch(e) {
+    toast('Gagal memuat video. Cek koneksi.','error');
+    videos=[];
+    renderGrid();
+  }
+}
+
+async function saveVideos() {
+  const res = await fetch(BIN_URL, {
+    method:'PUT',
+    headers:{
+      'Content-Type':'application/json',
+      'X-Master-Key': API_KEY
+    },
+    body: JSON.stringify({videos})
+  });
+  if(!res.ok) throw new Error('Gagal menyimpan');
+}
+
+// ── VIDEO HELPERS ──────────────────────────────
+function getEmbedUrl(url) {
+  try {
+    // YouTube
+    const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?rel=0&autoplay=1`;
+    // YouTube Shorts
+    const ytShort = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+    if (ytShort) return `https://www.youtube.com/embed/${ytShort[1]}?rel=0&autoplay=1`;
+    // Google Drive
+    const gdMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (gdMatch) return `https://drive.google.com/file/d/${gdMatch[1]}/preview`;
+    const gdView = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
+    if (gdView) return `https://drive.google.com/file/d/${gdView[1]}/preview`;
+    return null;
+  } catch(e){ return null; }
+}
+
+function getThumbnail(url) {
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+  if (ytMatch) return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+  const ytShort = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+  if (ytShort) return `https://img.youtube.com/vi/${ytShort[1]}/hqdefault.jpg`;
+  // Google Drive — gunakan icon placeholder
+  return null;
+}
+
+function getSourceType(url) {
+  if (url.includes('youtube.com') || url.includes('youtu.be')) return 'yt';
+  if (url.includes('drive.google.com')) return 'gd';
+  return 'other';
+}
+function getSourceLabel(type) {
+  if (type==='yt') return 'YouTube';
+  if (type==='gd') return 'Drive';
+  return 'Video';
+}
+
+// ── EMBED PREVIEW (admin form) ─────────────────
+function previewEmbed() {
+  const url = document.getElementById('vid-url').value.trim();
+  const ep  = document.getElementById('embed-preview');
+  const ef  = document.getElementById('embed-frame');
+  const embedUrl = getEmbedUrl(url);
+  if (embedUrl) {
+    ef.src = embedUrl.replace('&autoplay=1','');
+    ep.classList.add('visible');
+  } else {
+    ef.src=''; ep.classList.remove('visible');
+  }
+}
+
+function clearForm() {
+  document.getElementById('vid-url').value='';
+  document.getElementById('vid-title').value='';
+  document.getElementById('vid-desc').value='';
+  document.getElementById('embed-frame').src='';
+  document.getElementById('embed-preview').classList.remove('visible');
+}
+
+// ── ADD VIDEO ──────────────────────────────────
+async function addVideo() {
+  const url   = document.getElementById('vid-url').value.trim();
+  const title = document.getElementById('vid-title').value.trim();
+  const desc  = document.getElementById('vid-desc').value.trim();
+
+  if (!url)   { toast('Masukkan link video terlebih dahulu','error'); return; }
+  if (!title) { toast('Masukkan judul video','error'); return; }
+  if (!getEmbedUrl(url)) { toast('Link tidak dikenali. Gunakan YouTube atau Google Drive','error'); return; }
+
+  const btn = document.querySelector('.add-actions .btn-accent');
+  btn.disabled=true; btn.textContent='Menyimpan...';
+
+  try {
+    const entry = {
+      id: Date.now(), url, title, desc,
+      source: getSourceType(url),
+      date: new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})
+    };
+    videos.unshift(entry);
+    await saveVideos();
+    renderGrid();
+    clearForm();
+    toast('Video berhasil dipublikasikan! Semua orang bisa melihatnya.','success');
+  } catch(e) {
+    videos.shift();
+    toast('Gagal menyimpan. Coba lagi.','error');
+  } finally {
+    btn.disabled=false; btn.textContent='✓ Publikasikan';
+  }
+}
+
+// ── DELETE VIDEO ───────────────────────────────
+async function deleteVideo(id) {
+  if (!confirm('Hapus video ini?')) return;
+  const backup = [...videos];
+  videos = videos.filter(v=>v.id!==id);
+  renderGrid();
+  try {
+    await saveVideos();
+    toast('Video dihapus','error');
+  } catch(e) {
+    videos = backup;
+    renderGrid();
+    toast('Gagal menghapus. Coba lagi.','error');
+  }
+}
+
+// ── RENDER ─────────────────────────────────────
+function renderGrid() {
+  const grid  = document.getElementById('video-grid');
+  const badge = document.getElementById('count-badge');
+  badge.textContent = videos.length ? `${videos.length} video` : '';
+
+  if (!videos.length) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">🎬</div>
+      <div class="empty-text">Belum ada video</div>
+      <div class="empty-sub">${role==='admin' ? 'Tambahkan video pertama di atas.' : 'Admin belum menambahkan video apapun.'}</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = videos.map((v,i) => {
+    const thumb = getThumbnail(v.url);
+    const srcType = v.source || getSourceType(v.url);
+    const srcLabel = getSourceLabel(srcType);
+    return `
+    <div class="video-card" style="animation-delay:${i*.05}s" onclick="openModal(${v.id})">
+      <div class="card-thumb">
+        ${thumb
+          ? `<img src="${thumb}" alt="${esc(v.title)}" loading="lazy">`
+          : `<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">📁</span><span style="font-size:.75rem">Google Drive</span></div>`
+        }
+        <span class="card-source-badge src-${srcType}">${srcLabel}</span>
+        <div class="card-play-overlay"><div class="play-circle">▶</div></div>
+      </div>
+      <div class="card-body">
+        <div class="card-title" title="${esc(v.title)}">${esc(v.title)}</div>
+        <div class="card-meta"><span>${v.date}</span></div>
+        ${role==='admin' ? `<div class="card-admin-actions">
+          <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteVideo(${v.id})">🗑 Hapus</button>
+        </div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── MODAL ──────────────────────────────────────
+function openModal(id) {
+  const v = videos.find(x=>x.id===id); if(!v) return;
+  const embedUrl = getEmbedUrl(v.url);
+  if (!embedUrl) { toast('Link video tidak dapat diputar','error'); return; }
+  document.getElementById('modal-iframe').src = embedUrl;
+  document.getElementById('modal-title').textContent = v.title;
+  document.getElementById('modal-meta').textContent  = v.date;
+  document.getElementById('modal-desc').textContent  = v.desc || '';
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e) {
+  if(e && e.target!==document.getElementById('modal') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modal-iframe').src='';
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+// ── TOAST ──────────────────────────────────────
+function toast(msg, type='success') {
+  const c=document.getElementById('tc');
+  const t=document.createElement('div');
+  t.className=`toast ${type}`;
+  t.innerHTML=`<span class="ti">${type==='success'?'✓':type==='info'?'ℹ':'✕'}</span>${msg}`;
+  c.appendChild(t);
+  setTimeout(()=>{ t.style.cssText='opacity:0;transform:translateX(16px);transition:all .3s'; setTimeout(()=>t.remove(),320); },3000);
+}
+</script>
+</body>
+</html>
