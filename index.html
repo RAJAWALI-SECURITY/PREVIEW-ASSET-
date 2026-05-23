@@ -98,6 +98,20 @@
   @media(max-width:600px){.input-row{grid-template-columns:1fr;}}
   .add-actions{display:flex;gap:.75rem;margin-top:1.2rem;}
 
+  /* TEXTAREA — deskripsi multiline, scroll otomatis, Enter = newline */
+  textarea.form-input {
+    resize: vertical;
+    min-height: 100px;
+    max-height: 320px;
+    line-height: 1.65;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    /* pastikan Enter tidak dikirim sebagai submit */
+  }
+  /* hint karakter di bawah textarea */
+  .textarea-hint{font-size:.73rem;color:var(--muted);margin-top:.35rem;opacity:.7;}
+
   /* EMBED PREVIEW */
   .embed-preview{margin-top:1rem;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--bg);display:none;}
   .embed-preview iframe{width:100%;height:100%;border:none;}
@@ -145,16 +159,46 @@
   .modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:1.5rem;}
   .modal-overlay.active{display:flex;animation:fadeOverlay .2s ease;}
   @keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
-  .modal-card{width:100%;max-width:860px;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;animation:scaleIn .25s ease;}
+  .modal-card{width:100%;max-width:860px;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;animation:scaleIn .25s ease;
+    /* ── SCROLL CARD ── */
+    max-height:90vh;
+    display:flex;
+    flex-direction:column;
+  }
   @keyframes scaleIn{from{transform:scale(.93);opacity:0}to{transform:scale(1);opacity:1}}
-  .modal-vid-wrap{background:#000;position:relative;aspect-ratio:16/9;}
+
+  /* Video wrap: fixed, tidak ikut scroll */
+  .modal-vid-wrap{background:#000;position:relative;aspect-ratio:16/9;flex-shrink:0;}
   .modal-vid-wrap iframe{width:100%;height:100%;border:none;}
   .modal-close{position:absolute;top:.75rem;right:.75rem;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:.9rem;z-index:1;transition:background .2s;}
   .modal-close:hover{background:rgba(0,0,0,.95);}
-  .modal-info{padding:1.2rem 1.5rem 1.5rem;}
+
+  /* Info section: scrollable jika deskripsi panjang */
+  .modal-info{
+    padding:1.2rem 1.5rem 1.5rem;
+    overflow-y:auto;
+    flex:1;
+    /* scrollbar tipis supaya tidak mengganggu tampilan */
+    scrollbar-width:thin;
+    scrollbar-color:var(--border) transparent;
+  }
+  .modal-info::-webkit-scrollbar{width:5px;}
+  .modal-info::-webkit-scrollbar-track{background:transparent;}
+  .modal-info::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+  .modal-info::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.15);}
+
   .modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:.3rem;}
   .modal-meta{font-size:.8rem;color:var(--muted);}
-  .modal-desc{margin-top:.65rem;font-size:.88rem;color:rgba(240,240,248,.65);line-height:1.6;}
+  /* Deskripsi: preservasi baris baru, bisa scroll */
+  .modal-desc{
+    margin-top:.75rem;
+    font-size:.88rem;
+    color:rgba(240,240,248,.65);
+    line-height:1.7;
+    white-space:pre-wrap;   /* ← tampilkan baris baru dari \n */
+    word-break:break-word;
+    /* Gradient fade bawah jika terlalu panjang — dihilangkan karena sudah ada scroll */
+  }
 
   /* TOAST */
   .toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;display:flex;flex-direction:column;gap:.5rem;}
@@ -172,6 +216,7 @@
     #main-screen{padding:1.5rem 1.2rem;}
     .page-title{font-size:1.6rem;}
     .video-grid{grid-template-columns:1fr;}
+    .modal-card{max-height:95vh;}
   }
 </style>
 </head>
@@ -238,10 +283,20 @@
           <input class="form-input" id="vid-title" type="text" placeholder="Nama asset...">
         </div>
       </div>
+
+      <!-- DESKRIPSI — multiline, Enter = baris baru -->
       <div class="form-group" style="margin-top:1rem;margin-bottom:0">
         <label class="form-label">Deskripsi (opsional)</label>
-        <input class="form-input" id="vid-desc" type="text" placeholder="Keterangan singkat...">
+        <textarea
+          class="form-input"
+          id="vid-desc"
+          placeholder="Keterangan singkat...&#10;Tekan Enter untuk pindah baris."
+          rows="4"
+          onkeydown="handleDescKey(event)"
+        ></textarea>
+        <div class="textarea-hint">Enter = baris baru &nbsp;·&nbsp; Shift+Enter juga bisa</div>
       </div>
+
       <div class="embed-preview" id="embed-preview">
         <iframe id="embed-frame" allowfullscreen></iframe>
       </div>
@@ -276,6 +331,7 @@
       <button class="modal-close" onclick="closeModal()">✕</button>
       <iframe id="modal-iframe" allowfullscreen></iframe>
     </div>
+    <!-- .modal-info sekarang scrollable -->
     <div class="modal-info">
       <div class="modal-title" id="modal-title"></div>
       <div class="modal-meta"  id="modal-meta"></div>
@@ -301,7 +357,7 @@ let videos = [];
 // ── BOOT ───────────────────────────────────────
 window.onload = () => {
   const saved = sessionStorage.getItem('pa_role');
-  if (saved === 'admin')   { role='admin';  enterMain(); }
+  if (saved === 'admin')    { role='admin';  enterMain(); }
   else if (saved==='viewer'){ role='viewer'; enterMain(); }
   else showScreen('splash-screen');
 };
@@ -312,9 +368,9 @@ function showScreen(id) {
   document.getElementById(id).classList.add('active');
   document.getElementById('navbar').style.display = id==='main-screen' ? 'flex' : 'none';
 }
-function goSplash()      { showScreen('splash-screen'); }
-function goAdminLogin()  { showScreen('admin-login-screen'); setTimeout(()=>document.getElementById('admin-password').focus(),200); }
-function goViewer()      { role='viewer'; sessionStorage.setItem('pa_role','viewer'); enterMain(); }
+function goSplash()     { showScreen('splash-screen'); }
+function goAdminLogin() { showScreen('admin-login-screen'); setTimeout(()=>document.getElementById('admin-password').focus(),200); }
+function goViewer()     { role='viewer'; sessionStorage.setItem('pa_role','viewer'); enterMain(); }
 
 // ── AUTH ───────────────────────────────────────
 function doAdminLogin() {
@@ -334,10 +390,25 @@ function logout() {
   sessionStorage.removeItem('pa_role'); role=null;
   showScreen('splash-screen'); toast('Berhasil keluar','success');
 }
+
+// Keyboard global: Enter di login, Escape tutup modal
 document.addEventListener('keydown', e=>{
-  if(e.key==='Enter' && document.getElementById('admin-login-screen').classList.contains('active')) doAdminLogin();
-  if(e.key==='Escape') closeModal({target:document.getElementById('modal')});
+  if (e.key==='Enter' && document.getElementById('admin-login-screen').classList.contains('active')) {
+    doAdminLogin();
+  }
+  if (e.key==='Escape') closeModal({target:document.getElementById('modal')});
 });
+
+// Textarea deskripsi: Enter = newline (bukan submit)
+// — sudah native di <textarea>, tapi fungsi ini mencegah
+//   jika ada listener lain yang mungkin mencegat:
+function handleDescKey(e) {
+  // Biarkan Enter berjalan normal di textarea (pindah baris)
+  // Tidak perlu e.preventDefault() — ini hanya pengaman eksplisit
+  if (e.key === 'Enter') {
+    e.stopPropagation(); // jangan biarkan event naik ke listener global
+  }
+}
 
 // ── MAIN ───────────────────────────────────────
 function enterMain() {
@@ -387,13 +458,10 @@ async function saveVideos() {
 // ── VIDEO HELPERS ──────────────────────────────
 function getEmbedUrl(url) {
   try {
-    // YouTube
     const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
     if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?rel=0&autoplay=1`;
-    // YouTube Shorts
     const ytShort = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
     if (ytShort) return `https://www.youtube.com/embed/${ytShort[1]}?rel=0&autoplay=1`;
-    // Google Drive
     const gdMatch = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (gdMatch) return `https://drive.google.com/file/d/${gdMatch[1]}/preview`;
     const gdView = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
@@ -407,7 +475,6 @@ function getThumbnail(url) {
   if (ytMatch) return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
   const ytShort = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
   if (ytShort) return `https://img.youtube.com/vi/${ytShort[1]}/hqdefault.jpg`;
-  // Google Drive — gunakan icon placeholder
   return null;
 }
 
@@ -448,7 +515,7 @@ function clearForm() {
 async function addVideo() {
   const url   = document.getElementById('vid-url').value.trim();
   const title = document.getElementById('vid-title').value.trim();
-  const desc  = document.getElementById('vid-desc').value.trim();
+  const desc  = document.getElementById('vid-desc').value; // simpan apa adanya termasuk \n
 
   if (!url)   { toast('Masukkan link video terlebih dahulu','error'); return; }
   if (!title) { toast('Masukkan judul video','error'); return; }
@@ -459,7 +526,8 @@ async function addVideo() {
 
   try {
     const entry = {
-      id: Date.now(), url, title, desc,
+      id: Date.now(), url, title,
+      desc: desc.trim(), // trim leading/trailing whitespace, baris di tengah tetap
       source: getSourceType(url),
       date: new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})
     };
@@ -542,7 +610,10 @@ function openModal(id) {
   document.getElementById('modal-iframe').src = embedUrl;
   document.getElementById('modal-title').textContent = v.title;
   document.getElementById('modal-meta').textContent  = v.date;
+  // textContent otomatis preserve \n dengan white-space:pre-wrap di CSS
   document.getElementById('modal-desc').textContent  = v.desc || '';
+  // Reset scroll posisi info ke atas setiap buka modal
+  document.getElementById('modal').querySelector('.modal-info').scrollTop = 0;
   document.getElementById('modal').classList.add('active');
   document.body.style.overflow='hidden';
 }
