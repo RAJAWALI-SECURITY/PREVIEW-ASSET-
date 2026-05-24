@@ -73,6 +73,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
 .btn-danger{background:rgba(255,77,109,.12);color:var(--danger);border:1px solid rgba(255,77,109,.3);}
 .btn-danger:hover{background:rgba(255,77,109,.22);}
+.btn-edit{background:rgba(123,92,250,.12);color:var(--accent2);border:1px solid rgba(123,92,250,.3);}
+.btn-edit:hover{background:rgba(123,92,250,.22);}
 .btn-full{width:100%;padding:.85rem;font-size:.95rem;border-radius:10px;}
 .btn-sm{font-size:.74rem;padding:.32rem .7rem;border-radius:6px;}
 
@@ -92,7 +94,7 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .page-title span{color:var(--accent);}
 .page-sub{color:var(--muted);font-size:.88rem;margin-top:.4rem;}
 
-/* ── ADMIN FORM — TABS ── */
+/* ── ADMIN FORM ── */
 .add-box{background:var(--surface);border:1px solid rgba(232,255,71,.22);border-radius:16px;padding:1.75rem;margin-bottom:2.25rem;}
 .tab-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;background:var(--bg);border-radius:10px;padding:.3rem;}
 .tab-btn{flex:1;padding:.5rem;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.83rem;font-weight:600;border-radius:7px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.45rem;}
@@ -103,14 +105,27 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 @media(max-width:600px){.input-row{grid-template-columns:1fr;}}
 .add-actions{display:flex;gap:.75rem;margin-top:1.2rem;flex-wrap:wrap;align-items:center;}
 textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height:1.65;overflow-y:auto;white-space:pre-wrap;word-break:break-word;}
-.textarea-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem;opacity:.65;}
+
+/* ── VIDEO INPUT MODE TOGGLE ── */
+.vid-mode-toggle{display:flex;gap:.5rem;margin-bottom:1rem;background:var(--bg);border-radius:8px;padding:.25rem;}
+.vid-mode-btn{flex:1;padding:.4rem .75rem;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;border-radius:6px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.35rem;}
+.vid-mode-btn.active{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.vid-mode-panel{display:none;}
+.vid-mode-panel.active{display:block;}
 
 /* embed preview */
 .embed-preview{margin-top:1rem;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--bg);display:none;}
 .embed-preview iframe{width:100%;height:100%;border:none;}
 .embed-preview.visible{display:block;}
 
-/* ── FOTO UPLOAD ZONE ── */
+/* video preview player */
+.vid-file-preview{margin-top:1rem;border-radius:10px;overflow:hidden;background:#000;display:none;}
+.vid-file-preview video{width:100%;display:block;max-height:340px;}
+.vid-file-preview.visible{display:block;}
+.vid-file-info{font-size:.76rem;color:var(--muted);margin-top:.4rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.vid-file-info span{background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:.15rem .55rem;}
+
+/* ── UPLOAD ZONE ── */
 .upload-zone{border:2px dashed var(--border);border-radius:12px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all .25s;margin-top:1rem;position:relative;background:transparent;}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(232,255,71,.04);}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -127,9 +142,9 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .total-size-badge.warn{color:#ffb347;border-color:rgba(255,179,71,.4);}
 .total-size-badge.over{color:var(--danger);border-color:rgba(255,77,109,.4);}
 .photo-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.5rem;}
-.photo-preview-item{aspect-ratio:1;border-radius:8px;overflow:hidden;position:relative;background:var(--bg);border:1px solid var(--border);cursor:default;}
+.photo-preview-item{aspect-ratio:1;border-radius:8px;overflow:hidden;position:relative;background:var(--bg);border:1px solid var(--border);}
 .photo-preview-item img{width:100%;height:100%;object-fit:cover;display:block;}
-.photo-preview-item .remove-btn{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(255,77,109,.9);border:none;color:#fff;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-weight:700;}
+.photo-preview-item .remove-btn{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(255,77,109,.9);border:none;color:#fff;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;}
 .photo-preview-item .size-tag{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);font-size:.56rem;color:rgba(255,255,255,.75);text-align:center;padding:.12rem 0;}
 .compress-info{font-size:.74rem;color:var(--muted);margin-top:.5rem;padding:.5rem .75rem;background:rgba(71,255,178,.05);border:1px solid rgba(71,255,178,.12);border-radius:8px;display:flex;align-items:center;gap:.4rem;}
 .compress-info span{color:var(--success);}
@@ -144,7 +159,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .section-label{font-size:.73rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;display:flex;align-items:center;gap:.75rem;}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* filter tabs */
+/* filter */
 .filter-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
 .filter-btn{font-size:.75rem;font-weight:700;letter-spacing:.06em;padding:.3rem .9rem;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
 .filter-btn.active{background:var(--accent);color:#08080f;border-color:var(--accent);}
@@ -157,6 +172,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .card-thumb{width:100%;aspect-ratio:16/9;background:var(--bg);position:relative;overflow:hidden;}
 .card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.card-thumb video{width:100%;height:100%;object-fit:cover;}
 .asset-card:hover .card-thumb img{transform:scale(1.05);}
 .card-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s;}
 .asset-card:hover .card-play-overlay{opacity:1;}
@@ -168,12 +184,13 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .type-photo{background:rgba(232,255,71,.85);color:#08080f;}
 .src-yt{background:rgba(255,0,0,.75);color:#fff;}
 .src-gd{background:rgba(66,133,244,.75);color:#fff;}
+.src-local{background:rgba(71,255,178,.75);color:#08080f;}
 .src-other{background:rgba(0,0,0,.6);color:#fff;}
 .card-body{padding:.9rem 1.1rem 1rem;}
 .card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:.3rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .card-meta{font-size:.76rem;color:var(--muted);}
 .card-desc-preview{font-size:.78rem;color:var(--muted);margin-top:.35rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;opacity:.7;}
-.card-admin-actions{display:flex;gap:.5rem;margin-top:.7rem;}
+.card-admin-actions{display:flex;gap:.5rem;margin-top:.7rem;flex-wrap:wrap;}
 
 .empty-state{grid-column:1/-1;text-align:center;padding:5rem 2rem;}
 .empty-icon{font-size:3rem;opacity:.3;margin-bottom:.75rem;}
@@ -196,11 +213,10 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .crumb-sep{opacity:.4;}
 .crumb-current{color:var(--text);opacity:.7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px;}
 .player-video-box{width:100%;aspect-ratio:16/9;background:#000;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.7);margin-bottom:1.75rem;}
-.player-video-box iframe{width:100%;height:100%;border:none;display:block;}
+.player-video-box iframe,.player-video-box video{width:100%;height:100%;border:none;display:block;}
 .player-info{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.75rem 2rem;}
 .player-source-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.85rem;}
 .player-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.55rem;line-height:1.25;margin-bottom:.6rem;}
-.player-meta{font-size:.8rem;color:var(--muted);}
 .player-divider{height:1px;background:var(--border);margin:1.25rem 0;}
 .player-desc-label{font-size:.73rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
 .player-desc{font-size:.93rem;color:rgba(240,240,248,.75);line-height:1.8;white-space:pre-wrap;word-break:break-word;}
@@ -237,6 +253,33 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .lightbox-nav.next{right:1.2rem;}
 .lightbox-counter{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:.8rem;color:rgba(255,255,255,.5);background:rgba(0,0,0,.6);padding:.3rem .9rem;border-radius:99px;backdrop-filter:blur(8px);}
 
+/* ══════════════════════════════════════════
+   ── EDIT MODAL ──
+══════════════════════════════════════════ */
+.modal-overlay{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:1.5rem;}
+.modal-overlay.active{display:flex;animation:fadeOverlay .2s ease;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;width:100%;max-width:620px;max-height:92vh;overflow-y:auto;padding:2rem;position:relative;}
+.modal::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:var(--accent2);border-radius:50%;filter:blur(70px);opacity:.2;pointer-events:none;}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;gap:1rem;}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;}
+.modal-close{width:34px;height:34px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.modal-close:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+.modal-section{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:1.25rem 0 .75rem;padding-top:1rem;border-top:1px solid var(--border);}
+.modal-section:first-of-type{margin-top:0;padding-top:0;border-top:none;}
+.modal-actions{display:flex;gap:.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);flex-wrap:wrap;}
+
+/* edit foto grid inside modal */
+.edit-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem;margin-top:.75rem;}
+.edit-photo-item{aspect-ratio:1;border-radius:8px;overflow:hidden;position:relative;background:var(--bg);border:1px solid var(--border);}
+.edit-photo-item img{width:100%;height:100%;object-fit:cover;display:block;}
+.edit-photo-item .remove-btn{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(255,77,109,.9);border:none;color:#fff;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.edit-photo-add-zone{border:2px dashed var(--border);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;aspect-ratio:1;transition:all .2s;position:relative;font-size:.65rem;color:var(--muted);gap:.2rem;}
+.edit-photo-add-zone:hover{border-color:var(--accent);color:var(--accent);}
+.edit-photo-add-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.edit-compress-status{font-size:.73rem;color:var(--muted);padding:.4rem .75rem;background:rgba(71,255,178,.05);border:1px solid rgba(71,255,178,.12);border-radius:7px;margin-top:.5rem;display:none;align-items:center;gap:.4rem;}
+.edit-compress-status span{color:var(--success);}
+.edit-photo-count{font-size:.75rem;color:var(--accent);font-weight:700;margin-top:.4rem;}
+
 /* ── TOAST ── */
 .toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:600;display:flex;flex-direction:column;gap:.5rem;}
 .toast{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.83rem;display:flex;align-items:center;gap:.55rem;animation:toastIn .3s ease;max-width:300px;}
@@ -259,6 +302,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   .photos-grid{columns:2 140px;}
   .lightbox-nav.prev{left:.5rem;}
   .lightbox-nav.next{right:.5rem;}
+  .modal{padding:1.5rem;}
 }
 </style>
 </head>
@@ -309,8 +353,6 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 
 <!-- ══ GALLERY ══ -->
 <div id="main-screen" class="screen">
-
-  <!-- ADMIN FORM -->
   <div id="admin-section" style="display:none">
     <div class="add-box">
       <div class="tab-bar">
@@ -320,22 +362,55 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 
       <!-- Panel: Video -->
       <div class="tab-panel active" id="tab-video">
-        <div class="input-row">
-          <div class="form-group" style="margin-bottom:0">
-            <label class="form-label">Link Video</label>
-            <input class="form-input" id="vid-url" type="url" placeholder="YouTube atau Google Drive..." oninput="previewEmbed()">
+        <!-- Toggle: Link vs File -->
+        <div class="vid-mode-toggle">
+          <button class="vid-mode-btn active" id="vmode-link-btn" onclick="switchVidMode('link')">🔗 Dari Link URL</button>
+          <button class="vid-mode-btn" id="vmode-file-btn" onclick="switchVidMode('file')">📂 Upload File Video</button>
+        </div>
+
+        <!-- Mode: Link -->
+        <div class="vid-mode-panel active" id="vmode-link">
+          <div class="input-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">Link Video</label>
+              <input class="form-input" id="vid-url" type="url" placeholder="YouTube atau Google Drive..." oninput="previewEmbed()">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label">Judul</label>
+              <input class="form-input" id="vid-title" type="text" placeholder="Nama asset...">
+            </div>
           </div>
-          <div class="form-group" style="margin-bottom:0">
+          <div class="form-group" style="margin-top:1rem;margin-bottom:0">
+            <label class="form-label">Deskripsi (opsional)</label>
+            <textarea class="form-input" id="vid-desc" placeholder="Keterangan..." rows="3" onkeydown="handleDescKey(event)"></textarea>
+          </div>
+          <div class="embed-preview" id="embed-preview"><iframe id="embed-frame" allowfullscreen></iframe></div>
+        </div>
+
+        <!-- Mode: File -->
+        <div class="vid-mode-panel" id="vmode-file">
+          <div class="form-group" style="margin-bottom:.75rem">
             <label class="form-label">Judul</label>
-            <input class="form-input" id="vid-title" type="text" placeholder="Nama asset...">
+            <input class="form-input" id="vid-file-title" type="text" placeholder="Nama asset...">
           </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Deskripsi (opsional)</label>
+            <textarea class="form-input" id="vid-file-desc" placeholder="Keterangan..." rows="2" onkeydown="handleDescKey(event)"></textarea>
+          </div>
+          <div class="upload-zone" id="vid-upload-zone"
+               ondragover="handleVidDragOver(event)" ondragleave="handleVidDragLeave(event)" ondrop="handleVidDrop(event)">
+            <input type="file" id="vid-file-input" accept="video/*" onchange="handleVidFileSelect(event)">
+            <div class="upload-icon">🎬</div>
+            <div class="upload-text"><strong>Klik atau drag & drop file video</strong></div>
+            <div class="upload-hint">MP4 · MOV · AVI · WEBM · MKV · FLV</div>
+          </div>
+          <div class="vid-file-preview" id="vid-file-preview">
+            <video id="vid-file-player" controls></video>
+          </div>
+          <div class="vid-file-info" id="vid-file-info" style="display:none"></div>
         </div>
-        <div class="form-group" style="margin-top:1rem;margin-bottom:0">
-          <label class="form-label">Deskripsi (opsional)</label>
-          <textarea class="form-input" id="vid-desc" placeholder="Keterangan..." rows="3" onkeydown="handleDescKey(event)"></textarea>
-        </div>
-        <div class="embed-preview" id="embed-preview"><iframe id="embed-frame" allowfullscreen></iframe></div>
-        <div class="add-actions">
+
+        <div class="add-actions" style="margin-top:1.2rem">
           <button class="btn btn-accent" id="pub-video-btn" onclick="addVideo()">✓ Publikasikan Video</button>
           <button class="btn btn-ghost" onclick="clearVideoForm()">Bersihkan</button>
         </div>
@@ -353,8 +428,6 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
             <textarea class="form-input" id="photo-desc" placeholder="Keterangan..." rows="3" onkeydown="handleDescKey(event)"></textarea>
           </div>
         </div>
-
-        <!-- Drop zone -->
         <div class="upload-zone" id="upload-zone"
              ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
           <input type="file" id="photo-file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
@@ -362,32 +435,20 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
           <div class="upload-text"><strong>Klik untuk pilih foto</strong> atau drag & drop di sini</div>
           <div class="upload-hint">JPG · PNG · WEBP · GIF — Bisa pilih banyak sekaligus · Foto dikompresi otomatis</div>
         </div>
-
-        <!-- Status kompresi -->
         <div id="compress-status" style="display:none" class="compress-info">
           <span>⚡</span> <span id="compress-text">Sedang mengompresi foto...</span>
         </div>
-
-        <!-- Preview -->
         <div id="photo-preview-section" class="photo-preview-section" style="display:none">
           <div class="photo-preview-header">
-            <div class="photo-preview-label">
-              📷 <span id="photo-count-label">0 foto dipilih</span>
-            </div>
+            <div class="photo-preview-label">📷 <span id="photo-count-label">0 foto dipilih</span></div>
             <div id="total-size-badge" class="total-size-badge">0 KB</div>
           </div>
           <div class="photo-preview-grid" id="photo-preview-grid"></div>
         </div>
-
-        <!-- Progress -->
         <div class="upload-progress" id="upload-progress">
           <div class="upload-progress-bar"><div class="upload-progress-fill" id="upload-progress-fill" style="width:0%"></div></div>
-          <div class="upload-progress-text">
-            <span id="upload-progress-text">Menyimpan...</span>
-            <span id="upload-progress-pct"></span>
-          </div>
+          <div class="upload-progress-text"><span id="upload-progress-text">Menyimpan...</span><span id="upload-progress-pct"></span></div>
         </div>
-
         <div class="add-actions">
           <button class="btn btn-accent" id="pub-photo-btn" onclick="addPhotos()">✓ Publikasikan Foto</button>
           <button class="btn btn-ghost" onclick="clearPhotoForm()">Bersihkan</button>
@@ -397,7 +458,6 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
     </div>
   </div>
 
-  <!-- HEADER -->
   <div class="page-header">
     <div>
       <div class="page-title">Asset <span>Gallery</span></div>
@@ -405,14 +465,11 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
     </div>
     <div id="count-badge" style="font-size:.85rem;color:var(--muted)"></div>
   </div>
-
-  <!-- Filter -->
-  <div class="filter-bar" id="filter-bar">
+  <div class="filter-bar">
     <button class="filter-btn active" onclick="setFilter('all',this)">Semua</button>
     <button class="filter-btn" onclick="setFilter('video',this)">🎬 Video</button>
     <button class="filter-btn" onclick="setFilter('photo',this)">🖼️ Foto</button>
   </div>
-
   <div class="section-label">Asset Tersedia</div>
   <div class="asset-grid" id="asset-grid">
     <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
@@ -429,7 +486,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
       <span class="crumb-sep">›</span>
       <span class="crumb-current" id="player-breadcrumb-title">—</span>
     </div>
-    <div class="player-video-box"><iframe id="player-iframe" allowfullscreen></iframe></div>
+    <div class="player-video-box" id="player-video-box"></div>
     <div class="player-info">
       <div class="player-source-row">
         <span class="card-type-badge" id="player-source-badge" style="position:static"></span>
@@ -440,8 +497,9 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
       <div class="player-desc-label">Deskripsi</div>
       <div id="player-desc-wrap"></div>
       <div class="player-admin-bar" id="player-admin-bar" style="display:none">
+        <button class="btn btn-edit btn-sm" id="player-edit-btn">✏️ Edit Video</button>
         <button class="btn btn-danger btn-sm" id="player-delete-btn">🗑 Hapus Video</button>
-        <button class="btn btn-ghost btn-sm" onclick="goGallery()">← Kembali ke Gallery</button>
+        <button class="btn btn-ghost btn-sm" onclick="goGallery()">← Kembali</button>
       </div>
     </div>
   </div>
@@ -466,8 +524,9 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
     </div>
     <div class="photos-grid" id="photos-grid"></div>
     <div class="photo-admin-row" id="photo-admin-row" style="display:none">
-      <button class="btn btn-danger btn-sm" id="photo-delete-btn">🗑 Hapus Album Ini</button>
-      <button class="btn btn-ghost btn-sm" onclick="goGallery()">← Kembali ke Gallery</button>
+      <button class="btn btn-edit btn-sm" id="photo-edit-btn">✏️ Edit Album</button>
+      <button class="btn btn-danger btn-sm" id="photo-delete-btn">🗑 Hapus Album</button>
+      <button class="btn btn-ghost btn-sm" onclick="goGallery()">← Kembali</button>
     </div>
   </div>
 </div>
@@ -481,79 +540,141 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
+<!-- ══ EDIT VIDEO MODAL ══ -->
+<div class="modal-overlay" id="edit-video-modal" onclick="modalBgClick(event,'edit-video-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit Video</div>
+      <button class="modal-close" onclick="closeModal('edit-video-modal')">✕</button>
+    </div>
+    <div class="modal-section">Informasi Video</div>
+    <div class="form-group">
+      <label class="form-label">Judul</label>
+      <input class="form-input" id="edit-vid-title" type="text" placeholder="Judul video...">
+    </div>
+    <div class="form-group" id="edit-vid-url-group">
+      <label class="form-label">Link Video (URL)</label>
+      <input class="form-input" id="edit-vid-url" type="url" placeholder="YouTube atau Google Drive..." oninput="previewEditEmbed()">
+      <div class="embed-preview" id="edit-embed-preview" style="margin-top:.75rem"><iframe id="edit-embed-frame" allowfullscreen></iframe></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Deskripsi (opsional)</label>
+      <textarea class="form-input" id="edit-vid-desc" rows="4" placeholder="Keterangan..." onkeydown="handleDescKey(event)"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-accent" id="save-video-btn" onclick="saveEditVideo()">💾 Simpan Perubahan</button>
+      <button class="btn btn-ghost" onclick="closeModal('edit-video-modal')">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EDIT PHOTO MODAL ══ -->
+<div class="modal-overlay" id="edit-photo-modal" onclick="modalBgClick(event,'edit-photo-modal')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Edit Album Foto</div>
+      <button class="modal-close" onclick="closeModal('edit-photo-modal')">✕</button>
+    </div>
+    <div class="modal-section">Informasi Album</div>
+    <div class="form-group">
+      <label class="form-label">Judul Album</label>
+      <input class="form-input" id="edit-photo-title" type="text" placeholder="Nama album...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Deskripsi (opsional)</label>
+      <textarea class="form-input" id="edit-photo-desc" rows="3" placeholder="Keterangan..." onkeydown="handleDescKey(event)"></textarea>
+    </div>
+    <div class="modal-section">Kelola Foto</div>
+    <div id="edit-photo-count" class="edit-photo-count"></div>
+    <div class="edit-photo-grid" id="edit-photo-grid"></div>
+    <div class="edit-compress-status" id="edit-compress-status">
+      <span>⚡</span><span id="edit-compress-text">Mengompresi...</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-accent" id="save-photo-btn" onclick="saveEditPhoto()">💾 Simpan Perubahan</button>
+      <button class="btn btn-ghost" onclick="closeModal('edit-photo-modal')">Batal</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast-container" id="tc"></div>
 
 <script>
 // ── CONFIG ──
-const BIN_ID  = '6a1149986610dd3ae89006d7';
-const API_KEY = '$2a$10$t3RmmHl3xr0eQNxDOIbAVer4cRHGTmc5oFRYkk.WVw.g93JHsaYom';
-const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const BIN_ID   = '6a1149986610dd3ae89006d7';
+const API_KEY  = '$2a$10$t3RmmHl3xr0eQNxDOIbAVer4cRHGTmc5oFRYkk.WVw.g93JHsaYom';
+const BIN_URL  = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const ADMIN_PASS = btoa('595080470');
 
-// Batas kompresi: max 1200px sisi terpanjang, kualitas JPEG 0.78
 const COMPRESS_MAX_PX = 1200;
 const COMPRESS_QUALITY = 0.78;
-// Peringatan ukuran total (KB)
-const WARN_KB  = 3000;  // ~3MB
-const LIMIT_KB = 7500;  // ~7.5MB
+const WARN_KB  = 3000;
+const LIMIT_KB = 7500;
 
 // ── STATE ──
 let role   = null;
 let assets = [];
 let activeFilter = 'all';
-let pendingPhotos = []; // {name, data(base64), origKB, compKB}
+let pendingPhotos  = [];   // add photo form
+let editPhotos     = [];   // edit modal photos {data, compKB, _new?}
 let lightboxPhotos = [];
 let lightboxIndex  = 0;
 let currentAssetId = null;
+let vidMode        = 'link'; // 'link' | 'file'
+let pendingVidFile = null;   // {data:base64, name, sizeKB, mimeType}
 
 // ── BOOT ──
 window.onload = () => {
   const saved = sessionStorage.getItem('pa_role');
-  if (saved==='admin')     { role='admin';  enterMain(); }
+  if(saved==='admin')      { role='admin';  enterMain(); }
   else if(saved==='viewer'){ role='viewer'; enterMain(); }
   else showScreen('splash-screen');
 };
 
-// ── SCREEN ──
+// ── SCREENS ──
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   const showNav = ['main-screen','player-screen','photo-screen'].includes(id);
-  document.getElementById('navbar').style.display = showNav ? 'flex' : 'none';
+  document.getElementById('navbar').style.display = showNav?'flex':'none';
   window.scrollTo({top:0,behavior:'instant'});
 }
-function goSplash()     { showScreen('splash-screen'); }
-function goAdminLogin() { showScreen('admin-login-screen'); setTimeout(()=>document.getElementById('admin-password').focus(),200); }
-function goViewer()     { role='viewer'; sessionStorage.setItem('pa_role','viewer'); enterMain(); }
-function goGallery()    { document.getElementById('player-iframe').src=''; closeLightbox(); showScreen('main-screen'); }
+function goSplash()    { showScreen('splash-screen'); }
+function goAdminLogin(){ showScreen('admin-login-screen'); setTimeout(()=>document.getElementById('admin-password').focus(),200); }
+function goViewer()    { role='viewer'; sessionStorage.setItem('pa_role','viewer'); enterMain(); }
+function goGallery()   {
+  const pb = document.getElementById('player-video-box');
+  if(pb) pb.innerHTML='';
+  closeLightbox();
+  showScreen('main-screen');
+}
 
 // ── AUTH ──
 function doAdminLogin() {
   const pw  = document.getElementById('admin-password').value;
   const err = document.getElementById('login-error');
-  if (btoa(pw)===ADMIN_PASS) {
+  if(btoa(pw)===ADMIN_PASS){
     err.style.display='none';
     document.getElementById('admin-password').value='';
     role='admin'; sessionStorage.setItem('pa_role','admin');
     enterMain(); toast('Selamat datang, Admin!','success');
-  } else {
-    err.style.display='block';
-    document.getElementById('admin-password').value='';
-  }
+  } else { err.style.display='block'; document.getElementById('admin-password').value=''; }
 }
 function logout() {
-  document.getElementById('player-iframe').src='';
-  closeLightbox();
+  const pb = document.getElementById('player-video-box');
+  if(pb) pb.innerHTML='';
+  closeLightbox(); closeAllModals();
   sessionStorage.removeItem('pa_role'); role=null;
   showScreen('splash-screen'); toast('Berhasil keluar','success');
 }
 document.addEventListener('keydown', e=>{
   if(e.key==='Enter' && document.getElementById('admin-login-screen').classList.contains('active')) doAdminLogin();
   if(e.key==='Escape'){
-    if(document.getElementById('lightbox').classList.contains('active')) closeLightbox();
-    else if(document.getElementById('player-screen').classList.contains('active'))  goGallery();
-    else if(document.getElementById('photo-screen').classList.contains('active'))   goGallery();
+    if(document.querySelector('.modal-overlay.active')) { closeAllModals(); return; }
+    if(document.getElementById('lightbox').classList.contains('active')){ closeLightbox(); return; }
+    if(document.getElementById('player-screen').classList.contains('active')){ goGallery(); return; }
+    if(document.getElementById('photo-screen').classList.contains('active')){ goGallery(); return; }
   }
   if(document.getElementById('lightbox').classList.contains('active')){
     if(e.key==='ArrowLeft')  lightboxNav(-1);
@@ -563,20 +684,19 @@ document.addEventListener('keydown', e=>{
 function handleDescKey(e){ if(e.key==='Enter') e.stopPropagation(); }
 
 // ── MAIN ──
-function enterMain() { showScreen('main-screen'); updateNavbar(); loadAssets(); }
-function updateNavbar() {
-  const nr = document.getElementById('nav-right');
-  document.getElementById('admin-section').style.display = role==='admin' ? 'block' : 'none';
+function enterMain(){ showScreen('main-screen'); updateNavbar(); loadAssets(); }
+function updateNavbar(){
+  document.getElementById('admin-section').style.display = role==='admin'?'block':'none';
   document.getElementById('page-sub').textContent = role==='admin'
     ? 'Mode Admin — tambah & kelola video dan foto'
     : 'Mode Viewer — klik untuk melihat asset';
-  nr.innerHTML = role==='admin'
+  document.getElementById('nav-right').innerHTML = role==='admin'
     ? `<span class="badge-pill pill-admin">● Admin</span><button class="btn btn-danger btn-sm" onclick="logout()">Keluar</button>`
     : `<span class="badge-pill pill-viewer">● Viewer</span><button class="btn btn-ghost btn-sm" onclick="logout()">Keluar</button>`;
 }
 
 // ── TABS ──
-function switchTab(tab) {
+function switchTab(tab){
   ['video','photo'].forEach(t=>{
     document.getElementById(`tab-${t}`).classList.toggle('active', t===tab);
     document.getElementById(`tab-${t}-btn`).classList.toggle('active', t===tab);
@@ -584,28 +704,25 @@ function switchTab(tab) {
 }
 
 // ── FILTER ──
-function setFilter(f, btn) {
-  activeFilter = f;
+function setFilter(f,btn){
+  activeFilter=f;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderGrid();
 }
 
 // ── JSONBIN ──
-async function loadAssets() {
+async function loadAssets(){
   try {
-    const res = await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
+    const res  = await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
     const data = await res.json();
     assets = Array.isArray(data.assets) ? data.assets
            : Array.isArray(data.videos) ? data.videos.map(v=>({...v,kind:'video'}))
            : [];
     renderGrid();
-  } catch(e) {
-    toast('Gagal memuat data. Cek koneksi.','error');
-    assets=[]; renderGrid();
-  }
+  } catch(e){ toast('Gagal memuat data. Cek koneksi.','error'); assets=[]; renderGrid(); }
 }
-async function saveAssets() {
+async function saveAssets(){
   const res = await fetch(BIN_URL,{
     method:'PUT',
     headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
@@ -615,8 +732,8 @@ async function saveAssets() {
 }
 
 // ── VIDEO HELPERS ──
-function getEmbedUrl(url) {
-  try {
+function getEmbedUrl(url){
+  try{
     const ytM = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
     if(ytM) return `https://www.youtube.com/embed/${ytM[1]}?rel=0&autoplay=1`;
     const ytS = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
@@ -626,336 +743,480 @@ function getEmbedUrl(url) {
     const gdV = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
     if(gdV) return `https://drive.google.com/file/d/${gdV[1]}/preview`;
     return null;
-  } catch(e){ return null; }
+  }catch(e){ return null; }
 }
-function getVideoThumb(url) {
+function getVideoThumb(url){
+  if(!url) return null;
   const ytM = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
   if(ytM) return `https://img.youtube.com/vi/${ytM[1]}/hqdefault.jpg`;
   const ytS = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
   if(ytS) return `https://img.youtube.com/vi/${ytS[1]}/hqdefault.jpg`;
   return null;
 }
-function getSourceType(url) {
+function getSourceType(url){
+  if(!url) return 'local';
   if(url.includes('youtube.com')||url.includes('youtu.be')) return 'yt';
   if(url.includes('drive.google.com')) return 'gd';
+  if(url.startsWith('data:')) return 'local';
   return 'other';
 }
-function getSourceLabel(type) {
-  return type==='yt'?'YouTube':type==='gd'?'Google Drive':'Video';
+function getSourceLabel(type){
+  return type==='yt'?'YouTube':type==='gd'?'Google Drive':type==='local'?'File Lokal':'Video';
 }
 
-// ── EMBED PREVIEW ──
-function previewEmbed() {
+// ── EMBED PREVIEW (add form) ──
+function previewEmbed(){
   const url=document.getElementById('vid-url').value.trim();
   const ep=document.getElementById('embed-preview'), ef=document.getElementById('embed-frame');
   const eu=getEmbedUrl(url);
   if(eu){ ef.src=eu.replace('&autoplay=1',''); ep.classList.add('visible'); }
   else  { ef.src=''; ep.classList.remove('visible'); }
 }
-function clearVideoForm() {
-  ['vid-url','vid-title','vid-desc'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('embed-frame').src='';
-  document.getElementById('embed-preview').classList.remove('visible');
+// ── EMBED PREVIEW (edit modal) ──
+function previewEditEmbed(){
+  const url=document.getElementById('edit-vid-url').value.trim();
+  const ep=document.getElementById('edit-embed-preview'), ef=document.getElementById('edit-embed-frame');
+  const eu=getEmbedUrl(url);
+  if(eu){ ef.src=eu.replace('&autoplay=1',''); ep.classList.add('visible'); }
+  else  { ef.src=''; ep.classList.remove('visible'); }
 }
 
-// ═══════════════════════════════════════════════════
-// ── FOTO: KOMPRESI OTOMATIS ──
-// ═══════════════════════════════════════════════════
+// ── VIDEO MODE TOGGLE ──
+function switchVidMode(mode){
+  vidMode=mode;
+  ['link','file'].forEach(m=>{
+    document.getElementById(`vmode-${m}`).classList.toggle('active',m===mode);
+    document.getElementById(`vmode-${m}-btn`).classList.toggle('active',m===mode);
+  });
+}
 
-/**
- * Kompresi 1 file gambar: resize ke max COMPRESS_MAX_PX px (sisi terpanjang),
- * lalu encode JPEG kualitas COMPRESS_QUALITY.
- * Mengembalikan { data: base64DataURL, compKB: number }
- */
-function compressImage(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Gagal membaca file'));
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onerror = () => reject(new Error('Gambar tidak valid'));
-      img.onload = () => {
-        // Tentukan dimensi output
-        let { width, height } = img;
-        const maxPx = COMPRESS_MAX_PX;
-        if (width > maxPx || height > maxPx) {
-          if (width >= height) { height = Math.round(height * maxPx / width); width = maxPx; }
-          else                 { width = Math.round(width * maxPx / height); height = maxPx; }
+// ── VIDEO FILE DRAG & DROP ──
+function handleVidDragOver(e)  { e.preventDefault(); document.getElementById('vid-upload-zone').classList.add('drag'); }
+function handleVidDragLeave()  { document.getElementById('vid-upload-zone').classList.remove('drag'); }
+function handleVidDrop(e)      { e.preventDefault(); handleVidDragLeave(); processVidFile(e.dataTransfer.files[0]); }
+function handleVidFileSelect(e){ if(e.target.files[0]) processVidFile(e.target.files[0]); document.getElementById('vid-file-input').value=''; }
+
+function processVidFile(file){
+  if(!file) return;
+  const allowed=['video/mp4','video/webm','video/ogg','video/quicktime','video/x-msvideo','video/x-matroska','video/x-flv','video/mpeg'];
+  if(!allowed.includes(file.type) && !file.name.match(/\.(mp4|mov|avi|webm|mkv|flv|mpeg|mpg)$/i)){
+    toast('Format video tidak didukung. Gunakan MP4, MOV, WEBM, AVI, MKV','error'); return;
+  }
+  const sizeKB = Math.round(file.size/1024);
+  if(sizeKB > 8000){ toast('File video terlalu besar (maks ~8MB untuk disimpan online). Gunakan link URL saja.','error'); return; }
+
+  const reader = new FileReader();
+  reader.onload = e2 => {
+    pendingVidFile = { data: e2.target.result, name: file.name, sizeKB, mimeType: file.type||'video/mp4' };
+    // auto-fill judul jika kosong
+    const titleEl = document.getElementById('vid-file-title');
+    if(!titleEl.value.trim()){
+      titleEl.value = file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
+    }
+    // preview
+    const pv = document.getElementById('vid-file-preview');
+    const pvEl = document.getElementById('vid-file-player');
+    pvEl.src = e2.target.result;
+    pv.classList.add('visible');
+    // info
+    const info = document.getElementById('vid-file-info');
+    info.style.display='flex';
+    info.innerHTML=`<span>📄 ${esc(file.name)}</span><span>💾 ${formatKB(sizeKB)}</span><span>🎞️ ${file.type||'video'}</span>`;
+    toast(`Video "${file.name}" siap dipublikasikan`,'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearVideoForm(){
+  ['vid-url','vid-title','vid-desc','vid-file-title','vid-file-desc'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('embed-frame').src='';
+  document.getElementById('embed-preview').classList.remove('visible');
+  document.getElementById('vid-file-preview').classList.remove('visible');
+  document.getElementById('vid-file-player').src='';
+  document.getElementById('vid-file-info').style.display='none';
+  pendingVidFile=null;
+}
+
+// ── KOMPRESI FOTO ──
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error('Gagal membaca file'));
+    reader.onload=e=>{
+      const img=new Image();
+      img.onerror=()=>reject(new Error('Gambar tidak valid'));
+      img.onload=()=>{
+        let {width,height}=img;
+        if(width>COMPRESS_MAX_PX||height>COMPRESS_MAX_PX){
+          if(width>=height){height=Math.round(height*COMPRESS_MAX_PX/width);width=COMPRESS_MAX_PX;}
+          else{width=Math.round(width*COMPRESS_MAX_PX/height);height=COMPRESS_MAX_PX;}
         }
-        const canvas = document.createElement('canvas');
-        canvas.width  = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // Untuk GIF / PNG transparan tetap pakai PNG dengan kualitas lebih rendah
-        const isTransparent = file.type === 'image/gif' || file.type === 'image/png';
+        const canvas=document.createElement('canvas');
+        canvas.width=width; canvas.height=height;
+        canvas.getContext('2d').drawImage(img,0,0,width,height);
+        const isTransp=file.type==='image/gif'||file.type==='image/png';
         let data;
-        if (isTransparent) {
-          // Coba JPEG dulu — jika file asli kecil, tetap PNG
-          const jpegData = canvas.toDataURL('image/jpeg', COMPRESS_QUALITY);
-          const pngData  = canvas.toDataURL('image/png');
-          data = jpegData.length < pngData.length ? jpegData : pngData;
+        if(isTransp){
+          const j=canvas.toDataURL('image/jpeg',COMPRESS_QUALITY);
+          const p=canvas.toDataURL('image/png');
+          data=j.length<p.length?j:p;
         } else {
-          data = canvas.toDataURL('image/jpeg', COMPRESS_QUALITY);
+          data=canvas.toDataURL('image/jpeg',COMPRESS_QUALITY);
         }
-
-        const compKB = Math.round(data.length * 0.75 / 1024); // estimasi bytes
-        resolve({ data, compKB });
+        resolve({data, compKB:Math.round(data.length*0.75/1024)});
       };
-      img.src = e.target.result;
+      img.src=e.target.result;
     };
     reader.readAsDataURL(file);
   });
 }
 
-// ── Drag & Drop ──
+// ── FOTO DRAG & DROP (add form) ──
 function handleDragOver(e)  { e.preventDefault(); document.getElementById('upload-zone').classList.add('drag'); }
 function handleDragLeave()  { document.getElementById('upload-zone').classList.remove('drag'); }
 function handleDrop(e)      { e.preventDefault(); handleDragLeave(); processFiles(e.dataTransfer.files); }
 function handleFileSelect(e){ processFiles(e.target.files); document.getElementById('photo-file-input').value=''; }
 
-async function processFiles(files) {
-  const allowed = ['image/jpeg','image/png','image/webp','image/gif','image/bmp'];
-  const filtered = [...files].filter(f => allowed.includes(f.type));
-  if (!filtered.length) { toast('Pilih file gambar (JPG, PNG, WEBP, GIF)','error'); return; }
-
-  // Tampilkan status kompresi
-  const cs = document.getElementById('compress-status');
-  const ct = document.getElementById('compress-text');
-  cs.style.display = 'flex';
-  ct.textContent   = `Mengompresi ${filtered.length} foto...`;
-
-  let done = 0;
-  const newPhotos = [];
-
-  for (const file of filtered) {
-    try {
-      const origKB = Math.round(file.size / 1024);
-      const { data, compKB } = await compressImage(file);
-      newPhotos.push({ name: file.name, data, origKB, compKB });
+async function processFiles(files){
+  const allowed=['image/jpeg','image/png','image/webp','image/gif','image/bmp'];
+  const filtered=[...files].filter(f=>allowed.includes(f.type));
+  if(!filtered.length){ toast('Pilih file gambar (JPG, PNG, WEBP, GIF)','error'); return; }
+  const cs=document.getElementById('compress-status');
+  const ct=document.getElementById('compress-text');
+  cs.style.display='flex'; ct.textContent=`Mengompresi ${filtered.length} foto...`;
+  let done=0; const newPhotos=[];
+  for(const file of filtered){
+    try{
+      const origKB=Math.round(file.size/1024);
+      const {data,compKB}=await compressImage(file);
+      newPhotos.push({name:file.name,data,origKB,compKB});
       done++;
-      ct.textContent = `Mengompresi foto ${done}/${filtered.length}...`;
-    } catch(err) {
-      toast(`Gagal memproses: ${file.name}`, 'error');
-    }
+      ct.textContent=`Mengompresi foto ${done}/${filtered.length}...`;
+    }catch(err){ toast(`Gagal memproses: ${file.name}`,'error'); }
   }
-
   pendingPhotos.push(...newPhotos);
-  cs.style.display = 'none';
-
-  if (newPhotos.length) {
-    const saved = newPhotos.reduce((s,p)=>s+(p.origKB-p.compKB),0);
-    if (saved > 50) toast(`✓ ${newPhotos.length} foto dikompresi, hemat ~${formatKB(saved)}`,'success');
+  cs.style.display='none';
+  if(newPhotos.length){
+    const saved=newPhotos.reduce((s,p)=>s+(p.origKB-p.compKB),0);
+    if(saved>50) toast(`✓ ${newPhotos.length} foto dikompresi, hemat ~${formatKB(saved)}`,'success');
   }
-
   renderPhotoPreviews();
 }
 
-function totalKB() { return pendingPhotos.reduce((s,p)=>s+p.compKB,0); }
+function totalKB(){ return pendingPhotos.reduce((s,p)=>s+p.compKB,0); }
+function formatKB(kb){ return kb>=1024?(kb/1024).toFixed(1)+' MB':kb+' KB'; }
 
-function formatKB(kb) {
-  return kb >= 1024 ? (kb/1024).toFixed(1)+' MB' : kb+' KB';
-}
-
-function renderPhotoPreviews() {
-  const section = document.getElementById('photo-preview-section');
-  const grid    = document.getElementById('photo-preview-grid');
-  const label   = document.getElementById('photo-count-label');
-  const sizeBadge = document.getElementById('total-size-badge');
-  const note    = document.getElementById('pub-photo-note');
-
-  if (!pendingPhotos.length) {
-    section.style.display = 'none';
-    note.textContent = '';
-    return;
-  }
-
-  section.style.display = 'block';
-  label.textContent = `${pendingPhotos.length} foto dipilih`;
-
-  const total = totalKB();
-  sizeBadge.textContent = `Total: ${formatKB(total)}`;
-  sizeBadge.className   = 'total-size-badge' + (total>LIMIT_KB?' over':total>WARN_KB?' warn':'');
-
-  if (total > LIMIT_KB) {
-    note.textContent = `⚠ Ukuran terlalu besar (${formatKB(total)}). Hapus beberapa foto.`;
-    note.style.color = 'var(--danger)';
-  } else if (total > WARN_KB) {
-    note.textContent = `Ukuran agak besar (${formatKB(total)}), kemungkinan lambat.`;
-    note.style.color = '#ffb347';
-  } else {
-    note.textContent = '';
-  }
-
-  grid.innerHTML = pendingPhotos.map((p,i) => `
+function renderPhotoPreviews(){
+  const section=document.getElementById('photo-preview-section');
+  const grid=document.getElementById('photo-preview-grid');
+  const label=document.getElementById('photo-count-label');
+  const sizeBadge=document.getElementById('total-size-badge');
+  const note=document.getElementById('pub-photo-note');
+  if(!pendingPhotos.length){ section.style.display='none'; note.textContent=''; return; }
+  section.style.display='block';
+  label.textContent=`${pendingPhotos.length} foto dipilih`;
+  const total=totalKB();
+  sizeBadge.textContent=`Total: ${formatKB(total)}`;
+  sizeBadge.className='total-size-badge'+(total>LIMIT_KB?' over':total>WARN_KB?' warn':'');
+  if(total>LIMIT_KB){ note.textContent=`⚠ Ukuran terlalu besar (${formatKB(total)}). Hapus beberapa foto.`; note.style.color='var(--danger)'; }
+  else if(total>WARN_KB){ note.textContent=`Ukuran agak besar (${formatKB(total)}), kemungkinan lambat.`; note.style.color='#ffb347'; }
+  else note.textContent='';
+  grid.innerHTML=pendingPhotos.map((p,i)=>`
     <div class="photo-preview-item">
       <img src="${p.data}" alt="${esc(p.name)}" loading="lazy">
-      <button class="remove-btn" onclick="removePendingPhoto(${i})" title="Hapus foto ini">✕</button>
+      <button class="remove-btn" onclick="removePendingPhoto(${i})">✕</button>
       <div class="size-tag">${formatKB(p.compKB)}</div>
     </div>`).join('');
 }
-
-function removePendingPhoto(i) {
-  pendingPhotos.splice(i, 1);
+function removePendingPhoto(i){ pendingPhotos.splice(i,1); renderPhotoPreviews(); }
+function clearPhotoForm(){
+  document.getElementById('photo-title').value='';
+  document.getElementById('photo-desc').value='';
+  pendingPhotos=[];
   renderPhotoPreviews();
-}
-
-function clearPhotoForm() {
-  document.getElementById('photo-title').value = '';
-  document.getElementById('photo-desc').value  = '';
-  pendingPhotos = [];
-  renderPhotoPreviews();
-  document.getElementById('upload-progress').style.display = 'none';
-  document.getElementById('compress-status').style.display = 'none';
-  document.getElementById('pub-photo-note').textContent    = '';
+  document.getElementById('upload-progress').style.display='none';
+  document.getElementById('compress-status').style.display='none';
+  document.getElementById('pub-photo-note').textContent='';
 }
 
 // ── ADD VIDEO ──
-async function addVideo() {
-  const url  = document.getElementById('vid-url').value.trim();
-  const title= document.getElementById('vid-title').value.trim();
-  const desc = document.getElementById('vid-desc').value;
-  if(!url)              { toast('Masukkan link video','error'); return; }
-  if(!title)            { toast('Masukkan judul video','error'); return; }
-  if(!getEmbedUrl(url)) { toast('Link tidak dikenali. Gunakan YouTube atau Google Drive','error'); return; }
-
-  const btn = document.getElementById('pub-video-btn');
-  btn.disabled=true; btn.textContent='Menyimpan...';
-  try {
-    const entry={id:Date.now(),kind:'video',url,title,desc:desc.trim(),
-      source:getSourceType(url),
-      date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
-    assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
-    toast('Video berhasil dipublikasikan!','success');
-  } catch(e){ assets.shift(); toast('Gagal menyimpan. Coba lagi.','error'); }
-  finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
+async function addVideo(){
+  const btn=document.getElementById('pub-video-btn');
+  if(vidMode==='file'){
+    const title=document.getElementById('vid-file-title').value.trim();
+    const desc =document.getElementById('vid-file-desc').value;
+    if(!title)         { toast('Masukkan judul video','error'); return; }
+    if(!pendingVidFile){ toast('Pilih file video terlebih dahulu','error'); return; }
+    btn.disabled=true; btn.textContent='Menyimpan...';
+    try{
+      const entry={id:Date.now(),kind:'video',url:pendingVidFile.data,title,desc:desc.trim(),
+        source:'local',mimeType:pendingVidFile.mimeType,
+        date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
+      assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
+      toast('Video berhasil dipublikasikan!','success');
+    }catch(e){ assets.shift(); toast('Gagal menyimpan. File mungkin terlalu besar.','error'); }
+    finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
+  } else {
+    const url  =document.getElementById('vid-url').value.trim();
+    const title=document.getElementById('vid-title').value.trim();
+    const desc =document.getElementById('vid-desc').value;
+    if(!url)              { toast('Masukkan link video','error'); return; }
+    if(!title)            { toast('Masukkan judul video','error'); return; }
+    if(!getEmbedUrl(url)) { toast('Link tidak dikenali. Gunakan YouTube atau Google Drive','error'); return; }
+    btn.disabled=true; btn.textContent='Menyimpan...';
+    try{
+      const entry={id:Date.now(),kind:'video',url,title,desc:desc.trim(),
+        source:getSourceType(url),
+        date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
+      assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
+      toast('Video berhasil dipublikasikan!','success');
+    }catch(e){ assets.shift(); toast('Gagal menyimpan. Coba lagi.','error'); }
+    finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
+  }
 }
 
 // ── ADD PHOTOS ──
-async function addPhotos() {
-  const title = document.getElementById('photo-title').value.trim();
-  const desc  = document.getElementById('photo-desc').value;
-
-  if (!title)               { toast('Masukkan judul/nama album','error'); return; }
-  if (!pendingPhotos.length){ toast('Pilih minimal 1 foto terlebih dahulu','error'); return; }
-
-  const total = totalKB();
-  if (total > LIMIT_KB) {
-    toast(`Ukuran terlalu besar (${formatKB(total)}). Hapus beberapa foto dulu.`,'error');
-    return;
-  }
-
-  const btn  = document.getElementById('pub-photo-btn');
-  const prog = document.getElementById('upload-progress');
-  const fill = document.getElementById('upload-progress-fill');
-  const ptxt = document.getElementById('upload-progress-text');
-  const ppct = document.getElementById('upload-progress-pct');
-
-  btn.disabled = true;
-  prog.style.display = 'block';
-  fill.style.width   = '20%';
-  ptxt.textContent   = 'Menyiapkan data...';
-  ppct.textContent   = '';
-
-  try {
-    fill.style.width = '60%';
-    ptxt.textContent = 'Menyimpan ke server...';
-    ppct.textContent = `${pendingPhotos.length} foto · ${formatKB(total)}`;
-
-    const entry = {
-      id: Date.now(), kind: 'photo', title, desc: desc.trim(),
-      photos: pendingPhotos.map(p => p.data),
-      count:  pendingPhotos.length,
-      date: new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})
-    };
-
-    assets.unshift(entry);
-    await saveAssets();
-    renderGrid();
-    clearPhotoForm();
-
-    fill.style.width   = '100%';
-    ptxt.textContent   = 'Selesai!';
-    ppct.textContent   = '';
-    setTimeout(()=>{ prog.style.display='none'; fill.style.width='0%'; }, 1000);
-    toast(`✓ ${entry.count} foto berhasil dipublikasikan!`, 'success');
-
-  } catch(e) {
-    assets.shift();
-    prog.style.display = 'none';
-    fill.style.width   = '0%';
+async function addPhotos(){
+  const title=document.getElementById('photo-title').value.trim();
+  const desc =document.getElementById('photo-desc').value;
+  if(!title)               { toast('Masukkan judul/nama album','error'); return; }
+  if(!pendingPhotos.length){ toast('Pilih minimal 1 foto terlebih dahulu','error'); return; }
+  const total=totalKB();
+  if(total>LIMIT_KB){ toast(`Ukuran terlalu besar (${formatKB(total)}). Hapus beberapa foto dulu.`,'error'); return; }
+  const btn=document.getElementById('pub-photo-btn');
+  const prog=document.getElementById('upload-progress');
+  const fill=document.getElementById('upload-progress-fill');
+  const ptxt=document.getElementById('upload-progress-text');
+  const ppct=document.getElementById('upload-progress-pct');
+  btn.disabled=true; prog.style.display='block';
+  fill.style.width='20%'; ptxt.textContent='Menyiapkan data...'; ppct.textContent='';
+  try{
+    fill.style.width='60%'; ptxt.textContent='Menyimpan ke server...';
+    ppct.textContent=`${pendingPhotos.length} foto · ${formatKB(total)}`;
+    const entry={id:Date.now(),kind:'photo',title,desc:desc.trim(),
+      photos:pendingPhotos.map(p=>p.data),count:pendingPhotos.length,
+      date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
+    assets.unshift(entry); await saveAssets(); renderGrid(); clearPhotoForm();
+    fill.style.width='100%'; ptxt.textContent='Selesai!'; ppct.textContent='';
+    setTimeout(()=>{ prog.style.display='none'; fill.style.width='0%'; },1000);
+    toast(`✓ ${entry.count} foto berhasil dipublikasikan!`,'success');
+  }catch(e){
+    assets.shift(); prog.style.display='none'; fill.style.width='0%';
     toast('Gagal menyimpan. Coba kurangi jumlah/ukuran foto.','error');
-  } finally {
-    btn.disabled     = false;
-    btn.textContent  = '✓ Publikasikan Foto';
-  }
+  }finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Foto'; }
 }
 
 // ── DELETE ──
-async function deleteAsset(id) {
-  const a = assets.find(x=>x.id===id);
-  const label = a?.kind==='photo' ? 'album foto ini' : 'video ini';
-  if (!confirm(`Hapus ${label}?`)) return;
-  const backup = [...assets];
-  assets = assets.filter(v=>v.id!==id);
-  try {
+async function deleteAsset(id){
+  const a=assets.find(x=>x.id===id);
+  const label=a?.kind==='photo'?'album foto ini':'video ini';
+  if(!confirm(`Hapus ${label}?`)) return;
+  const backup=[...assets];
+  assets=assets.filter(v=>v.id!==id);
+  try{
     await saveAssets();
     toast('Asset dihapus','error');
     const onViewer=['player-screen','photo-screen'].some(s=>document.getElementById(s).classList.contains('active'));
     if(onViewer) goGallery(); else renderGrid();
-  } catch(e){ assets=backup; renderGrid(); toast('Gagal menghapus.','error'); }
+  }catch(e){ assets=backup; renderGrid(); toast('Gagal menghapus.','error'); }
 }
 
+// ══════════════════════════════════════════════
+// ── EDIT VIDEO ──
+// ══════════════════════════════════════════════
+function openEditVideo(id){
+  const v=assets.find(x=>x.id===id); if(!v) return;
+  document.getElementById('edit-vid-title').value = v.title||'';
+  document.getElementById('edit-vid-desc').value  = v.desc||'';
+  const urlGrp = document.getElementById('edit-vid-url-group');
+  const ef     = document.getElementById('edit-embed-frame');
+  const ep     = document.getElementById('edit-embed-preview');
+  if(v.source==='local'){
+    // file lokal — tidak bisa edit URL, sembunyikan field URL
+    urlGrp.style.display='none';
+    ef.src=''; ep.classList.remove('visible');
+  } else {
+    urlGrp.style.display='block';
+    document.getElementById('edit-vid-url').value = v.url||'';
+    const eu=getEmbedUrl(v.url||'');
+    if(eu){ ef.src=eu.replace('&autoplay=1',''); ep.classList.add('visible'); }
+    else  { ef.src=''; ep.classList.remove('visible'); }
+  }
+  document.getElementById('save-video-btn').dataset.id = id;
+  openModal('edit-video-modal');
+}
+
+async function saveEditVideo(){
+  const btn  = document.getElementById('save-video-btn');
+  const id   = parseInt(btn.dataset.id);
+  const idx  = assets.findIndex(x=>x.id===id);
+  if(idx<0) return;
+  const title= document.getElementById('edit-vid-title').value.trim();
+  const desc = document.getElementById('edit-vid-desc').value;
+  const v    = assets[idx];
+  if(!title){ toast('Judul tidak boleh kosong','error'); return; }
+  let newUrl = v.url;
+  let newSrc = v.source;
+  if(v.source!=='local'){
+    newUrl = document.getElementById('edit-vid-url').value.trim();
+    if(!newUrl)              { toast('Masukkan link video','error'); return; }
+    if(!getEmbedUrl(newUrl)) { toast('Link tidak dikenali','error'); return; }
+    newSrc = getSourceType(newUrl);
+  }
+  const backup = [...assets];
+  assets[idx] = {...v, title, desc:desc.trim(), url:newUrl, source:newSrc};
+  btn.disabled=true; btn.textContent='Menyimpan...';
+  try{
+    await saveAssets();
+    renderGrid();
+    closeModal('edit-video-modal');
+    // refresh player jika sedang buka
+    if(document.getElementById('player-screen').classList.contains('active')) openPlayer(id);
+    toast('Video berhasil diperbarui!','success');
+  }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan. Coba lagi.','error'); }
+  finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan'; }
+}
+
+// ══════════════════════════════════════════════
+// ── EDIT PHOTO ──
+// ══════════════════════════════════════════════
+function openEditPhoto(id){
+  const a=assets.find(x=>x.id===id); if(!a||a.kind!=='photo') return;
+  document.getElementById('edit-photo-title').value = a.title||'';
+  document.getElementById('edit-photo-desc').value  = a.desc||'';
+  // clone foto ke editPhotos
+  editPhotos = (a.photos||[]).map(src=>({data:src, compKB:Math.round(src.length*0.75/1024)}));
+  document.getElementById('save-photo-btn').dataset.id = id;
+  renderEditPhotoGrid();
+  openModal('edit-photo-modal');
+}
+
+function renderEditPhotoGrid(){
+  const grid=document.getElementById('edit-photo-grid');
+  const count=document.getElementById('edit-photo-count');
+  count.textContent=`${editPhotos.length} foto`;
+  grid.innerHTML = editPhotos.map((p,i)=>`
+    <div class="edit-photo-item">
+      <img src="${p.data}" loading="lazy">
+      <button class="remove-btn" onclick="removeEditPhoto(${i})">✕</button>
+    </div>`).join('')
+  + `<div class="edit-photo-add-zone">
+      <input type="file" accept="image/*" multiple onchange="addMoreEditPhotos(event)">
+      <span style="font-size:1.4rem">＋</span>
+      <span>Tambah</span>
+    </div>`;
+}
+
+function removeEditPhoto(i){
+  if(editPhotos.length<=1 && !confirm('Hapus semua foto? Album akan kosong setelah disimpan.')) return;
+  editPhotos.splice(i,1);
+  renderEditPhotoGrid();
+}
+
+async function addMoreEditPhotos(e){
+  const allowed=['image/jpeg','image/png','image/webp','image/gif','image/bmp'];
+  const files=[...e.target.files].filter(f=>allowed.includes(f.type));
+  e.target.value='';
+  if(!files.length) return;
+  const cs=document.getElementById('edit-compress-status');
+  const ct=document.getElementById('edit-compress-text');
+  cs.style.display='flex'; ct.textContent=`Mengompresi ${files.length} foto...`;
+  let done=0;
+  for(const file of files){
+    try{
+      const {data,compKB}=await compressImage(file);
+      editPhotos.push({data,compKB,_new:true});
+      done++;
+      ct.textContent=`Mengompresi ${done}/${files.length}...`;
+    }catch(err){ toast(`Gagal: ${file.name}`,'error'); }
+  }
+  cs.style.display='none';
+  renderEditPhotoGrid();
+  toast(`+${done} foto ditambahkan`,'success');
+}
+
+async function saveEditPhoto(){
+  const btn  = document.getElementById('save-photo-btn');
+  const id   = parseInt(btn.dataset.id);
+  const idx  = assets.findIndex(x=>x.id===id);
+  if(idx<0) return;
+  const title= document.getElementById('edit-photo-title').value.trim();
+  const desc = document.getElementById('edit-photo-desc').value;
+  if(!title){ toast('Judul tidak boleh kosong','error'); return; }
+  if(!editPhotos.length){ toast('Album tidak boleh kosong','error'); return; }
+  const backup=[...assets];
+  const a=assets[idx];
+  assets[idx]={...a, title, desc:desc.trim(), photos:editPhotos.map(p=>p.data), count:editPhotos.length};
+  btn.disabled=true; btn.textContent='Menyimpan...';
+  try{
+    await saveAssets();
+    renderGrid();
+    closeModal('edit-photo-modal');
+    // refresh photo viewer jika sedang buka
+    if(document.getElementById('photo-screen').classList.contains('active')) openPhotos(id);
+    toast('Album berhasil diperbarui!','success');
+  }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan.','error'); }
+  finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan'; }
+}
+
+// ── MODAL HELPERS ──
+function openModal(id){ document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden'; }
+function closeModal(id){ document.getElementById(id).classList.remove('active'); document.body.style.overflow=''; }
+function closeAllModals(){ document.querySelectorAll('.modal-overlay.active').forEach(m=>{ m.classList.remove('active'); }); document.body.style.overflow=''; }
+function modalBgClick(e,id){ if(e.target===document.getElementById(id)) closeModal(id); }
+
 // ── RENDER GALLERY ──
-function renderGrid() {
-  const grid  = document.getElementById('asset-grid');
-  const badge = document.getElementById('count-badge');
+function renderGrid(){
+  const grid =document.getElementById('asset-grid');
+  const badge=document.getElementById('count-badge');
   const filtered = activeFilter==='all' ? assets
     : assets.filter(a=>(activeFilter==='video'?(a.kind==='video'||!a.kind):(a.kind==='photo')));
-  badge.textContent = assets.length ? `${assets.length} asset` : '';
-
-  if (!filtered.length) {
+  badge.textContent=assets.length?`${assets.length} asset`:'';
+  if(!filtered.length){
     grid.innerHTML=`<div class="empty-state">
       <div class="empty-icon">${activeFilter==='photo'?'🖼️':'🎬'}</div>
       <div class="empty-text">Belum ada ${activeFilter==='photo'?'foto':'asset'}</div>
       <div class="empty-sub">${role==='admin'?'Tambahkan di atas.':'Admin belum menambahkan apapun.'}</div>
     </div>`; return;
   }
-  grid.innerHTML = filtered.map((a,i) =>
-    a.kind==='photo' ? renderPhotoCard(a,i) : renderVideoCard(a,i)
-  ).join('');
+  grid.innerHTML=filtered.map((a,i)=>a.kind==='photo'?renderPhotoCard(a,i):renderVideoCard(a,i)).join('');
 }
 
-function renderVideoCard(v,i) {
-  const thumb   = getVideoThumb(v.url||'');
-  const srcType = v.source||getSourceType(v.url||'');
-  const srcLbl  = getSourceLabel(srcType);
-  const descP   = v.desc ? `<div class="card-desc-preview">${esc(v.desc)}</div>` : '';
+function renderVideoCard(v,i){
+  const thumb  =getVideoThumb(v.url||'');
+  const srcType=v.source||getSourceType(v.url||'');
+  const srcLbl =getSourceLabel(srcType);
+  const descP  =v.desc?`<div class="card-desc-preview">${esc(v.desc)}</div>`:'';
+  const isLocal=srcType==='local';
   return `<div class="asset-card" style="animation-delay:${i*.04}s" onclick="openPlayer(${v.id})">
     <div class="card-thumb">
       ${thumb
-        ? `<img src="${thumb}" alt="${esc(v.title)}" loading="lazy">`
-        : `<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">📁</span><span style="font-size:.75rem">Google Drive</span></div>`}
+        ?`<img src="${thumb}" alt="${esc(v.title)}" loading="lazy">`
+        :isLocal
+          ?`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">🎞️</span><span style="font-size:.72rem">File Lokal</span></div>`
+          :`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">📁</span><span style="font-size:.75rem">Google Drive</span></div>`}
       <span class="card-type-badge src-${srcType}">${srcLbl}</span>
       <div class="card-play-overlay"><div class="play-circle">▶</div></div>
     </div>
     <div class="card-body">
       <div class="card-title" title="${esc(v.title)}">${esc(v.title)}</div>
       <div class="card-meta">${v.date}</div>${descP}
-      ${role==='admin'?`<div class="card-admin-actions"><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteAsset(${v.id})">🗑 Hapus</button></div>`:''}
+      ${role==='admin'?`<div class="card-admin-actions">
+        <button class="btn btn-edit btn-sm" onclick="event.stopPropagation();openEditVideo(${v.id})">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteAsset(${v.id})">🗑 Hapus</button>
+      </div>`:''}
     </div>
   </div>`;
 }
 
-function renderPhotoCard(a,i) {
-  const cover = a.photos && a.photos[0] ? a.photos[0] : '';
-  const descP = a.desc ? `<div class="card-desc-preview">${esc(a.desc)}</div>` : '';
+function renderPhotoCard(a,i){
+  const cover=a.photos&&a.photos[0]?a.photos[0]:'';
+  const descP=a.desc?`<div class="card-desc-preview">${esc(a.desc)}</div>`:'';
   return `<div class="asset-card" style="animation-delay:${i*.04}s" onclick="openPhotos(${a.id})">
     <div class="card-thumb">
       ${cover
-        ? `<img src="${cover}" alt="${esc(a.title)}" loading="lazy">`
-        : `<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">🖼️</span></div>`}
+        ?`<img src="${cover}" alt="${esc(a.title)}" loading="lazy">`
+        :`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">🖼️</span></div>`}
       <span class="card-type-badge type-photo">Foto</span>
       ${a.count>1?`<span class="photo-stack-badge">📷 ${a.count}</span>`:''}
       <div class="card-play-overlay"><div class="play-circle">🔍</div></div>
@@ -963,98 +1224,107 @@ function renderPhotoCard(a,i) {
     <div class="card-body">
       <div class="card-title" title="${esc(a.title)}">${esc(a.title)}</div>
       <div class="card-meta">${a.date} · ${a.count} foto</div>${descP}
-      ${role==='admin'?`<div class="card-admin-actions"><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteAsset(${a.id})">🗑 Hapus</button></div>`:''}
+      ${role==='admin'?`<div class="card-admin-actions">
+        <button class="btn btn-edit btn-sm" onclick="event.stopPropagation();openEditPhoto(${a.id})">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();deleteAsset(${a.id})">🗑 Hapus</button>
+      </div>`:''}
     </div>
   </div>`;
 }
 
 // ── OPEN VIDEO PLAYER ──
-function openPlayer(id) {
-  const v = assets.find(x=>x.id===id); if(!v) return;
-  const eu = getEmbedUrl(v.url||'');
-  if(!eu){ toast('Link tidak dapat diputar','error'); return; }
-  currentAssetId = id;
-  const srcType = v.source||getSourceType(v.url||'');
-  document.getElementById('player-iframe').src = eu;
-  document.getElementById('player-breadcrumb-title').textContent = v.title;
-  document.getElementById('player-title').textContent = v.title;
-  document.getElementById('player-date').textContent  = v.date;
-  const badge = document.getElementById('player-source-badge');
-  badge.className  = `card-type-badge src-${srcType}`; badge.style.position='static';
-  badge.textContent = getSourceLabel(srcType);
-  const dw = document.getElementById('player-desc-wrap');
-  dw.innerHTML = v.desc && v.desc.trim()
-    ? `<div class="player-desc">${escHtml(v.desc)}</div>`
-    : `<div class="player-no-desc">Tidak ada deskripsi.</div>`;
-  const ab = document.getElementById('player-admin-bar');
-  if(role==='admin'){ ab.style.display='flex'; document.getElementById('player-delete-btn').onclick=()=>deleteAsset(id); }
-  else ab.style.display='none';
+function openPlayer(id){
+  const v=assets.find(x=>x.id===id); if(!v) return;
+  currentAssetId=id;
+  const box=document.getElementById('player-video-box');
+  const srcType=v.source||getSourceType(v.url||'');
+  if(srcType==='local'){
+    // file lokal — pakai <video>
+    const mime=v.mimeType||'video/mp4';
+    box.innerHTML=`<video controls autoplay style="width:100%;height:100%;border:none;display:block"><source src="${v.url}" type="${mime}">Browser tidak mendukung tag video.</video>`;
+  } else {
+    const eu=getEmbedUrl(v.url||'');
+    if(!eu){ toast('Link tidak dapat diputar','error'); return; }
+    box.innerHTML=`<iframe src="${eu}" allowfullscreen style="width:100%;height:100%;border:none;display:block"></iframe>`;
+  }
+  document.getElementById('player-breadcrumb-title').textContent=v.title;
+  document.getElementById('player-title').textContent=v.title;
+  document.getElementById('player-date').textContent =v.date;
+  const badge=document.getElementById('player-source-badge');
+  badge.className=`card-type-badge src-${srcType}`; badge.style.position='static';
+  badge.textContent=getSourceLabel(srcType);
+  const dw=document.getElementById('player-desc-wrap');
+  dw.innerHTML=v.desc&&v.desc.trim()
+    ?`<div class="player-desc">${escHtml(v.desc)}</div>`
+    :`<div class="player-no-desc">Tidak ada deskripsi.</div>`;
+  const ab=document.getElementById('player-admin-bar');
+  if(role==='admin'){
+    ab.style.display='flex';
+    document.getElementById('player-edit-btn').onclick  =()=>openEditVideo(id);
+    document.getElementById('player-delete-btn').onclick=()=>deleteAsset(id);
+  } else ab.style.display='none';
   showScreen('player-screen');
 }
 
 // ── OPEN PHOTO VIEWER ──
-function openPhotos(id) {
-  const a = assets.find(x=>x.id===id); if(!a||a.kind!=='photo') return;
-  currentAssetId = id;
-  document.getElementById('photo-breadcrumb-title').textContent = a.title;
-  document.getElementById('photo-view-title').textContent = a.title;
-  document.getElementById('photo-view-date').textContent  = a.date;
-  document.getElementById('photo-view-count').textContent = `${a.count} foto dalam album ini`;
-  const descEl = document.getElementById('photo-view-desc');
-  descEl.style.display = a.desc&&a.desc.trim() ? 'block' : 'none';
-  descEl.textContent   = a.desc||'';
-
-  const mg = document.getElementById('photos-grid');
-  mg.innerHTML = (a.photos||[]).map((src,i)=>`
+function openPhotos(id){
+  const a=assets.find(x=>x.id===id); if(!a||a.kind!=='photo') return;
+  currentAssetId=id;
+  document.getElementById('photo-breadcrumb-title').textContent=a.title;
+  document.getElementById('photo-view-title').textContent=a.title;
+  document.getElementById('photo-view-date').textContent =a.date;
+  document.getElementById('photo-view-count').textContent=`${a.count} foto dalam album ini`;
+  const descEl=document.getElementById('photo-view-desc');
+  descEl.style.display=a.desc&&a.desc.trim()?'block':'none';
+  descEl.textContent=a.desc||'';
+  document.getElementById('photos-grid').innerHTML=(a.photos||[]).map((src,i)=>`
     <div class="photo-item" onclick="openLightbox(${id},${i})">
       <img src="${src}" alt="Foto ${i+1}" loading="lazy">
       <div class="photo-item-overlay">🔍</div>
     </div>`).join('');
-
-  const ar = document.getElementById('photo-admin-row');
-  if(role==='admin'){ ar.style.display='flex'; document.getElementById('photo-delete-btn').onclick=()=>deleteAsset(id); }
-  else ar.style.display='none';
+  const ar=document.getElementById('photo-admin-row');
+  if(role==='admin'){
+    ar.style.display='flex';
+    document.getElementById('photo-edit-btn').onclick  =()=>openEditPhoto(id);
+    document.getElementById('photo-delete-btn').onclick=()=>deleteAsset(id);
+  } else ar.style.display='none';
   showScreen('photo-screen');
 }
 
 // ── LIGHTBOX ──
-function openLightbox(albumId, idx) {
-  const a = assets.find(x=>x.id===albumId); if(!a) return;
-  lightboxPhotos = a.photos||[];
-  lightboxIndex  = idx;
+function openLightbox(albumId,idx){
+  const a=assets.find(x=>x.id===albumId); if(!a) return;
+  lightboxPhotos=a.photos||[]; lightboxIndex=idx;
   updateLightboxImg();
   document.getElementById('lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
-function updateLightboxImg() {
-  document.getElementById('lightbox-img').src = lightboxPhotos[lightboxIndex]||'';
-  document.getElementById('lightbox-counter').textContent = `${lightboxIndex+1} / ${lightboxPhotos.length}`;
-  const showNav = lightboxPhotos.length > 1;
-  document.querySelector('.lightbox-nav.prev').style.display = showNav ? 'flex' : 'none';
-  document.querySelector('.lightbox-nav.next').style.display = showNav ? 'flex' : 'none';
+function updateLightboxImg(){
+  document.getElementById('lightbox-img').src=lightboxPhotos[lightboxIndex]||'';
+  document.getElementById('lightbox-counter').textContent=`${lightboxIndex+1} / ${lightboxPhotos.length}`;
+  const show=lightboxPhotos.length>1;
+  document.querySelector('.lightbox-nav.prev').style.display=show?'flex':'none';
+  document.querySelector('.lightbox-nav.next').style.display=show?'flex':'none';
 }
-function lightboxNav(dir) {
-  lightboxIndex = (lightboxIndex+dir+lightboxPhotos.length) % lightboxPhotos.length;
-  updateLightboxImg();
-}
-function closeLightbox() {
+function lightboxNav(dir){ lightboxIndex=(lightboxIndex+dir+lightboxPhotos.length)%lightboxPhotos.length; updateLightboxImg(); }
+function closeLightbox(){
   document.getElementById('lightbox').classList.remove('active');
-  document.getElementById('lightbox-img').src = '';
-  document.body.style.overflow = '';
+  document.getElementById('lightbox-img').src='';
+  document.body.style.overflow='';
 }
-function lightboxBgClick(e) { if(e.target===document.getElementById('lightbox')) closeLightbox(); }
+function lightboxBgClick(e){ if(e.target===document.getElementById('lightbox')) closeLightbox(); }
 
 // ── UTILS ──
-function esc(s)     { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+function esc(s)    { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
 
 // ── TOAST ──
-function toast(msg, type='success') {
+function toast(msg,type='success'){
   const c=document.getElementById('tc'), t=document.createElement('div');
-  t.className = `toast ${type}`;
-  t.innerHTML = `<span class="ti">${type==='success'?'✓':type==='info'?'ℹ':'✕'}</span>${msg}`;
+  t.className=`toast ${type}`;
+  t.innerHTML=`<span class="ti">${type==='success'?'✓':type==='info'?'ℹ':'✕'}</span>${msg}`;
   c.appendChild(t);
-  setTimeout(()=>{ t.style.cssText='opacity:0;transform:translateX(16px);transition:all .3s'; setTimeout(()=>t.remove(),320); }, 3500);
+  setTimeout(()=>{ t.style.cssText='opacity:0;transform:translateX(16px);transition:all .3s'; setTimeout(()=>t.remove(),320); },3500);
 }
 </script>
 </body>
