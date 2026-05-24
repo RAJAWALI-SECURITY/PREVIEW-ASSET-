@@ -151,8 +151,39 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .upload-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px;transition:width .35s ease;}
 .upload-progress-text{font-size:.74rem;color:var(--muted);margin-top:.4rem;display:flex;align-items:center;justify-content:space-between;}
 
-/* VIDEO FILE PREVIEW */
-.vid-file-preview{margin-top:1rem;border-radius:10px;overflow:hidden;background:#000;display:none;}
+/* ── THUMBNAIL PICKER ── */
+.thumb-picker{margin-top:1rem;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+.thumb-picker-label{font-size:.73rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.thumb-picker-label span{color:var(--accent);}
+.thumb-mode-bar{display:flex;gap:.4rem;margin-bottom:.85rem;}
+.thumb-mode-btn{flex:1;padding:.38rem .5rem;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.74rem;font-weight:600;border-radius:6px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.3rem;border:1px solid transparent;}
+.thumb-mode-btn.active{background:var(--surface2);color:var(--text);border-color:var(--border);}
+.thumb-mode-btn:hover:not(.active){color:var(--text);}
+.thumb-panel{display:none;}
+.thumb-panel.active{display:block;}
+/* Upload foto thumbnail */
+.thumb-upload-zone{border:2px dashed var(--border);border-radius:10px;padding:1.25rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:transparent;}
+.thumb-upload-zone:hover{border-color:var(--accent);background:rgba(232,255,71,.04);}
+.thumb-upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.thumb-upload-zone .upload-text{font-size:.82rem;}
+/* Frame picker */
+.frame-picker-wrap{position:relative;}
+.frame-video-hidden{width:100%;border-radius:8px;background:#000;display:none;max-height:200px;}
+.frame-video-hidden.show{display:block;}
+.frame-controls{display:flex;align-items:center;gap:.6rem;margin-top:.65rem;flex-wrap:wrap;}
+.frame-slider{flex:1;min-width:120px;accent-color:var(--accent);cursor:pointer;}
+.frame-time-label{font-size:.72rem;color:var(--muted);min-width:42px;text-align:center;}
+.btn-capture{font-family:'DM Sans',sans-serif;font-size:.74rem;font-weight:700;padding:.38rem .9rem;border-radius:7px;border:none;cursor:pointer;background:var(--accent);color:#08080f;transition:all .2s;display:flex;align-items:center;gap:.3rem;}
+.btn-capture:hover{background:#d4eb30;}
+.btn-capture:disabled{opacity:.5;cursor:not-allowed;}
+/* Thumbnail preview */
+.thumb-preview-wrap{margin-top:.75rem;display:none;}
+.thumb-preview-wrap.show{display:block;}
+.thumb-preview-box{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--bg);border:1px solid rgba(232,255,71,.3);}
+.thumb-preview-box img{width:100%;height:100%;object-fit:cover;display:block;}
+.thumb-preview-remove{position:absolute;top:.5rem;right:.5rem;width:26px;height:26px;border-radius:50%;background:rgba(255,77,109,.9);border:none;color:#fff;font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.thumb-preview-label{font-size:.7rem;color:var(--success);margin-top:.4rem;display:flex;align-items:center;gap:.3rem;}
+.thumb-no-video-note{font-size:.78rem;color:var(--muted);padding:.6rem;background:rgba(90,90,114,.08);border-radius:8px;text-align:center;}
 .vid-file-preview video{width:100%;display:block;max-height:280px;}
 .vid-file-preview.visible{display:block;}
 .vid-file-info{font-size:.76rem;color:var(--muted);margin-top:.4rem;display:flex;gap:1rem;flex-wrap:wrap;}
@@ -385,6 +416,27 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
             <label class="form-label">Harga (opsional)</label>
             <input class="form-input" id="vid-price" type="text" placeholder="Contoh: Rp 150.000 atau kosongkan jika tidak ada harga">
           </div>
+          <!-- THUMBNAIL PICKER: link mode -->
+          <div class="thumb-picker" id="thumb-picker-link">
+            <div class="thumb-picker-label">🖼 Custom Thumbnail <span>(opsional)</span></div>
+            <div class="thumb-mode-bar">
+              <button class="thumb-mode-btn active" onclick="switchThumbMode('link','upload')">📁 Upload Foto</button>
+            </div>
+            <div class="thumb-panel active" id="thumb-link-upload">
+              <div class="thumb-upload-zone" id="thumb-link-zone">
+                <input type="file" id="thumb-link-input" accept="image/*" onchange="handleThumbUpload(event,'link')">
+                <div class="upload-text"><strong>Klik pilih gambar thumbnail</strong></div>
+                <div class="upload-hint">JPG · PNG · WEBP — Rasio 16:9 direkomendasikan</div>
+              </div>
+            </div>
+            <div class="thumb-preview-wrap" id="thumb-link-preview">
+              <div class="thumb-preview-box">
+                <img id="thumb-link-img" src="" alt="Thumbnail">
+                <button class="thumb-preview-remove" onclick="clearThumb('link')">✕</button>
+              </div>
+              <div class="thumb-preview-label">✓ Thumbnail siap diupload ke Cloudinary</div>
+            </div>
+          </div>
           <div class="embed-preview" id="embed-preview"><iframe id="embed-frame" allowfullscreen></iframe></div>
         </div>
 
@@ -413,6 +465,41 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
             <video id="vid-file-player" controls></video>
           </div>
           <div class="vid-file-info" id="vid-file-info" style="display:none"></div>
+          <!-- THUMBNAIL PICKER: file mode -->
+          <div class="thumb-picker" id="thumb-picker-file">
+            <div class="thumb-picker-label">🖼 Custom Thumbnail <span>(opsional)</span></div>
+            <div class="thumb-mode-bar">
+              <button class="thumb-mode-btn active" id="tmode-file-upload-btn" onclick="switchThumbMode('file','upload')">📁 Upload Foto</button>
+              <button class="thumb-mode-btn" id="tmode-file-frame-btn" onclick="switchThumbMode('file','frame')">🎬 Ambil dari Video</button>
+            </div>
+            <!-- Upload foto -->
+            <div class="thumb-panel active" id="thumb-file-upload">
+              <div class="thumb-upload-zone" id="thumb-file-zone">
+                <input type="file" id="thumb-file-input" accept="image/*" onchange="handleThumbUpload(event,'file')">
+                <div class="upload-text"><strong>Klik pilih gambar thumbnail</strong></div>
+                <div class="upload-hint">JPG · PNG · WEBP — Rasio 16:9 direkomendasikan</div>
+              </div>
+            </div>
+            <!-- Ambil frame video -->
+            <div class="thumb-panel" id="thumb-file-frame">
+              <div id="thumb-no-video-note" class="thumb-no-video-note">⬆ Upload video terlebih dahulu untuk bisa ambil frame</div>
+              <div class="frame-picker-wrap" id="frame-picker-wrap" style="display:none">
+                <video id="frame-video" class="frame-video-hidden show" muted playsinline preload="metadata"></video>
+                <div class="frame-controls">
+                  <span class="frame-time-label" id="frame-time-label">0:00</span>
+                  <input type="range" class="frame-slider" id="frame-slider" min="0" max="100" value="0" step="0.1" oninput="scrubFrame(this.value)">
+                  <button class="btn-capture" onclick="captureFrame()">📸 Ambil Frame Ini</button>
+                </div>
+              </div>
+            </div>
+            <div class="thumb-preview-wrap" id="thumb-file-preview">
+              <div class="thumb-preview-box">
+                <img id="thumb-file-img" src="" alt="Thumbnail">
+                <button class="thumb-preview-remove" onclick="clearThumb('file')">✕</button>
+              </div>
+              <div class="thumb-preview-label">✓ Thumbnail siap diupload ke Cloudinary</div>
+            </div>
+          </div>
           <div class="cld-progress-wrap" id="vid-cld-progress">
             <div class="cld-progress-bar"><div class="cld-progress-fill" id="vid-cld-fill"></div></div>
             <div class="cld-progress-text">
@@ -583,6 +670,27 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
       <label class="form-label">Harga (opsional)</label>
       <input class="form-input" id="edit-vid-price" type="text" placeholder="Contoh: Rp 150.000 atau kosongkan jika tidak ada harga">
     </div>
+    <!-- THUMBNAIL PICKER: edit modal -->
+    <div class="thumb-picker" style="margin-top:0">
+      <div class="thumb-picker-label">🖼 Custom Thumbnail <span>(opsional)</span></div>
+      <div class="thumb-mode-bar">
+        <button class="thumb-mode-btn active" onclick="switchThumbMode('edit','upload')">📁 Upload Foto</button>
+      </div>
+      <div class="thumb-panel active" id="thumb-edit-upload">
+        <div class="thumb-upload-zone" id="thumb-edit-zone">
+          <input type="file" id="thumb-edit-input" accept="image/*" onchange="handleThumbUpload(event,'edit')">
+          <div class="upload-text"><strong>Klik pilih gambar thumbnail baru</strong></div>
+          <div class="upload-hint">JPG · PNG · WEBP — Rasio 16:9 direkomendasikan</div>
+        </div>
+      </div>
+      <div class="thumb-preview-wrap" id="thumb-edit-preview">
+        <div class="thumb-preview-box">
+          <img id="thumb-edit-img" src="" alt="Thumbnail">
+          <button class="thumb-preview-remove" onclick="clearThumb('edit')">✕</button>
+        </div>
+        <div class="thumb-preview-label" id="thumb-edit-label">✓ Thumbnail siap diupload ke Cloudinary</div>
+      </div>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-accent" id="save-video-btn" onclick="saveEditVideo()">💾 Simpan Perubahan</button>
       <button class="btn btn-ghost" onclick="closeModal('edit-video-modal')">Batal</button>
@@ -649,6 +757,10 @@ let lightboxIndex  = 0;
 let currentAssetId = null;
 let vidMode        = 'link';
 let pendingVidFile = null; // {file, localUrl, name, sizeKB}
+// ── THUMBNAIL STATE ──
+// pendingThumb[mode] = {file, localUrl, isCapture}
+// mode: 'link' | 'file' | 'edit'
+const pendingThumb = { link: null, file: null, edit: null };
 
 // ── BOOT ──
 window.onload = () => {
@@ -810,6 +922,7 @@ function getEmbedUrl(url){
 }
 function getVideoThumb(v){
   if(!v) return null;
+  // Custom thumbnail selalu prioritas utama
   if(v.thumbnailUrl) return v.thumbnailUrl;
   const url=v.url||'';
   const ytM=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
@@ -880,6 +993,8 @@ function processVidFile(file){
   info.innerHTML=`<span>📄 ${esc(file.name)}</span><span>💾 ${formatKB(sizeKB)}</span><span>☁️ Siap diupload ke Cloudinary</span>`;
   document.getElementById('vid-cld-progress').style.display='none';
   document.getElementById('vid-cld-fill').style.width='0%';
+  // Setup frame picker
+  setupFramePicker(localUrl);
   toast(`Video "${file.name}" siap diupload`,'success');
 }
 
@@ -893,6 +1008,9 @@ function clearVideoForm(){
   document.getElementById('vid-cld-progress').style.display='none';
   if(pendingVidFile?.localUrl) URL.revokeObjectURL(pendingVidFile.localUrl);
   pendingVidFile=null;
+  // clear thumbnails
+  clearThumb('link'); clearThumb('file');
+  setupFramePicker(null);
 }
 
 // ── FOTO DRAG & DROP ──
@@ -953,6 +1071,118 @@ function clearPhotoForm(){
   document.getElementById('pub-photo-note').textContent='';
 }
 
+// ══════════════════════════════════════════════
+// ── THUMBNAIL PICKER LOGIC ──
+// ══════════════════════════════════════════════
+
+function switchThumbMode(ctx, mode){
+  // ctx: 'link' | 'file' | 'edit'
+  // mode: 'upload' | 'frame'
+  const panels = ['upload','frame'];
+  panels.forEach(p=>{
+    const el = document.getElementById(`thumb-${ctx}-${p}`);
+    const btn = document.getElementById(`tmode-${ctx}-${p}-btn`);
+    if(el) el.classList.toggle('active', p===mode);
+    if(btn) btn.classList.toggle('active', p===mode);
+  });
+}
+
+function handleThumbUpload(e, ctx){
+  const file = e.target.files[0]; e.target.value='';
+  if(!file) return;
+  if(pendingThumb[ctx]?.localUrl) URL.revokeObjectURL(pendingThumb[ctx].localUrl);
+  const localUrl = URL.createObjectURL(file);
+  pendingThumb[ctx] = {file, localUrl, isCapture: false};
+  showThumbPreview(ctx, localUrl);
+  toast('Thumbnail dipilih','success');
+}
+
+function showThumbPreview(ctx, src){
+  const wrap = document.getElementById(`thumb-${ctx}-preview`);
+  const img  = document.getElementById(`thumb-${ctx}-img`);
+  if(!wrap || !img) return;
+  img.src = src;
+  wrap.classList.add('show');
+  // sembunyikan zone upload
+  const zone = document.getElementById(`thumb-${ctx}-zone`);
+  if(zone) zone.style.display='none';
+}
+
+function clearThumb(ctx){
+  if(pendingThumb[ctx]?.localUrl && pendingThumb[ctx].isCapture) URL.revokeObjectURL(pendingThumb[ctx].localUrl);
+  pendingThumb[ctx] = null;
+  const wrap = document.getElementById(`thumb-${ctx}-preview`);
+  const img  = document.getElementById(`thumb-${ctx}-img`);
+  if(wrap) wrap.classList.remove('show');
+  if(img)  img.src='';
+  const zone = document.getElementById(`thumb-${ctx}-zone`);
+  if(zone) zone.style.display='';
+  // reset input file
+  const inp = document.getElementById(`thumb-${ctx}-input`);
+  if(inp) inp.value='';
+}
+
+// ── FRAME CAPTURE ──
+function setupFramePicker(videoSrc){
+  const noVid = document.getElementById('thumb-no-video-note');
+  const wrap  = document.getElementById('frame-picker-wrap');
+  const fvid  = document.getElementById('frame-video');
+  const slider= document.getElementById('frame-slider');
+  if(!videoSrc){ noVid.style.display='block'; wrap.style.display='none'; return; }
+  noVid.style.display='none'; wrap.style.display='block';
+  fvid.src = videoSrc;
+  fvid.load();
+  fvid.addEventListener('loadedmetadata', ()=>{
+    slider.max = fvid.duration || 100;
+    slider.value = 0;
+    fvid.currentTime = 0;
+    updateFrameTimeLabel(0);
+  }, {once:true});
+}
+
+function scrubFrame(val){
+  const fvid = document.getElementById('frame-video');
+  if(fvid.readyState >= 1){
+    fvid.currentTime = parseFloat(val);
+    updateFrameTimeLabel(parseFloat(val));
+  }
+}
+function updateFrameTimeLabel(sec){
+  const m = Math.floor(sec/60), s = Math.floor(sec%60);
+  document.getElementById('frame-time-label').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+function captureFrame(){
+  const fvid = document.getElementById('frame-video');
+  if(!fvid.src || fvid.readyState < 2){ toast('Video belum siap','error'); return; }
+  const canvas = document.createElement('canvas');
+  canvas.width  = fvid.videoWidth  || 1280;
+  canvas.height = fvid.videoHeight || 720;
+  canvas.getContext('2d').drawImage(fvid, 0, 0, canvas.width, canvas.height);
+  canvas.toBlob(blob=>{
+    if(!blob){ toast('Gagal menangkap frame','error'); return; }
+    if(pendingThumb.file?.isCapture && pendingThumb.file?.localUrl) URL.revokeObjectURL(pendingThumb.file.localUrl);
+    const localUrl = URL.createObjectURL(blob);
+    const file = new File([blob], 'thumbnail-frame.jpg', {type:'image/jpeg'});
+    pendingThumb.file = {file, localUrl, isCapture: true};
+    showThumbPreview('file', localUrl);
+    toast('Frame berhasil diambil sebagai thumbnail!','success');
+  }, 'image/jpeg', 0.92);
+}
+
+// ── UPLOAD THUMBNAIL ke Cloudinary & return URL ──
+async function uploadThumbIfNeeded(ctx){
+  const t = pendingThumb[ctx];
+  if(!t || !t.file) return null;
+  try{
+    const result = await uploadToCloudinary(t.file, 'image', null);
+    return result.url;
+  }catch(e){
+    toast('Gagal upload thumbnail: '+e.message,'error');
+    return null;
+  }
+}
+
 // ── ADD VIDEO ──
 async function addVideo(){
   const btn=document.getElementById('pub-video-btn');
@@ -972,13 +1202,21 @@ async function addVideo(){
     status.textContent='Mengupload video ke Cloudinary...';
 
     try{
+      // Upload thumbnail dulu jika ada
+      let customThumbUrl = null;
+      if(pendingThumb.file){
+        status.textContent='Mengupload thumbnail...';
+        customThumbUrl = await uploadThumbIfNeeded('file');
+      }
+      status.textContent='Mengupload video ke Cloudinary...';
       const result=await uploadToCloudinary(pendingVidFile.file,'video', p=>{
         fill.style.width=p+'%'; pct.textContent=p+'%';
       });
       fill.style.width='100%'; status.textContent='✓ Upload selesai, menyimpan metadata...'; pct.textContent='100%';
 
       const entry={id:Date.now(),kind:'video',url:result.url,publicId:result.publicId,
-        thumbnailUrl:result.thumbnailUrl,source:'cld',title,desc:desc.trim(),
+        thumbnailUrl: customThumbUrl || result.thumbnailUrl,
+        source:'cld',title,desc:desc.trim(),
         price:document.getElementById('vid-file-price').value.trim(),
         date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
       assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
@@ -997,8 +1235,11 @@ async function addVideo(){
     if(!getEmbedUrl(url)) { toast('Link tidak dikenali. Gunakan YouTube atau Google Drive','error'); return; }
     btn.disabled=true; btn.textContent='Menyimpan...';
     try{
+      // Upload custom thumbnail jika ada
+      const customThumbUrl = pendingThumb.link ? await uploadThumbIfNeeded('link') : null;
       const entry={id:Date.now(),kind:'video',url,title,desc:desc.trim(),
         price:document.getElementById('vid-price').value.trim(),
+        thumbnailUrl: customThumbUrl || null,
         source:getSourceType(url,''),
         date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
       assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
@@ -1073,6 +1314,22 @@ function openEditVideo(id){
   document.getElementById('edit-vid-title').value=v.title||'';
   document.getElementById('edit-vid-desc').value=v.desc||'';
   document.getElementById('edit-vid-price').value=v.price||'';
+  // Reset & show existing thumbnail
+  clearThumb('edit');
+  pendingThumb.edit = null;
+  const editPreview = document.getElementById('thumb-edit-preview');
+  const editImg     = document.getElementById('thumb-edit-img');
+  const editLabel   = document.getElementById('thumb-edit-label');
+  const editZone    = document.getElementById('thumb-edit-zone');
+  if(v.thumbnailUrl){
+    editImg.src = v.thumbnailUrl;
+    editPreview.classList.add('show');
+    editZone.style.display='none';
+    if(editLabel) editLabel.textContent='Thumbnail saat ini (upload baru untuk mengganti)';
+  } else {
+    editPreview.classList.remove('show');
+    editZone.style.display='';
+  }
   const urlGrp=document.getElementById('edit-vid-url-group');
   const ef=document.getElementById('edit-embed-frame'),ep=document.getElementById('edit-embed-preview');
   if(v.source==='cld'){
@@ -1103,11 +1360,19 @@ async function saveEditVideo(){
     newSrc=getSourceType(newUrl,'');
   }
   const backup=[...assets];
-  assets[idx]={...v,title,desc:desc.trim(),url:newUrl,source:newSrc,
-    price:document.getElementById('edit-vid-price').value.trim()};
   btn.disabled=true; btn.textContent='Menyimpan...';
   try{
+    // Upload thumbnail baru jika ada
+    let newThumbUrl = v.thumbnailUrl || null;
+    if(pendingThumb.edit?.file){
+      const uploaded = await uploadThumbIfNeeded('edit');
+      if(uploaded) newThumbUrl = uploaded;
+    }
+    assets[idx]={...v,title,desc:desc.trim(),url:newUrl,source:newSrc,
+      price:document.getElementById('edit-vid-price').value.trim(),
+      thumbnailUrl: newThumbUrl};
     await saveAssets(); renderGrid(); closeModal('edit-video-modal');
+    clearThumb('edit');
     if(document.getElementById('player-screen').classList.contains('active')) openPlayer(id);
     toast('Video berhasil diperbarui!','success');
   }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan.','error'); }
