@@ -16,13 +16,11 @@ html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.5;}
 
-/* ── SCREENS ── */
 .screen{display:none;}
 .screen.active{display:block;animation:fadeS .35s ease;}
 #splash-screen.active,#admin-login-screen.active{display:flex;}
 @keyframes fadeS{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── SPLASH ── */
 #splash-screen{min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:2rem;position:relative;overflow:hidden;}
 .blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;}
 .blob-1{width:500px;height:500px;background:var(--accent2);opacity:.12;top:-120px;left:-120px;}
@@ -49,7 +47,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .divider-or{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--surface2);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--muted);z-index:2;}
 @media(max-width:520px){.divider-or{display:none;}}
 
-/* ── ADMIN LOGIN ── */
 #admin-login-screen{min-height:100vh;align-items:center;justify-content:center;padding:2rem;}
 .login-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2.5rem;position:relative;overflow:hidden;}
 .login-card::before{content:'';position:absolute;top:-60px;left:-60px;width:180px;height:180px;background:var(--accent2);border-radius:50%;filter:blur(80px);opacity:.28;}
@@ -64,7 +61,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .form-input::placeholder{color:var(--muted);}
 .login-error{background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);border-radius:8px;padding:.6rem 1rem;font-size:.84rem;color:var(--danger);margin-bottom:1rem;display:none;}
 
-/* ── BUTTONS ── */
 .btn{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;padding:.6rem 1.4rem;border-radius:9px;border:none;cursor:pointer;transition:all .2s;letter-spacing:.02em;}
 .btn-accent{background:var(--accent);color:#08080f;font-weight:800;}
 .btn-accent:hover{background:#d4eb30;transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,255,71,.3);}
@@ -78,7 +74,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .btn-full{width:100%;padding:.85rem;font-size:.95rem;border-radius:10px;}
 .btn-sm{font-size:.74rem;padding:.32rem .7rem;border-radius:6px;}
 
-/* ── NAVBAR ── */
 nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(8,8,16,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
 .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;cursor:pointer;}
 .logo span{color:var(--text);}
@@ -87,14 +82,12 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .pill-admin{background:rgba(123,92,250,.18);color:var(--accent2);border:1px solid rgba(123,92,250,.3);}
 .pill-viewer{background:rgba(71,255,178,.1);color:var(--success);border:1px solid rgba(71,255,178,.25);}
 
-/* ── GALLERY ── */
 #main-screen{padding:2.5rem;}
 .page-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
 .page-title{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;line-height:1;}
 .page-title span{color:var(--accent);}
 .page-sub{color:var(--muted);font-size:.88rem;margin-top:.4rem;}
 
-/* ── ADMIN FORM ── */
 .add-box{background:var(--surface);border:1px solid rgba(232,255,71,.22);border-radius:16px;padding:1.75rem;margin-bottom:2.25rem;}
 .tab-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;background:var(--bg);border-radius:10px;padding:.3rem;}
 .tab-btn{flex:1;padding:.5rem;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.83rem;font-weight:600;border-radius:7px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.45rem;}
@@ -106,26 +99,18 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .add-actions{display:flex;gap:.75rem;margin-top:1.2rem;flex-wrap:wrap;align-items:center;}
 textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height:1.65;overflow-y:auto;white-space:pre-wrap;word-break:break-word;}
 
-/* ── VIDEO INPUT MODE TOGGLE ── */
+/* VIDEO INPUT MODE TOGGLE */
 .vid-mode-toggle{display:flex;gap:.5rem;margin-bottom:1rem;background:var(--bg);border-radius:8px;padding:.25rem;}
 .vid-mode-btn{flex:1;padding:.4rem .75rem;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:600;border-radius:6px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.35rem;}
 .vid-mode-btn.active{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
 .vid-mode-panel{display:none;}
 .vid-mode-panel.active{display:block;}
 
-/* embed preview */
 .embed-preview{margin-top:1rem;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--bg);display:none;}
 .embed-preview iframe{width:100%;height:100%;border:none;}
 .embed-preview.visible{display:block;}
 
-/* video preview player */
-.vid-file-preview{margin-top:1rem;border-radius:10px;overflow:hidden;background:#000;display:none;}
-.vid-file-preview video{width:100%;display:block;max-height:340px;}
-.vid-file-preview.visible{display:block;}
-.vid-file-info{font-size:.76rem;color:var(--muted);margin-top:.4rem;display:flex;gap:1rem;flex-wrap:wrap;}
-.vid-file-info span{background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:.15rem .55rem;}
-
-/* ── UPLOAD ZONE ── */
+/* UPLOAD ZONE */
 .upload-zone{border:2px dashed var(--border);border-radius:12px;padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all .25s;margin-top:1rem;position:relative;background:transparent;}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:rgba(232,255,71,.04);}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -134,38 +119,53 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .upload-text strong{color:var(--accent);}
 .upload-hint{font-size:.74rem;color:var(--muted);margin-top:.35rem;opacity:.6;}
 
-/* ── FOTO PREVIEW GRID ── */
+/* CLOUDINARY UPLOAD PROGRESS */
+.cld-progress-wrap{margin-top:1rem;display:none;}
+.cld-progress-bar{height:6px;background:var(--bg);border-radius:99px;overflow:hidden;}
+.cld-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px;width:0%;transition:width .3s ease;}
+.cld-progress-text{font-size:.74rem;color:var(--muted);margin-top:.4rem;display:flex;justify-content:space-between;align-items:center;}
+.cld-progress-text .cld-status{display:flex;align-items:center;gap:.4rem;}
+.cld-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:700;padding:.18rem .55rem;border-radius:5px;background:rgba(71,255,178,.1);color:var(--success);border:1px solid rgba(71,255,178,.2);}
+
+/* FOTO PREVIEW GRID */
 .photo-preview-section{margin-top:1.1rem;}
 .photo-preview-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;}
 .photo-preview-label{font-size:.78rem;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:.4rem;}
 .total-size-badge{font-size:.7rem;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:.15rem .5rem;}
-.total-size-badge.warn{color:#ffb347;border-color:rgba(255,179,71,.4);}
-.total-size-badge.over{color:var(--danger);border-color:rgba(255,77,109,.4);}
 .photo-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:.5rem;}
 .photo-preview-item{aspect-ratio:1;border-radius:8px;overflow:hidden;position:relative;background:var(--bg);border:1px solid var(--border);}
 .photo-preview-item img{width:100%;height:100%;object-fit:cover;display:block;}
 .photo-preview-item .remove-btn{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(255,77,109,.9);border:none;color:#fff;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;}
 .photo-preview-item .size-tag{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);font-size:.56rem;color:rgba(255,255,255,.75);text-align:center;padding:.12rem 0;}
+.photo-preview-item .upload-status{position:absolute;top:3px;left:3px;font-size:.55rem;font-weight:700;padding:.1rem .35rem;border-radius:4px;background:rgba(0,0,0,.75);}
+.upload-status.pending{color:#ffb347;}
+.upload-status.done{color:var(--success);}
+.upload-status.err{color:var(--danger);}
+
 .compress-info{font-size:.74rem;color:var(--muted);margin-top:.5rem;padding:.5rem .75rem;background:rgba(71,255,178,.05);border:1px solid rgba(71,255,178,.12);border-radius:8px;display:flex;align-items:center;gap:.4rem;}
 .compress-info span{color:var(--success);}
 
-/* ── PROGRESS ── */
+/* UPLOAD PROGRESS (batch) */
 .upload-progress{margin-top:.9rem;display:none;}
 .upload-progress-bar{height:5px;background:var(--bg);border-radius:99px;overflow:hidden;}
 .upload-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px;transition:width .35s ease;}
 .upload-progress-text{font-size:.74rem;color:var(--muted);margin-top:.4rem;display:flex;align-items:center;justify-content:space-between;}
 
-/* ── SECTION LABEL ── */
+/* VIDEO FILE PREVIEW */
+.vid-file-preview{margin-top:1rem;border-radius:10px;overflow:hidden;background:#000;display:none;}
+.vid-file-preview video{width:100%;display:block;max-height:280px;}
+.vid-file-preview.visible{display:block;}
+.vid-file-info{font-size:.76rem;color:var(--muted);margin-top:.4rem;display:flex;gap:1rem;flex-wrap:wrap;}
+.vid-file-info span{background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:.15rem .55rem;}
+
 .section-label{font-size:.73rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem;display:flex;align-items:center;gap:.75rem;}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* filter */
 .filter-bar{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap;}
 .filter-btn{font-size:.75rem;font-weight:700;letter-spacing:.06em;padding:.3rem .9rem;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;}
 .filter-btn.active{background:var(--accent);color:#08080f;border-color:var(--accent);}
 .filter-btn:hover:not(.active){color:var(--text);border-color:rgba(255,255,255,.2);}
 
-/* ── ASSET GRID ── */
 .asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem;}
 .asset-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .3s;animation:fadeIn .4s ease both;}
 .asset-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.15);box-shadow:0 16px 40px rgba(0,0,0,.4);}
@@ -184,6 +184,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .type-photo{background:rgba(232,255,71,.85);color:#08080f;}
 .src-yt{background:rgba(255,0,0,.75);color:#fff;}
 .src-gd{background:rgba(66,133,244,.75);color:#fff;}
+.src-cld{background:rgba(71,255,178,.8);color:#08080f;}
 .src-local{background:rgba(71,255,178,.75);color:#08080f;}
 .src-other{background:rgba(0,0,0,.6);color:#fff;}
 .card-body{padding:.9rem 1.1rem 1rem;}
@@ -204,7 +205,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .skeleton-line.short{width:55%;}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* ── VIDEO PLAYER ── */
+/* VIDEO PLAYER */
 #player-screen{min-height:100vh;}
 .player-wrap{max-width:960px;margin:0 auto;padding:2rem 2.5rem 4rem;}
 .player-breadcrumb{display:flex;align-items:center;gap:.6rem;margin-bottom:1.75rem;font-size:.8rem;color:var(--muted);}
@@ -223,7 +224,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .player-no-desc{font-size:.88rem;color:var(--muted);opacity:.5;font-style:italic;}
 .player-admin-bar{display:flex;gap:.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);flex-wrap:wrap;}
 
-/* ── PHOTO VIEWER ── */
+/* PHOTO VIEWER */
 #photo-screen{min-height:100vh;}
 .photo-wrap{max-width:1100px;margin:0 auto;padding:2rem 2.5rem 4rem;}
 .photo-header{margin-bottom:1.75rem;}
@@ -239,7 +240,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .photo-item:hover .photo-item-overlay{opacity:1;}
 .photo-admin-row{display:flex;gap:.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);flex-wrap:wrap;}
 
-/* ── LIGHTBOX ── */
+/* LIGHTBOX */
 .lightbox{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.97);display:none;flex-direction:column;align-items:center;justify-content:center;}
 .lightbox.active{display:flex;animation:fadeOverlay .2s ease;}
 @keyframes fadeOverlay{from{opacity:0}to{opacity:1}}
@@ -253,9 +254,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .lightbox-nav.next{right:1.2rem;}
 .lightbox-counter{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:.8rem;color:rgba(255,255,255,.5);background:rgba(0,0,0,.6);padding:.3rem .9rem;border-radius:99px;backdrop-filter:blur(8px);}
 
-/* ══════════════════════════════════════════
-   ── EDIT MODAL ──
-══════════════════════════════════════════ */
+/* EDIT MODAL */
 .modal-overlay{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:1.5rem;}
 .modal-overlay.active{display:flex;animation:fadeOverlay .2s ease;}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;width:100%;max-width:620px;max-height:92vh;overflow-y:auto;padding:2rem;position:relative;}
@@ -268,7 +267,6 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .modal-section:first-of-type{margin-top:0;padding-top:0;border-top:none;}
 .modal-actions{display:flex;gap:.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border);flex-wrap:wrap;}
 
-/* edit foto grid inside modal */
 .edit-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem;margin-top:.75rem;}
 .edit-photo-item{aspect-ratio:1;border-radius:8px;overflow:hidden;position:relative;background:var(--bg);border:1px solid var(--border);}
 .edit-photo-item img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -276,13 +274,10 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 .edit-photo-add-zone{border:2px dashed var(--border);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;aspect-ratio:1;transition:all .2s;position:relative;font-size:.65rem;color:var(--muted);gap:.2rem;}
 .edit-photo-add-zone:hover{border-color:var(--accent);color:var(--accent);}
 .edit-photo-add-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.edit-compress-status{font-size:.73rem;color:var(--muted);padding:.4rem .75rem;background:rgba(71,255,178,.05);border:1px solid rgba(71,255,178,.12);border-radius:7px;margin-top:.5rem;display:none;align-items:center;gap:.4rem;}
-.edit-compress-status span{color:var(--success);}
 .edit-photo-count{font-size:.75rem;color:var(--accent);font-weight:700;margin-top:.4rem;}
 
-/* ── TOAST ── */
 .toast-container{position:fixed;bottom:1.5rem;right:1.5rem;z-index:600;display:flex;flex-direction:column;gap:.5rem;}
-.toast{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.83rem;display:flex;align-items:center;gap:.55rem;animation:toastIn .3s ease;max-width:300px;}
+.toast{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem;font-size:.83rem;display:flex;align-items:center;gap:.55rem;animation:toastIn .3s ease;max-width:320px;}
 @keyframes toastIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
 .toast.success{border-color:rgba(71,255,178,.3);}
 .toast.success .ti{color:var(--success);}
@@ -308,7 +303,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 </head>
 <body>
 
-<!-- ══ SPLASH ══ -->
+<!-- SPLASH -->
 <div id="splash-screen" class="screen">
   <div class="blob blob-1"></div><div class="blob blob-2"></div>
   <div class="splash-logo">Preview<span>Asset</span></div>
@@ -330,7 +325,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   </div>
 </div>
 
-<!-- ══ ADMIN LOGIN ══ -->
+<!-- ADMIN LOGIN -->
 <div id="admin-login-screen" class="screen">
   <div class="login-card">
     <button class="login-back" onclick="goSplash()">← Kembali</button>
@@ -345,13 +340,13 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   </div>
 </div>
 
-<!-- ══ NAVBAR ══ -->
+<!-- NAVBAR -->
 <nav id="navbar" style="display:none">
   <div class="logo" onclick="goGallery()">Preview<span>Asset</span></div>
   <div class="nav-right" id="nav-right"></div>
 </nav>
 
-<!-- ══ GALLERY ══ -->
+<!-- GALLERY -->
 <div id="main-screen" class="screen">
   <div id="admin-section" style="display:none">
     <div class="add-box">
@@ -362,10 +357,9 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 
       <!-- Panel: Video -->
       <div class="tab-panel active" id="tab-video">
-        <!-- Toggle: Link vs File -->
         <div class="vid-mode-toggle">
           <button class="vid-mode-btn active" id="vmode-link-btn" onclick="switchVidMode('link')">🔗 Dari Link URL</button>
-          <button class="vid-mode-btn" id="vmode-file-btn" onclick="switchVidMode('file')">📂 Upload File Video</button>
+          <button class="vid-mode-btn" id="vmode-file-btn" onclick="switchVidMode('file')">☁️ Upload ke Cloudinary</button>
         </div>
 
         <!-- Mode: Link -->
@@ -387,7 +381,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
           <div class="embed-preview" id="embed-preview"><iframe id="embed-frame" allowfullscreen></iframe></div>
         </div>
 
-        <!-- Mode: File -->
+        <!-- Mode: Upload Cloudinary -->
         <div class="vid-mode-panel" id="vmode-file">
           <div class="form-group" style="margin-bottom:.75rem">
             <label class="form-label">Judul</label>
@@ -400,14 +394,21 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
           <div class="upload-zone" id="vid-upload-zone"
                ondragover="handleVidDragOver(event)" ondragleave="handleVidDragLeave(event)" ondrop="handleVidDrop(event)">
             <input type="file" id="vid-file-input" accept="video/*" onchange="handleVidFileSelect(event)">
-            <div class="upload-icon">🎬</div>
+            <div class="upload-icon">☁️</div>
             <div class="upload-text"><strong>Klik atau drag & drop file video</strong></div>
-            <div class="upload-hint">MP4 · MOV · AVI · WEBM · MKV · FLV</div>
+            <div class="upload-hint">MP4 · MOV · AVI · WEBM · MKV — Upload langsung ke Cloudinary</div>
           </div>
           <div class="vid-file-preview" id="vid-file-preview">
             <video id="vid-file-player" controls></video>
           </div>
           <div class="vid-file-info" id="vid-file-info" style="display:none"></div>
+          <div class="cld-progress-wrap" id="vid-cld-progress">
+            <div class="cld-progress-bar"><div class="cld-progress-fill" id="vid-cld-fill"></div></div>
+            <div class="cld-progress-text">
+              <span class="cld-status" id="vid-cld-status">Mengupload ke Cloudinary...</span>
+              <span id="vid-cld-pct">0%</span>
+            </div>
+          </div>
         </div>
 
         <div class="add-actions" style="margin-top:1.2rem">
@@ -431,12 +432,12 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
         <div class="upload-zone" id="upload-zone"
              ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
           <input type="file" id="photo-file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
-          <div class="upload-icon">📁</div>
+          <div class="upload-icon">☁️</div>
           <div class="upload-text"><strong>Klik untuk pilih foto</strong> atau drag & drop di sini</div>
-          <div class="upload-hint">JPG · PNG · WEBP · GIF — Bisa pilih banyak sekaligus · Foto dikompresi otomatis</div>
+          <div class="upload-hint">JPG · PNG · WEBP · GIF — Upload langsung ke Cloudinary, tanpa batas ukuran JSONBin</div>
         </div>
         <div id="compress-status" style="display:none" class="compress-info">
-          <span>⚡</span> <span id="compress-text">Sedang mengompresi foto...</span>
+          <span>⚡</span> <span id="compress-text">Sedang memproses foto...</span>
         </div>
         <div id="photo-preview-section" class="photo-preview-section" style="display:none">
           <div class="photo-preview-header">
@@ -447,7 +448,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
         </div>
         <div class="upload-progress" id="upload-progress">
           <div class="upload-progress-bar"><div class="upload-progress-fill" id="upload-progress-fill" style="width:0%"></div></div>
-          <div class="upload-progress-text"><span id="upload-progress-text">Menyimpan...</span><span id="upload-progress-pct"></span></div>
+          <div class="upload-progress-text"><span id="upload-progress-text">Mengupload ke Cloudinary...</span><span id="upload-progress-pct"></span></div>
         </div>
         <div class="add-actions">
           <button class="btn btn-accent" id="pub-photo-btn" onclick="addPhotos()">✓ Publikasikan Foto</button>
@@ -478,7 +479,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   </div>
 </div>
 
-<!-- ══ VIDEO PLAYER ══ -->
+<!-- VIDEO PLAYER -->
 <div id="player-screen" class="screen">
   <div class="player-wrap">
     <div class="player-breadcrumb">
@@ -505,7 +506,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   </div>
 </div>
 
-<!-- ══ PHOTO VIEWER ══ -->
+<!-- PHOTO VIEWER -->
 <div id="photo-screen" class="screen">
   <div class="photo-wrap">
     <div class="player-breadcrumb">
@@ -531,7 +532,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   </div>
 </div>
 
-<!-- ══ LIGHTBOX ══ -->
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="lightboxBgClick(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-nav prev" onclick="lightboxNav(-1)">‹</button>
@@ -540,7 +541,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
-<!-- ══ EDIT VIDEO MODAL ══ -->
+<!-- EDIT VIDEO MODAL -->
 <div class="modal-overlay" id="edit-video-modal" onclick="modalBgClick(event,'edit-video-modal')">
   <div class="modal">
     <div class="modal-header">
@@ -568,7 +569,7 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   </div>
 </div>
 
-<!-- ══ EDIT PHOTO MODAL ══ -->
+<!-- EDIT PHOTO MODAL -->
 <div class="modal-overlay" id="edit-photo-modal" onclick="modalBgClick(event,'edit-photo-modal')">
   <div class="modal">
     <div class="modal-header">
@@ -587,8 +588,9 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
     <div class="modal-section">Kelola Foto</div>
     <div id="edit-photo-count" class="edit-photo-count"></div>
     <div class="edit-photo-grid" id="edit-photo-grid"></div>
-    <div class="edit-compress-status" id="edit-compress-status">
-      <span>⚡</span><span id="edit-compress-text">Mengompresi...</span>
+    <div class="cld-progress-wrap" id="edit-cld-progress" style="margin-top:.75rem">
+      <div class="cld-progress-bar"><div class="cld-progress-fill" id="edit-cld-fill"></div></div>
+      <div class="cld-progress-text"><span id="edit-cld-status">Mengupload...</span><span id="edit-cld-pct"></span></div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-accent" id="save-photo-btn" onclick="saveEditPhoto()">💾 Simpan Perubahan</button>
@@ -597,38 +599,37 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast-container" id="tc"></div>
 
 <script>
-// ── CONFIG ──
+// ── CLOUDINARY CONFIG ──
+const CLD_CLOUD   = 'dyfryuzvn';
+const CLD_PRESET  = 'previewasset';
+const CLD_UPLOAD  = `https://api.cloudinary.com/v1_1/${CLD_CLOUD}`;
+
+// ── JSONBIN CONFIG (metadata only) ──
 const BIN_ID   = '6a1149986610dd3ae89006d7';
 const API_KEY  = '$2a$10$t3RmmHl3xr0eQNxDOIbAVer4cRHGTmc5oFRYkk.WVw.g93JHsaYom';
 const BIN_URL  = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 const ADMIN_PASS = btoa('595080470');
 
-const COMPRESS_MAX_PX = 1200;
-const COMPRESS_QUALITY = 0.78;
-const WARN_KB  = 3000;
-const LIMIT_KB = 7500;
-
 // ── STATE ──
 let role   = null;
 let assets = [];
 let activeFilter = 'all';
-let pendingPhotos  = [];   // add photo form
-let editPhotos     = [];   // edit modal photos {data, compKB, _new?}
+let pendingPhotos  = [];  // [{name, file, localUrl, sizeKB}]
+let editPhotos     = [];  // [{url, publicId, _new?, file?}]
 let lightboxPhotos = [];
 let lightboxIndex  = 0;
 let currentAssetId = null;
-let vidMode        = 'link'; // 'link' | 'file'
-let pendingVidFile = null;   // {data:base64, name, sizeKB, mimeType}
+let vidMode        = 'link';
+let pendingVidFile = null; // {file, localUrl, name, sizeKB}
 
 // ── BOOT ──
 window.onload = () => {
   const saved = sessionStorage.getItem('pa_role');
-  if(saved==='admin')      { role='admin';  enterMain(); }
-  else if(saved==='viewer'){ role='viewer'; enterMain(); }
+  if(saved==='admin')       { role='admin';  enterMain(); }
+  else if(saved==='viewer') { role='viewer'; enterMain(); }
   else showScreen('splash-screen');
 };
 
@@ -636,24 +637,19 @@ window.onload = () => {
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  const showNav = ['main-screen','player-screen','photo-screen'].includes(id);
-  document.getElementById('navbar').style.display = showNav?'flex':'none';
+  const showNav=['main-screen','player-screen','photo-screen'].includes(id);
+  document.getElementById('navbar').style.display=showNav?'flex':'none';
   window.scrollTo({top:0,behavior:'instant'});
 }
-function goSplash()    { showScreen('splash-screen'); }
-function goAdminLogin(){ showScreen('admin-login-screen'); setTimeout(()=>document.getElementById('admin-password').focus(),200); }
-function goViewer()    { role='viewer'; sessionStorage.setItem('pa_role','viewer'); enterMain(); }
-function goGallery()   {
-  const pb = document.getElementById('player-video-box');
-  if(pb) pb.innerHTML='';
-  closeLightbox();
-  showScreen('main-screen');
-}
+function goSplash()     { showScreen('splash-screen'); }
+function goAdminLogin() { showScreen('admin-login-screen'); setTimeout(()=>document.getElementById('admin-password').focus(),200); }
+function goViewer()     { role='viewer'; sessionStorage.setItem('pa_role','viewer'); enterMain(); }
+function goGallery()    { document.getElementById('player-video-box').innerHTML=''; closeLightbox(); showScreen('main-screen'); }
 
 // ── AUTH ──
 function doAdminLogin() {
-  const pw  = document.getElementById('admin-password').value;
-  const err = document.getElementById('login-error');
+  const pw=document.getElementById('admin-password').value;
+  const err=document.getElementById('login-error');
   if(btoa(pw)===ADMIN_PASS){
     err.style.display='none';
     document.getElementById('admin-password').value='';
@@ -662,22 +658,21 @@ function doAdminLogin() {
   } else { err.style.display='block'; document.getElementById('admin-password').value=''; }
 }
 function logout() {
-  const pb = document.getElementById('player-video-box');
-  if(pb) pb.innerHTML='';
+  document.getElementById('player-video-box').innerHTML='';
   closeLightbox(); closeAllModals();
   sessionStorage.removeItem('pa_role'); role=null;
   showScreen('splash-screen'); toast('Berhasil keluar','success');
 }
-document.addEventListener('keydown', e=>{
+document.addEventListener('keydown',e=>{
   if(e.key==='Enter' && document.getElementById('admin-login-screen').classList.contains('active')) doAdminLogin();
   if(e.key==='Escape'){
-    if(document.querySelector('.modal-overlay.active')) { closeAllModals(); return; }
+    if(document.querySelector('.modal-overlay.active')){ closeAllModals(); return; }
     if(document.getElementById('lightbox').classList.contains('active')){ closeLightbox(); return; }
     if(document.getElementById('player-screen').classList.contains('active')){ goGallery(); return; }
     if(document.getElementById('photo-screen').classList.contains('active')){ goGallery(); return; }
   }
   if(document.getElementById('lightbox').classList.contains('active')){
-    if(e.key==='ArrowLeft')  lightboxNav(-1);
+    if(e.key==='ArrowLeft') lightboxNav(-1);
     if(e.key==='ArrowRight') lightboxNav(1);
   }
 });
@@ -686,20 +681,20 @@ function handleDescKey(e){ if(e.key==='Enter') e.stopPropagation(); }
 // ── MAIN ──
 function enterMain(){ showScreen('main-screen'); updateNavbar(); loadAssets(); }
 function updateNavbar(){
-  document.getElementById('admin-section').style.display = role==='admin'?'block':'none';
-  document.getElementById('page-sub').textContent = role==='admin'
-    ? 'Mode Admin — tambah & kelola video dan foto'
-    : 'Mode Viewer — klik untuk melihat asset';
-  document.getElementById('nav-right').innerHTML = role==='admin'
-    ? `<span class="badge-pill pill-admin">● Admin</span><button class="btn btn-danger btn-sm" onclick="logout()">Keluar</button>`
-    : `<span class="badge-pill pill-viewer">● Viewer</span><button class="btn btn-ghost btn-sm" onclick="logout()">Keluar</button>`;
+  document.getElementById('admin-section').style.display=role==='admin'?'block':'none';
+  document.getElementById('page-sub').textContent=role==='admin'
+    ?'Mode Admin — tambah & kelola video dan foto'
+    :'Mode Viewer — klik untuk melihat asset';
+  document.getElementById('nav-right').innerHTML=role==='admin'
+    ?`<span class="badge-pill pill-admin">● Admin</span><button class="btn btn-danger btn-sm" onclick="logout()">Keluar</button>`
+    :`<span class="badge-pill pill-viewer">● Viewer</span><button class="btn btn-ghost btn-sm" onclick="logout()">Keluar</button>`;
 }
 
 // ── TABS ──
 function switchTab(tab){
   ['video','photo'].forEach(t=>{
-    document.getElementById(`tab-${t}`).classList.toggle('active', t===tab);
-    document.getElementById(`tab-${t}-btn`).classList.toggle('active', t===tab);
+    document.getElementById(`tab-${t}`).classList.toggle('active',t===tab);
+    document.getElementById(`tab-${t}-btn`).classList.toggle('active',t===tab);
   });
 }
 
@@ -713,72 +708,117 @@ function setFilter(f,btn){
 
 // ── JSONBIN ──
 async function loadAssets(){
-  try {
-    const res  = await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
-    const data = await res.json();
-    assets = Array.isArray(data.assets) ? data.assets
-           : Array.isArray(data.videos) ? data.videos.map(v=>({...v,kind:'video'}))
-           : [];
+  try{
+    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
+    const data=await res.json();
+    assets=Array.isArray(data.assets)?data.assets
+          :Array.isArray(data.videos)?data.videos.map(v=>({...v,kind:'video'}))
+          :[];
     renderGrid();
-  } catch(e){ toast('Gagal memuat data. Cek koneksi.','error'); assets=[]; renderGrid(); }
+  }catch(e){ toast('Gagal memuat data. Cek koneksi.','error'); assets=[]; renderGrid(); }
 }
 async function saveAssets(){
-  const res = await fetch(BIN_URL,{
+  const res=await fetch(BIN_URL,{
     method:'PUT',
     headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
-    body: JSON.stringify({assets})
+    body:JSON.stringify({assets})
   });
   if(!res.ok) throw new Error('Gagal menyimpan');
+}
+
+// ══════════════════════════════════════════════
+// ── CLOUDINARY UPLOAD ──
+// ══════════════════════════════════════════════
+
+/**
+ * Upload satu file ke Cloudinary.
+ * resource_type: 'image' | 'video' | 'auto'
+ * onProgress(pct 0-100)
+ * Returns: { url, publicId, thumbnailUrl }
+ */
+function uploadToCloudinary(file, resourceType='auto', onProgress=null){
+  return new Promise((resolve,reject)=>{
+    const fd=new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', CLD_PRESET);
+    // folder opsional
+    fd.append('folder','previewasset');
+
+    const xhr=new XMLHttpRequest();
+    xhr.open('POST',`${CLD_UPLOAD}/${resourceType}/upload`);
+
+    if(onProgress){
+      xhr.upload.onprogress=e=>{
+        if(e.lengthComputable) onProgress(Math.round(e.loaded/e.total*100));
+      };
+    }
+    xhr.onload=()=>{
+      if(xhr.status===200){
+        const r=JSON.parse(xhr.responseText);
+        // thumbnail untuk video: pakai format jpg transformation
+        const thumb = r.resource_type==='video'
+          ? r.secure_url.replace('/upload/','/upload/so_0,f_jpg,w_640/')
+          : null;
+        resolve({url:r.secure_url, publicId:r.public_id, thumbnailUrl:thumb, resourceType:r.resource_type});
+      } else {
+        reject(new Error(`Cloudinary error ${xhr.status}: ${xhr.responseText}`));
+      }
+    };
+    xhr.onerror=()=>reject(new Error('Upload gagal. Cek koneksi internet.'));
+    xhr.send(fd);
+  });
 }
 
 // ── VIDEO HELPERS ──
 function getEmbedUrl(url){
   try{
-    const ytM = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+    const ytM=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
     if(ytM) return `https://www.youtube.com/embed/${ytM[1]}?rel=0&autoplay=1`;
-    const ytS = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+    const ytS=url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
     if(ytS) return `https://www.youtube.com/embed/${ytS[1]}?rel=0&autoplay=1`;
-    const gdM = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
+    const gdM=url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/);
     if(gdM) return `https://drive.google.com/file/d/${gdM[1]}/preview`;
-    const gdV = url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
+    const gdV=url.match(/drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/);
     if(gdV) return `https://drive.google.com/file/d/${gdV[1]}/preview`;
     return null;
   }catch(e){ return null; }
 }
-function getVideoThumb(url){
-  if(!url) return null;
-  const ytM = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+function getVideoThumb(v){
+  if(!v) return null;
+  if(v.thumbnailUrl) return v.thumbnailUrl;
+  const url=v.url||'';
+  const ytM=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
   if(ytM) return `https://img.youtube.com/vi/${ytM[1]}/hqdefault.jpg`;
-  const ytS = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+  const ytS=url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
   if(ytS) return `https://img.youtube.com/vi/${ytS[1]}/hqdefault.jpg`;
   return null;
 }
-function getSourceType(url){
-  if(!url) return 'local';
+function getSourceType(url,source){
+  if(source) return source;
+  if(!url) return 'other';
   if(url.includes('youtube.com')||url.includes('youtu.be')) return 'yt';
   if(url.includes('drive.google.com')) return 'gd';
-  if(url.startsWith('data:')) return 'local';
+  if(url.includes('cloudinary.com')) return 'cld';
   return 'other';
 }
 function getSourceLabel(type){
-  return type==='yt'?'YouTube':type==='gd'?'Google Drive':type==='local'?'File Lokal':'Video';
+  return type==='yt'?'YouTube':type==='gd'?'Google Drive':type==='cld'?'Cloudinary':type==='local'?'File Lokal':'Video';
 }
 
-// ── EMBED PREVIEW (add form) ──
+// ── EMBED PREVIEW ──
 function previewEmbed(){
   const url=document.getElementById('vid-url').value.trim();
-  const ep=document.getElementById('embed-preview'), ef=document.getElementById('embed-frame');
+  const ep=document.getElementById('embed-preview'),ef=document.getElementById('embed-frame');
   const eu=getEmbedUrl(url);
-  if(eu){ ef.src=eu.replace('&autoplay=1',''); ep.classList.add('visible'); }
-  else  { ef.src=''; ep.classList.remove('visible'); }
+  if(eu){ef.src=eu.replace('&autoplay=1','');ep.classList.add('visible');}
+  else{ef.src='';ep.classList.remove('visible');}
 }
-// ── EMBED PREVIEW (edit modal) ──
 function previewEditEmbed(){
   const url=document.getElementById('edit-vid-url').value.trim();
-  const ep=document.getElementById('edit-embed-preview'), ef=document.getElementById('edit-embed-frame');
+  const ep=document.getElementById('edit-embed-preview'),ef=document.getElementById('edit-embed-frame');
   const eu=getEmbedUrl(url);
-  if(eu){ ef.src=eu.replace('&autoplay=1',''); ep.classList.add('visible'); }
-  else  { ef.src=''; ep.classList.remove('visible'); }
+  if(eu){ef.src=eu.replace('&autoplay=1','');ep.classList.add('visible');}
+  else{ef.src='';ep.classList.remove('visible');}
 }
 
 // ── VIDEO MODE TOGGLE ──
@@ -800,110 +840,59 @@ function processVidFile(file){
   if(!file) return;
   const allowed=['video/mp4','video/webm','video/ogg','video/quicktime','video/x-msvideo','video/x-matroska','video/x-flv','video/mpeg'];
   if(!allowed.includes(file.type) && !file.name.match(/\.(mp4|mov|avi|webm|mkv|flv|mpeg|mpg)$/i)){
-    toast('Format video tidak didukung. Gunakan MP4, MOV, WEBM, AVI, MKV','error'); return;
+    toast('Format video tidak didukung.','error'); return;
   }
-  const sizeKB = Math.round(file.size/1024);
-  if(sizeKB > 8000){ toast('File video terlalu besar (maks ~8MB untuk disimpan online). Gunakan link URL saja.','error'); return; }
-
-  const reader = new FileReader();
-  reader.onload = e2 => {
-    pendingVidFile = { data: e2.target.result, name: file.name, sizeKB, mimeType: file.type||'video/mp4' };
-    // auto-fill judul jika kosong
-    const titleEl = document.getElementById('vid-file-title');
-    if(!titleEl.value.trim()){
-      titleEl.value = file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
-    }
-    // preview
-    const pv = document.getElementById('vid-file-preview');
-    const pvEl = document.getElementById('vid-file-player');
-    pvEl.src = e2.target.result;
-    pv.classList.add('visible');
-    // info
-    const info = document.getElementById('vid-file-info');
-    info.style.display='flex';
-    info.innerHTML=`<span>📄 ${esc(file.name)}</span><span>💾 ${formatKB(sizeKB)}</span><span>🎞️ ${file.type||'video'}</span>`;
-    toast(`Video "${file.name}" siap dipublikasikan`,'success');
-  };
-  reader.readAsDataURL(file);
+  const sizeKB=Math.round(file.size/1024);
+  const localUrl=URL.createObjectURL(file);
+  pendingVidFile={file,localUrl,name:file.name,sizeKB,mimeType:file.type||'video/mp4'};
+  const titleEl=document.getElementById('vid-file-title');
+  if(!titleEl.value.trim()) titleEl.value=file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ');
+  const pv=document.getElementById('vid-file-preview');
+  document.getElementById('vid-file-player').src=localUrl;
+  pv.classList.add('visible');
+  const info=document.getElementById('vid-file-info');
+  info.style.display='flex';
+  info.innerHTML=`<span>📄 ${esc(file.name)}</span><span>💾 ${formatKB(sizeKB)}</span><span>☁️ Siap diupload ke Cloudinary</span>`;
+  document.getElementById('vid-cld-progress').style.display='none';
+  document.getElementById('vid-cld-fill').style.width='0%';
+  toast(`Video "${file.name}" siap diupload`,'success');
 }
 
 function clearVideoForm(){
-  ['vid-url','vid-title','vid-desc','vid-file-title','vid-file-desc'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  ['vid-url','vid-title','vid-desc','vid-file-title','vid-file-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('embed-frame').src='';
   document.getElementById('embed-preview').classList.remove('visible');
   document.getElementById('vid-file-preview').classList.remove('visible');
   document.getElementById('vid-file-player').src='';
   document.getElementById('vid-file-info').style.display='none';
+  document.getElementById('vid-cld-progress').style.display='none';
+  if(pendingVidFile?.localUrl) URL.revokeObjectURL(pendingVidFile.localUrl);
   pendingVidFile=null;
 }
 
-// ── KOMPRESI FOTO ──
-function compressImage(file){
-  return new Promise((resolve,reject)=>{
-    const reader=new FileReader();
-    reader.onerror=()=>reject(new Error('Gagal membaca file'));
-    reader.onload=e=>{
-      const img=new Image();
-      img.onerror=()=>reject(new Error('Gambar tidak valid'));
-      img.onload=()=>{
-        let {width,height}=img;
-        if(width>COMPRESS_MAX_PX||height>COMPRESS_MAX_PX){
-          if(width>=height){height=Math.round(height*COMPRESS_MAX_PX/width);width=COMPRESS_MAX_PX;}
-          else{width=Math.round(width*COMPRESS_MAX_PX/height);height=COMPRESS_MAX_PX;}
-        }
-        const canvas=document.createElement('canvas');
-        canvas.width=width; canvas.height=height;
-        canvas.getContext('2d').drawImage(img,0,0,width,height);
-        const isTransp=file.type==='image/gif'||file.type==='image/png';
-        let data;
-        if(isTransp){
-          const j=canvas.toDataURL('image/jpeg',COMPRESS_QUALITY);
-          const p=canvas.toDataURL('image/png');
-          data=j.length<p.length?j:p;
-        } else {
-          data=canvas.toDataURL('image/jpeg',COMPRESS_QUALITY);
-        }
-        resolve({data, compKB:Math.round(data.length*0.75/1024)});
-      };
-      img.src=e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// ── FOTO DRAG & DROP (add form) ──
-function handleDragOver(e)  { e.preventDefault(); document.getElementById('upload-zone').classList.add('drag'); }
-function handleDragLeave()  { document.getElementById('upload-zone').classList.remove('drag'); }
-function handleDrop(e)      { e.preventDefault(); handleDragLeave(); processFiles(e.dataTransfer.files); }
-function handleFileSelect(e){ processFiles(e.target.files); document.getElementById('photo-file-input').value=''; }
+// ── FOTO DRAG & DROP ──
+function handleDragOver(e)   { e.preventDefault(); document.getElementById('upload-zone').classList.add('drag'); }
+function handleDragLeave()   { document.getElementById('upload-zone').classList.remove('drag'); }
+function handleDrop(e)       { e.preventDefault(); handleDragLeave(); processFiles(e.dataTransfer.files); }
+function handleFileSelect(e) { processFiles(e.target.files); document.getElementById('photo-file-input').value=''; }
 
 async function processFiles(files){
   const allowed=['image/jpeg','image/png','image/webp','image/gif','image/bmp'];
   const filtered=[...files].filter(f=>allowed.includes(f.type));
   if(!filtered.length){ toast('Pilih file gambar (JPG, PNG, WEBP, GIF)','error'); return; }
-  const cs=document.getElementById('compress-status');
-  const ct=document.getElementById('compress-text');
-  cs.style.display='flex'; ct.textContent=`Mengompresi ${filtered.length} foto...`;
-  let done=0; const newPhotos=[];
+  const cs=document.getElementById('compress-status'),ct=document.getElementById('compress-text');
+  cs.style.display='flex'; ct.textContent=`Memproses ${filtered.length} foto...`;
   for(const file of filtered){
-    try{
-      const origKB=Math.round(file.size/1024);
-      const {data,compKB}=await compressImage(file);
-      newPhotos.push({name:file.name,data,origKB,compKB});
-      done++;
-      ct.textContent=`Mengompresi foto ${done}/${filtered.length}...`;
-    }catch(err){ toast(`Gagal memproses: ${file.name}`,'error'); }
+    const sizeKB=Math.round(file.size/1024);
+    const localUrl=URL.createObjectURL(file);
+    pendingPhotos.push({name:file.name,file,localUrl,sizeKB});
   }
-  pendingPhotos.push(...newPhotos);
   cs.style.display='none';
-  if(newPhotos.length){
-    const saved=newPhotos.reduce((s,p)=>s+(p.origKB-p.compKB),0);
-    if(saved>50) toast(`✓ ${newPhotos.length} foto dikompresi, hemat ~${formatKB(saved)}`,'success');
-  }
   renderPhotoPreviews();
+  toast(`${filtered.length} foto siap diupload ke Cloudinary`,'success');
 }
 
-function totalKB(){ return pendingPhotos.reduce((s,p)=>s+p.compKB,0); }
+function totalKB(){ return pendingPhotos.reduce((s,p)=>s+p.sizeKB,0); }
 function formatKB(kb){ return kb>=1024?(kb/1024).toFixed(1)+' MB':kb+' KB'; }
 
 function renderPhotoPreviews(){
@@ -911,31 +900,30 @@ function renderPhotoPreviews(){
   const grid=document.getElementById('photo-preview-grid');
   const label=document.getElementById('photo-count-label');
   const sizeBadge=document.getElementById('total-size-badge');
-  const note=document.getElementById('pub-photo-note');
-  if(!pendingPhotos.length){ section.style.display='none'; note.textContent=''; return; }
+  if(!pendingPhotos.length){ section.style.display='none'; return; }
   section.style.display='block';
   label.textContent=`${pendingPhotos.length} foto dipilih`;
   const total=totalKB();
   sizeBadge.textContent=`Total: ${formatKB(total)}`;
-  sizeBadge.className='total-size-badge'+(total>LIMIT_KB?' over':total>WARN_KB?' warn':'');
-  if(total>LIMIT_KB){ note.textContent=`⚠ Ukuran terlalu besar (${formatKB(total)}). Hapus beberapa foto.`; note.style.color='var(--danger)'; }
-  else if(total>WARN_KB){ note.textContent=`Ukuran agak besar (${formatKB(total)}), kemungkinan lambat.`; note.style.color='#ffb347'; }
-  else note.textContent='';
+  sizeBadge.className='total-size-badge';
   grid.innerHTML=pendingPhotos.map((p,i)=>`
-    <div class="photo-preview-item">
-      <img src="${p.data}" alt="${esc(p.name)}" loading="lazy">
+    <div class="photo-preview-item" id="ppitem-${i}">
+      <img src="${p.localUrl}" alt="${esc(p.name)}" loading="lazy">
       <button class="remove-btn" onclick="removePendingPhoto(${i})">✕</button>
-      <div class="size-tag">${formatKB(p.compKB)}</div>
+      <div class="size-tag">${formatKB(p.sizeKB)}</div>
     </div>`).join('');
 }
-function removePendingPhoto(i){ pendingPhotos.splice(i,1); renderPhotoPreviews(); }
+function removePendingPhoto(i){
+  if(pendingPhotos[i]?.localUrl) URL.revokeObjectURL(pendingPhotos[i].localUrl);
+  pendingPhotos.splice(i,1); renderPhotoPreviews();
+}
 function clearPhotoForm(){
   document.getElementById('photo-title').value='';
   document.getElementById('photo-desc').value='';
+  pendingPhotos.forEach(p=>{ if(p.localUrl) URL.revokeObjectURL(p.localUrl); });
   pendingPhotos=[];
   renderPhotoPreviews();
   document.getElementById('upload-progress').style.display='none';
-  document.getElementById('compress-status').style.display='none';
   document.getElementById('pub-photo-note').textContent='';
 }
 
@@ -944,33 +932,50 @@ async function addVideo(){
   const btn=document.getElementById('pub-video-btn');
   if(vidMode==='file'){
     const title=document.getElementById('vid-file-title').value.trim();
-    const desc =document.getElementById('vid-file-desc').value;
+    const desc=document.getElementById('vid-file-desc').value;
     if(!title)         { toast('Masukkan judul video','error'); return; }
     if(!pendingVidFile){ toast('Pilih file video terlebih dahulu','error'); return; }
-    btn.disabled=true; btn.textContent='Menyimpan...';
+    btn.disabled=true; btn.textContent='Mengupload...';
+
+    // Show Cloudinary progress
+    const prog=document.getElementById('vid-cld-progress');
+    const fill=document.getElementById('vid-cld-fill');
+    const status=document.getElementById('vid-cld-status');
+    const pct=document.getElementById('vid-cld-pct');
+    prog.style.display='block'; fill.style.width='0%';
+    status.textContent='Mengupload video ke Cloudinary...';
+
     try{
-      const entry={id:Date.now(),kind:'video',url:pendingVidFile.data,title,desc:desc.trim(),
-        source:'local',mimeType:pendingVidFile.mimeType,
+      const result=await uploadToCloudinary(pendingVidFile.file,'video', p=>{
+        fill.style.width=p+'%'; pct.textContent=p+'%';
+      });
+      fill.style.width='100%'; status.textContent='✓ Upload selesai, menyimpan metadata...'; pct.textContent='100%';
+
+      const entry={id:Date.now(),kind:'video',url:result.url,publicId:result.publicId,
+        thumbnailUrl:result.thumbnailUrl,source:'cld',title,desc:desc.trim(),
         date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
       assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
-      toast('Video berhasil dipublikasikan!','success');
-    }catch(e){ assets.shift(); toast('Gagal menyimpan. File mungkin terlalu besar.','error'); }
-    finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
+      toast('✓ Video berhasil dipublikasikan via Cloudinary!','success');
+    }catch(e){
+      assets.shift();
+      prog.style.display='none';
+      toast('Gagal upload: '+e.message,'error');
+    }finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
   } else {
-    const url  =document.getElementById('vid-url').value.trim();
+    const url=document.getElementById('vid-url').value.trim();
     const title=document.getElementById('vid-title').value.trim();
-    const desc =document.getElementById('vid-desc').value;
+    const desc=document.getElementById('vid-desc').value;
     if(!url)              { toast('Masukkan link video','error'); return; }
     if(!title)            { toast('Masukkan judul video','error'); return; }
     if(!getEmbedUrl(url)) { toast('Link tidak dikenali. Gunakan YouTube atau Google Drive','error'); return; }
     btn.disabled=true; btn.textContent='Menyimpan...';
     try{
       const entry={id:Date.now(),kind:'video',url,title,desc:desc.trim(),
-        source:getSourceType(url),
+        source:getSourceType(url,''),
         date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
       assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
       toast('Video berhasil dipublikasikan!','success');
-    }catch(e){ assets.shift(); toast('Gagal menyimpan. Coba lagi.','error'); }
+    }catch(e){ assets.shift(); toast('Gagal menyimpan.','error'); }
     finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
   }
 }
@@ -978,31 +983,43 @@ async function addVideo(){
 // ── ADD PHOTOS ──
 async function addPhotos(){
   const title=document.getElementById('photo-title').value.trim();
-  const desc =document.getElementById('photo-desc').value;
+  const desc=document.getElementById('photo-desc').value;
   if(!title)               { toast('Masukkan judul/nama album','error'); return; }
-  if(!pendingPhotos.length){ toast('Pilih minimal 1 foto terlebih dahulu','error'); return; }
-  const total=totalKB();
-  if(total>LIMIT_KB){ toast(`Ukuran terlalu besar (${formatKB(total)}). Hapus beberapa foto dulu.`,'error'); return; }
+  if(!pendingPhotos.length){ toast('Pilih minimal 1 foto','error'); return; }
+
   const btn=document.getElementById('pub-photo-btn');
   const prog=document.getElementById('upload-progress');
   const fill=document.getElementById('upload-progress-fill');
   const ptxt=document.getElementById('upload-progress-text');
   const ppct=document.getElementById('upload-progress-pct');
-  btn.disabled=true; prog.style.display='block';
-  fill.style.width='20%'; ptxt.textContent='Menyiapkan data...'; ppct.textContent='';
+  btn.disabled=true; prog.style.display='block'; fill.style.width='0%';
+  ptxt.textContent='Mengupload foto ke Cloudinary...'; ppct.textContent='';
+
   try{
-    fill.style.width='60%'; ptxt.textContent='Menyimpan ke server...';
-    ppct.textContent=`${pendingPhotos.length} foto · ${formatKB(total)}`;
+    const results=[];
+    for(let i=0;i<pendingPhotos.length;i++){
+      const p=pendingPhotos[i];
+      ptxt.textContent=`Foto ${i+1}/${pendingPhotos.length}: ${esc(p.name)}`;
+      const result=await uploadToCloudinary(p.file,'image', pct=>{
+        const overall=Math.round(((i+pct/100)/pendingPhotos.length)*100);
+        fill.style.width=overall+'%'; ppct.textContent=overall+'%';
+      });
+      results.push({url:result.url, publicId:result.publicId});
+    }
+
+    fill.style.width='100%'; ptxt.textContent='Menyimpan metadata...';
     const entry={id:Date.now(),kind:'photo',title,desc:desc.trim(),
-      photos:pendingPhotos.map(p=>p.data),count:pendingPhotos.length,
+      photos:results.map(r=>r.url),
+      publicIds:results.map(r=>r.publicId),
+      count:results.length,
       date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
     assets.unshift(entry); await saveAssets(); renderGrid(); clearPhotoForm();
-    fill.style.width='100%'; ptxt.textContent='Selesai!'; ppct.textContent='';
-    setTimeout(()=>{ prog.style.display='none'; fill.style.width='0%'; },1000);
-    toast(`✓ ${entry.count} foto berhasil dipublikasikan!`,'success');
+    fill.style.width='100%'; ptxt.textContent='✓ Selesai!'; ppct.textContent='';
+    setTimeout(()=>{ prog.style.display='none'; fill.style.width='0%'; },1500);
+    toast(`✓ ${entry.count} foto berhasil dipublikasikan via Cloudinary!`,'success');
   }catch(e){
     assets.shift(); prog.style.display='none'; fill.style.width='0%';
-    toast('Gagal menyimpan. Coba kurangi jumlah/ukuran foto.','error');
+    toast('Gagal upload: '+e.message,'error');
   }finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Foto'; }
 }
 
@@ -1021,156 +1038,149 @@ async function deleteAsset(id){
   }catch(e){ assets=backup; renderGrid(); toast('Gagal menghapus.','error'); }
 }
 
-// ══════════════════════════════════════════════
 // ── EDIT VIDEO ──
-// ══════════════════════════════════════════════
 function openEditVideo(id){
   const v=assets.find(x=>x.id===id); if(!v) return;
-  document.getElementById('edit-vid-title').value = v.title||'';
-  document.getElementById('edit-vid-desc').value  = v.desc||'';
-  const urlGrp = document.getElementById('edit-vid-url-group');
-  const ef     = document.getElementById('edit-embed-frame');
-  const ep     = document.getElementById('edit-embed-preview');
-  if(v.source==='local'){
-    // file lokal — tidak bisa edit URL, sembunyikan field URL
-    urlGrp.style.display='none';
-    ef.src=''; ep.classList.remove('visible');
+  document.getElementById('edit-vid-title').value=v.title||'';
+  document.getElementById('edit-vid-desc').value=v.desc||'';
+  const urlGrp=document.getElementById('edit-vid-url-group');
+  const ef=document.getElementById('edit-embed-frame'),ep=document.getElementById('edit-embed-preview');
+  if(v.source==='cld'){
+    urlGrp.style.display='none'; ef.src=''; ep.classList.remove('visible');
   } else {
     urlGrp.style.display='block';
-    document.getElementById('edit-vid-url').value = v.url||'';
+    document.getElementById('edit-vid-url').value=v.url||'';
     const eu=getEmbedUrl(v.url||'');
-    if(eu){ ef.src=eu.replace('&autoplay=1',''); ep.classList.add('visible'); }
-    else  { ef.src=''; ep.classList.remove('visible'); }
+    if(eu){ef.src=eu.replace('&autoplay=1','');ep.classList.add('visible');}
+    else{ef.src='';ep.classList.remove('visible');}
   }
-  document.getElementById('save-video-btn').dataset.id = id;
+  document.getElementById('save-video-btn').dataset.id=id;
   openModal('edit-video-modal');
 }
-
 async function saveEditVideo(){
-  const btn  = document.getElementById('save-video-btn');
-  const id   = parseInt(btn.dataset.id);
-  const idx  = assets.findIndex(x=>x.id===id);
-  if(idx<0) return;
-  const title= document.getElementById('edit-vid-title').value.trim();
-  const desc = document.getElementById('edit-vid-desc').value;
-  const v    = assets[idx];
+  const btn=document.getElementById('save-video-btn');
+  const id=parseInt(btn.dataset.id);
+  const idx=assets.findIndex(x=>x.id===id); if(idx<0) return;
+  const title=document.getElementById('edit-vid-title').value.trim();
+  const desc=document.getElementById('edit-vid-desc').value;
+  const v=assets[idx];
   if(!title){ toast('Judul tidak boleh kosong','error'); return; }
-  let newUrl = v.url;
-  let newSrc = v.source;
-  if(v.source!=='local'){
-    newUrl = document.getElementById('edit-vid-url').value.trim();
-    if(!newUrl)              { toast('Masukkan link video','error'); return; }
-    if(!getEmbedUrl(newUrl)) { toast('Link tidak dikenali','error'); return; }
-    newSrc = getSourceType(newUrl);
+  let newUrl=v.url,newSrc=v.source;
+  if(v.source!=='cld'){
+    newUrl=document.getElementById('edit-vid-url').value.trim();
+    if(!newUrl){ toast('Masukkan link video','error'); return; }
+    if(!getEmbedUrl(newUrl)){ toast('Link tidak dikenali','error'); return; }
+    newSrc=getSourceType(newUrl,'');
   }
-  const backup = [...assets];
-  assets[idx] = {...v, title, desc:desc.trim(), url:newUrl, source:newSrc};
+  const backup=[...assets];
+  assets[idx]={...v,title,desc:desc.trim(),url:newUrl,source:newSrc};
   btn.disabled=true; btn.textContent='Menyimpan...';
   try{
-    await saveAssets();
-    renderGrid();
-    closeModal('edit-video-modal');
-    // refresh player jika sedang buka
+    await saveAssets(); renderGrid(); closeModal('edit-video-modal');
     if(document.getElementById('player-screen').classList.contains('active')) openPlayer(id);
     toast('Video berhasil diperbarui!','success');
-  }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan. Coba lagi.','error'); }
+  }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan.','error'); }
   finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan'; }
 }
 
-// ══════════════════════════════════════════════
 // ── EDIT PHOTO ──
-// ══════════════════════════════════════════════
 function openEditPhoto(id){
   const a=assets.find(x=>x.id===id); if(!a||a.kind!=='photo') return;
-  document.getElementById('edit-photo-title').value = a.title||'';
-  document.getElementById('edit-photo-desc').value  = a.desc||'';
-  // clone foto ke editPhotos
-  editPhotos = (a.photos||[]).map(src=>({data:src, compKB:Math.round(src.length*0.75/1024)}));
-  document.getElementById('save-photo-btn').dataset.id = id;
+  document.getElementById('edit-photo-title').value=a.title||'';
+  document.getElementById('edit-photo-desc').value=a.desc||'';
+  editPhotos=(a.photos||[]).map((url,i)=>({url,publicId:(a.publicIds||[])[i]||null}));
+  document.getElementById('save-photo-btn').dataset.id=id;
+  document.getElementById('edit-cld-progress').style.display='none';
   renderEditPhotoGrid();
   openModal('edit-photo-modal');
 }
-
 function renderEditPhotoGrid(){
   const grid=document.getElementById('edit-photo-grid');
   const count=document.getElementById('edit-photo-count');
   count.textContent=`${editPhotos.length} foto`;
-  grid.innerHTML = editPhotos.map((p,i)=>`
+  grid.innerHTML=editPhotos.map((p,i)=>`
     <div class="edit-photo-item">
-      <img src="${p.data}" loading="lazy">
+      <img src="${p.localUrl||p.url}" loading="lazy">
       <button class="remove-btn" onclick="removeEditPhoto(${i})">✕</button>
     </div>`).join('')
-  + `<div class="edit-photo-add-zone">
+  +`<div class="edit-photo-add-zone">
       <input type="file" accept="image/*" multiple onchange="addMoreEditPhotos(event)">
-      <span style="font-size:1.4rem">＋</span>
-      <span>Tambah</span>
+      <span style="font-size:1.4rem">＋</span><span>Tambah</span>
     </div>`;
 }
-
 function removeEditPhoto(i){
-  if(editPhotos.length<=1 && !confirm('Hapus semua foto? Album akan kosong setelah disimpan.')) return;
-  editPhotos.splice(i,1);
-  renderEditPhotoGrid();
+  if(editPhotos.length<=1&&!confirm('Hapus semua foto? Album akan kosong.')) return;
+  if(editPhotos[i]?.localUrl) URL.revokeObjectURL(editPhotos[i].localUrl);
+  editPhotos.splice(i,1); renderEditPhotoGrid();
 }
-
 async function addMoreEditPhotos(e){
   const allowed=['image/jpeg','image/png','image/webp','image/gif','image/bmp'];
   const files=[...e.target.files].filter(f=>allowed.includes(f.type));
-  e.target.value='';
-  if(!files.length) return;
-  const cs=document.getElementById('edit-compress-status');
-  const ct=document.getElementById('edit-compress-text');
-  cs.style.display='flex'; ct.textContent=`Mengompresi ${files.length} foto...`;
-  let done=0;
+  e.target.value=''; if(!files.length) return;
   for(const file of files){
-    try{
-      const {data,compKB}=await compressImage(file);
-      editPhotos.push({data,compKB,_new:true});
-      done++;
-      ct.textContent=`Mengompresi ${done}/${files.length}...`;
-    }catch(err){ toast(`Gagal: ${file.name}`,'error'); }
+    const localUrl=URL.createObjectURL(file);
+    editPhotos.push({url:null,localUrl,file,_new:true});
   }
-  cs.style.display='none';
   renderEditPhotoGrid();
-  toast(`+${done} foto ditambahkan`,'success');
+  toast(`+${files.length} foto ditambahkan (akan diupload saat simpan)`,'info');
 }
-
 async function saveEditPhoto(){
-  const btn  = document.getElementById('save-photo-btn');
-  const id   = parseInt(btn.dataset.id);
-  const idx  = assets.findIndex(x=>x.id===id);
-  if(idx<0) return;
-  const title= document.getElementById('edit-photo-title').value.trim();
-  const desc = document.getElementById('edit-photo-desc').value;
+  const btn=document.getElementById('save-photo-btn');
+  const id=parseInt(btn.dataset.id);
+  const idx=assets.findIndex(x=>x.id===id); if(idx<0) return;
+  const title=document.getElementById('edit-photo-title').value.trim();
+  const desc=document.getElementById('edit-photo-desc').value;
   if(!title){ toast('Judul tidak boleh kosong','error'); return; }
   if(!editPhotos.length){ toast('Album tidak boleh kosong','error'); return; }
-  const backup=[...assets];
-  const a=assets[idx];
-  assets[idx]={...a, title, desc:desc.trim(), photos:editPhotos.map(p=>p.data), count:editPhotos.length};
+
+  const newOnes=editPhotos.filter(p=>p._new&&p.file);
+  const cp=document.getElementById('edit-cld-progress');
+  const cf=document.getElementById('edit-cld-fill');
+  const cs=document.getElementById('edit-cld-status');
+  const cpct=document.getElementById('edit-cld-pct');
+
   btn.disabled=true; btn.textContent='Menyimpan...';
+
   try{
-    await saveAssets();
-    renderGrid();
-    closeModal('edit-photo-modal');
-    // refresh photo viewer jika sedang buka
+    if(newOnes.length){
+      cp.style.display='block'; cf.style.width='0%';
+      cs.textContent=`Mengupload ${newOnes.length} foto baru...`;
+      for(let i=0;i<newOnes.length;i++){
+        cs.textContent=`Upload foto ${i+1}/${newOnes.length}...`;
+        const result=await uploadToCloudinary(newOnes[i].file,'image',pct=>{
+          const ov=Math.round(((i+pct/100)/newOnes.length)*100);
+          cf.style.width=ov+'%'; cpct.textContent=ov+'%';
+        });
+        newOnes[i].url=result.url; newOnes[i].publicId=result.publicId;
+        if(newOnes[i].localUrl) URL.revokeObjectURL(newOnes[i].localUrl);
+      }
+      cf.style.width='100%'; cs.textContent='✓ Upload selesai'; cpct.textContent='100%';
+    }
+
+    const backup=[...assets];
+    const a=assets[idx];
+    assets[idx]={...a,title,desc:desc.trim(),
+      photos:editPhotos.map(p=>p.url),
+      publicIds:editPhotos.map(p=>p.publicId||null),
+      count:editPhotos.length};
+    await saveAssets(); renderGrid(); closeModal('edit-photo-modal');
     if(document.getElementById('photo-screen').classList.contains('active')) openPhotos(id);
     toast('Album berhasil diperbarui!','success');
-  }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan.','error'); }
-  finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan'; }
+  }catch(e){ toast('Gagal: '+e.message,'error'); }
+  finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan'; cp.style.display='none'; }
 }
 
 // ── MODAL HELPERS ──
 function openModal(id){ document.getElementById(id).classList.add('active'); document.body.style.overflow='hidden'; }
 function closeModal(id){ document.getElementById(id).classList.remove('active'); document.body.style.overflow=''; }
-function closeAllModals(){ document.querySelectorAll('.modal-overlay.active').forEach(m=>{ m.classList.remove('active'); }); document.body.style.overflow=''; }
+function closeAllModals(){ document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active')); document.body.style.overflow=''; }
 function modalBgClick(e,id){ if(e.target===document.getElementById(id)) closeModal(id); }
 
 // ── RENDER GALLERY ──
 function renderGrid(){
-  const grid =document.getElementById('asset-grid');
+  const grid=document.getElementById('asset-grid');
   const badge=document.getElementById('count-badge');
-  const filtered = activeFilter==='all' ? assets
-    : assets.filter(a=>(activeFilter==='video'?(a.kind==='video'||!a.kind):(a.kind==='photo')));
+  const filtered=activeFilter==='all'?assets:assets.filter(a=>(activeFilter==='video'?(a.kind==='video'||!a.kind):(a.kind==='photo')));
   badge.textContent=assets.length?`${assets.length} asset`:'';
   if(!filtered.length){
     grid.innerHTML=`<div class="empty-state">
@@ -1183,18 +1193,15 @@ function renderGrid(){
 }
 
 function renderVideoCard(v,i){
-  const thumb  =getVideoThumb(v.url||'');
-  const srcType=v.source||getSourceType(v.url||'');
-  const srcLbl =getSourceLabel(srcType);
-  const descP  =v.desc?`<div class="card-desc-preview">${esc(v.desc)}</div>`:'';
-  const isLocal=srcType==='local';
+  const thumb=getVideoThumb(v);
+  const srcType=v.source||getSourceType(v.url||'','');
+  const srcLbl=getSourceLabel(srcType);
+  const descP=v.desc?`<div class="card-desc-preview">${esc(v.desc)}</div>`:'';
   return `<div class="asset-card" style="animation-delay:${i*.04}s" onclick="openPlayer(${v.id})">
     <div class="card-thumb">
       ${thumb
         ?`<img src="${thumb}" alt="${esc(v.title)}" loading="lazy">`
-        :isLocal
-          ?`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">🎞️</span><span style="font-size:.72rem">File Lokal</span></div>`
-          :`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">📁</span><span style="font-size:.75rem">Google Drive</span></div>`}
+        :`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">🎞️</span><span style="font-size:.72rem">${srcLbl}</span></div>`}
       <span class="card-type-badge src-${srcType}">${srcLbl}</span>
       <div class="card-play-overlay"><div class="play-circle">▶</div></div>
     </div>
@@ -1211,11 +1218,15 @@ function renderVideoCard(v,i){
 
 function renderPhotoCard(a,i){
   const cover=a.photos&&a.photos[0]?a.photos[0]:'';
+  // Cloudinary thumbnail optimization
+  const thumbUrl=cover&&cover.includes('cloudinary.com')
+    ?cover.replace('/upload/','/upload/w_640,h_360,c_fill,q_auto,f_auto/')
+    :cover;
   const descP=a.desc?`<div class="card-desc-preview">${esc(a.desc)}</div>`:'';
   return `<div class="asset-card" style="animation-delay:${i*.04}s" onclick="openPhotos(${a.id})">
     <div class="card-thumb">
-      ${cover
-        ?`<img src="${cover}" alt="${esc(a.title)}" loading="lazy">`
+      ${thumbUrl
+        ?`<img src="${thumbUrl}" alt="${esc(a.title)}" loading="lazy">`
         :`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--muted)"><span style="font-size:2rem">🖼️</span></div>`}
       <span class="card-type-badge type-photo">Foto</span>
       ${a.count>1?`<span class="photo-stack-badge">📷 ${a.count}</span>`:''}
@@ -1237,11 +1248,10 @@ function openPlayer(id){
   const v=assets.find(x=>x.id===id); if(!v) return;
   currentAssetId=id;
   const box=document.getElementById('player-video-box');
-  const srcType=v.source||getSourceType(v.url||'');
-  if(srcType==='local'){
-    // file lokal — pakai <video>
-    const mime=v.mimeType||'video/mp4';
-    box.innerHTML=`<video controls autoplay style="width:100%;height:100%;border:none;display:block"><source src="${v.url}" type="${mime}">Browser tidak mendukung tag video.</video>`;
+  const srcType=v.source||getSourceType(v.url||'','');
+  if(srcType==='cld'){
+    // Cloudinary video — pakai <video>
+    box.innerHTML=`<video controls autoplay style="width:100%;height:100%;border:none;display:block"><source src="${v.url}" type="video/mp4">Browser tidak mendukung tag video.</video>`;
   } else {
     const eu=getEmbedUrl(v.url||'');
     if(!eu){ toast('Link tidak dapat diputar','error'); return; }
@@ -1249,7 +1259,7 @@ function openPlayer(id){
   }
   document.getElementById('player-breadcrumb-title').textContent=v.title;
   document.getElementById('player-title').textContent=v.title;
-  document.getElementById('player-date').textContent =v.date;
+  document.getElementById('player-date').textContent=v.date;
   const badge=document.getElementById('player-source-badge');
   badge.className=`card-type-badge src-${srcType}`; badge.style.position='static';
   badge.textContent=getSourceLabel(srcType);
@@ -1260,7 +1270,7 @@ function openPlayer(id){
   const ab=document.getElementById('player-admin-bar');
   if(role==='admin'){
     ab.style.display='flex';
-    document.getElementById('player-edit-btn').onclick  =()=>openEditVideo(id);
+    document.getElementById('player-edit-btn').onclick=()=>openEditVideo(id);
     document.getElementById('player-delete-btn').onclick=()=>deleteAsset(id);
   } else ab.style.display='none';
   showScreen('player-screen');
@@ -1272,20 +1282,25 @@ function openPhotos(id){
   currentAssetId=id;
   document.getElementById('photo-breadcrumb-title').textContent=a.title;
   document.getElementById('photo-view-title').textContent=a.title;
-  document.getElementById('photo-view-date').textContent =a.date;
+  document.getElementById('photo-view-date').textContent=a.date;
   document.getElementById('photo-view-count').textContent=`${a.count} foto dalam album ini`;
   const descEl=document.getElementById('photo-view-desc');
   descEl.style.display=a.desc&&a.desc.trim()?'block':'none';
   descEl.textContent=a.desc||'';
-  document.getElementById('photos-grid').innerHTML=(a.photos||[]).map((src,i)=>`
-    <div class="photo-item" onclick="openLightbox(${id},${i})">
-      <img src="${src}" alt="Foto ${i+1}" loading="lazy">
+  document.getElementById('photos-grid').innerHTML=(a.photos||[]).map((src,i)=>{
+    // Cloudinary: auto optimize untuk gallery
+    const dispSrc=src.includes('cloudinary.com')
+      ?src.replace('/upload/','/upload/q_auto,f_auto,w_800/')
+      :src;
+    return `<div class="photo-item" onclick="openLightbox(${id},${i})">
+      <img src="${dispSrc}" alt="Foto ${i+1}" loading="lazy">
       <div class="photo-item-overlay">🔍</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   const ar=document.getElementById('photo-admin-row');
   if(role==='admin'){
     ar.style.display='flex';
-    document.getElementById('photo-edit-btn').onclick  =()=>openEditPhoto(id);
+    document.getElementById('photo-edit-btn').onclick=()=>openEditPhoto(id);
     document.getElementById('photo-delete-btn').onclick=()=>deleteAsset(id);
   } else ar.style.display='none';
   showScreen('photo-screen');
@@ -1294,13 +1309,19 @@ function openPhotos(id){
 // ── LIGHTBOX ──
 function openLightbox(albumId,idx){
   const a=assets.find(x=>x.id===albumId); if(!a) return;
+  // Gunakan URL full/original untuk lightbox
   lightboxPhotos=a.photos||[]; lightboxIndex=idx;
   updateLightboxImg();
   document.getElementById('lightbox').classList.add('active');
   document.body.style.overflow='hidden';
 }
 function updateLightboxImg(){
-  document.getElementById('lightbox-img').src=lightboxPhotos[lightboxIndex]||'';
+  const src=lightboxPhotos[lightboxIndex]||'';
+  // Cloudinary: optimize untuk lightbox (max 1600px)
+  const dispSrc=src.includes('cloudinary.com')
+    ?src.replace('/upload/','/upload/q_auto,f_auto,w_1600/')
+    :src;
+  document.getElementById('lightbox-img').src=dispSrc;
   document.getElementById('lightbox-counter').textContent=`${lightboxIndex+1} / ${lightboxPhotos.length}`;
   const show=lightboxPhotos.length>1;
   document.querySelector('.lightbox-nav.prev').style.display=show?'flex':'none';
@@ -1320,7 +1341,7 @@ function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
 
 // ── TOAST ──
 function toast(msg,type='success'){
-  const c=document.getElementById('tc'), t=document.createElement('div');
+  const c=document.getElementById('tc'),t=document.createElement('div');
   t.className=`toast ${type}`;
   t.innerHTML=`<span class="ti">${type==='success'?'✓':type==='info'?'ℹ':'✕'}</span>${msg}`;
   c.appendChild(t);
