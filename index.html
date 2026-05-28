@@ -734,16 +734,29 @@ textarea.form-input{resize:vertical;min-height:80px;max-height:200px;line-height
 
 <div class="toast-container" id="tc"></div>
 
-<script>
+<script type="module">
 // ── CLOUDINARY CONFIG ──
 const CLD_CLOUD   = 'dyfryuzvn';
 const CLD_PRESET  = 'previewasset';
 const CLD_UPLOAD  = `https://api.cloudinary.com/v1_1/${CLD_CLOUD}`;
 
-// ── JSONBIN CONFIG (metadata only) ──
-const BIN_ID   = '6a1149986610dd3ae89006d7';
-const API_KEY  = '$2a$10$t3RmmHl3xr0eQNxDOIbAVer4cRHGTmc5oFRYkk.WVw.g93JHsaYom';
-const BIN_URL  = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+// ── FIREBASE CONFIG ──
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set, get, onValue, push, remove, update }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD7GsO5LMPoSfYz3J0F1U08K61OkshQJrc",
+  authDomain: "preview-asset-v2.firebaseapp.com",
+  databaseURL: "https://preview-asset-v2-default-rtdb.firebaseio.com",
+  projectId: "preview-asset-v2",
+  storageBucket: "preview-asset-v2.firebasestorage.app",
+  messagingSenderId: "406920141087",
+  appId: "1:406920141087:web:3e893ed34c5d16af96b82a"
+};
+const fbApp = initializeApp(firebaseConfig);
+const db    = getDatabase(fbApp);
+const ASSETS_REF = ref(db, 'assets');
 const ADMIN_PASS = btoa('595080470');
 
 // ── STATE ──
@@ -763,12 +776,12 @@ let pendingVidFile = null; // {file, localUrl, name, sizeKB}
 const pendingThumb = { link: null, file: null, edit: null };
 
 // ── BOOT ──
-window.onload = () => {
+window.addEventListener('DOMContentLoaded', () => {
   const saved = sessionStorage.getItem('pa_role');
   if(saved==='admin')       { role='admin';  enterMain(); }
   else if(saved==='viewer') { role='viewer'; enterMain(); }
   else showScreen('splash-screen');
-};
+});
 
 // ── SCREENS ──
 function showScreen(id) {
@@ -801,14 +814,14 @@ function logout() {
   showScreen('splash-screen'); toast('Berhasil keluar','success');
 }
 document.addEventListener('keydown',e=>{
-  if(e.key==='Enter' && document.getElementById('admin-login-screen').classList.contains('active')) doAdminLogin();
+  if(e.key==='Enter' && document.getElementById('admin-login-screen')?.classList.contains('active')) doAdminLogin();
   if(e.key==='Escape'){
     if(document.querySelector('.modal-overlay.active')){ closeAllModals(); return; }
-    if(document.getElementById('lightbox').classList.contains('active')){ closeLightbox(); return; }
-    if(document.getElementById('player-screen').classList.contains('active')){ goGallery(); return; }
-    if(document.getElementById('photo-screen').classList.contains('active')){ goGallery(); return; }
+    if(document.getElementById('lightbox')?.classList.contains('active')){ closeLightbox(); return; }
+    if(document.getElementById('player-screen')?.classList.contains('active')){ goGallery(); return; }
+    if(document.getElementById('photo-screen')?.classList.contains('active')){ goGallery(); return; }
   }
-  if(document.getElementById('lightbox').classList.contains('active')){
+  if(document.getElementById('lightbox')?.classList.contains('active')){
     if(e.key==='ArrowLeft') lightboxNav(-1);
     if(e.key==='ArrowRight') lightboxNav(1);
   }
@@ -843,24 +856,40 @@ function setFilter(f,btn){
   renderGrid();
 }
 
-// ── JSONBIN ──
+// ── FIREBASE DB ──
 async function loadAssets(){
   try{
-    const res=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
-    const data=await res.json();
-    assets=Array.isArray(data.assets)?data.assets
-          :Array.isArray(data.videos)?data.videos.map(v=>({...v,kind:'video'}))
-          :[];
+    const snap = await get(ASSETS_REF);
+    if(snap.exists()){
+      const val = snap.val();
+      // Firebase returns object with keys, convert to sorted array
+      assets = Object.values(val).sort((a,b)=>b.id - a.id);
+    } else {
+      assets = [];
+    }
     renderGrid();
-  }catch(e){ toast('Gagal memuat data. Cek koneksi.','error'); assets=[]; renderGrid(); }
+  }catch(e){
+    toast('Gagal memuat data. Cek koneksi.','error');
+    assets=[]; renderGrid();
+  }
 }
+
 async function saveAssets(){
-  const res=await fetch(BIN_URL,{
-    method:'PUT',
-    headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},
-    body:JSON.stringify({assets})
-  });
-  if(!res.ok) throw new Error('Gagal menyimpan');
+  // Simpan semua asset sebagai object dengan key = id
+  const obj = {};
+  assets.forEach(a => { obj[a.id] = a; });
+  await set(ASSETS_REF, obj);
+}
+
+async function saveOneAsset(asset){
+  // Simpan/update satu asset saja — lebih efisien
+  const r = ref(db, `assets/${asset.id}`);
+  await set(r, asset);
+}
+
+async function deleteOneAsset(id){
+  const r = ref(db, `assets/${id}`);
+  await remove(r);
 }
 
 // ══════════════════════════════════════════════
@@ -1219,10 +1248,13 @@ async function addVideo(){
         source:'cld',title,desc:desc.trim(),
         price:document.getElementById('vid-file-price').value.trim(),
         date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
-      assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
+      assets.unshift(entry);
+      await saveOneAsset(entry);
+      renderGrid(); clearVideoForm();
       toast('✓ Video berhasil dipublikasikan via Cloudinary!','success');
     }catch(e){
-      assets.shift();
+      // Hapus dari local state jika gagal
+      assets = assets.filter(a => a.id !== entry?.id);
       prog.style.display='none';
       toast('Gagal upload: '+e.message,'error');
     }finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
@@ -1242,9 +1274,11 @@ async function addVideo(){
         thumbnailUrl: customThumbUrl || null,
         source:getSourceType(url,''),
         date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
-      assets.unshift(entry); await saveAssets(); renderGrid(); clearVideoForm();
+      assets.unshift(entry);
+      await saveOneAsset(entry);
+      renderGrid(); clearVideoForm();
       toast('Video berhasil dipublikasikan!','success');
-    }catch(e){ assets.shift(); toast('Gagal menyimpan.','error'); }
+    }catch(e){ toast('Gagal menyimpan: '+e.message,'error'); }
     finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Video'; }
   }
 }
@@ -1276,19 +1310,21 @@ async function addPhotos(){
       results.push({url:result.url, publicId:result.publicId});
     }
 
-    fill.style.width='100%'; ptxt.textContent='Menyimpan metadata...';
+    fill.style.width='100%'; ptxt.textContent='Menyimpan metadata ke Firebase...';
     const entry={id:Date.now(),kind:'photo',title,desc:desc.trim(),
       price:document.getElementById('photo-price').value.trim(),
       photos:results.map(r=>r.url),
       publicIds:results.map(r=>r.publicId),
       count:results.length,
       date:new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})};
-    assets.unshift(entry); await saveAssets(); renderGrid(); clearPhotoForm();
+    assets.unshift(entry);
+    await saveOneAsset(entry);
+    renderGrid(); clearPhotoForm();
     fill.style.width='100%'; ptxt.textContent='✓ Selesai!'; ppct.textContent='';
     setTimeout(()=>{ prog.style.display='none'; fill.style.width='0%'; },1500);
     toast(`✓ ${entry.count} foto berhasil dipublikasikan via Cloudinary!`,'success');
   }catch(e){
-    assets.shift(); prog.style.display='none'; fill.style.width='0%';
+    prog.style.display='none'; fill.style.width='0%';
     toast('Gagal upload: '+e.message,'error');
   }finally{ btn.disabled=false; btn.textContent='✓ Publikasikan Foto'; }
 }
@@ -1301,11 +1337,11 @@ async function deleteAsset(id){
   const backup=[...assets];
   assets=assets.filter(v=>v.id!==id);
   try{
-    await saveAssets();
+    await deleteOneAsset(id);
     toast('Asset dihapus','error');
     const onViewer=['player-screen','photo-screen'].some(s=>document.getElementById(s).classList.contains('active'));
     if(onViewer) goGallery(); else renderGrid();
-  }catch(e){ assets=backup; renderGrid(); toast('Gagal menghapus.','error'); }
+  }catch(e){ assets=backup; renderGrid(); toast('Gagal menghapus: '+e.message,'error'); }
 }
 
 // ── EDIT VIDEO ──
@@ -1371,11 +1407,12 @@ async function saveEditVideo(){
     assets[idx]={...v,title,desc:desc.trim(),url:newUrl,source:newSrc,
       price:document.getElementById('edit-vid-price').value.trim(),
       thumbnailUrl: newThumbUrl};
-    await saveAssets(); renderGrid(); closeModal('edit-video-modal');
+    await saveOneAsset(assets[idx]);
+    renderGrid(); closeModal('edit-video-modal');
     clearThumb('edit');
     if(document.getElementById('player-screen').classList.contains('active')) openPlayer(id);
     toast('Video berhasil diperbarui!','success');
-  }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan.','error'); }
+  }catch(e){ assets=backup; renderGrid(); toast('Gagal menyimpan: '+e.message,'error'); }
   finally{ btn.disabled=false; btn.textContent='💾 Simpan Perubahan'; }
 }
 
@@ -1454,14 +1491,14 @@ async function saveEditPhoto(){
       cf.style.width='100%'; cs.textContent='✓ Upload selesai'; cpct.textContent='100%';
     }
 
-    const backup=[...assets];
     const a=assets[idx];
     assets[idx]={...a,title,desc:desc.trim(),
       price:document.getElementById('edit-photo-price').value.trim(),
       photos:editPhotos.map(p=>p.url),
       publicIds:editPhotos.map(p=>p.publicId||null),
       count:editPhotos.length};
-    await saveAssets(); renderGrid(); closeModal('edit-photo-modal');
+    await saveOneAsset(assets[idx]);
+    renderGrid(); closeModal('edit-photo-modal');
     if(document.getElementById('photo-screen').classList.contains('active')) openPhotos(id);
     toast('Album berhasil diperbarui!','success');
   }catch(e){ toast('Gagal: '+e.message,'error'); }
@@ -1644,6 +1681,28 @@ function lightboxBgClick(e){ if(e.target===document.getElementById('lightbox')) 
 // ── UTILS ──
 function esc(s)    { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+
+// ── EXPOSE FUNCTIONS TO GLOBAL SCOPE (required for inline onclick with type=module) ──
+Object.assign(window, {
+  goAdminLogin, goViewer, goSplash, goGallery,
+  doAdminLogin, logout,
+  switchTab, switchVidMode, setFilter,
+  handleDescKey,
+  handleVidDragOver, handleVidDragLeave, handleVidDrop, handleVidFileSelect,
+  handleDragOver, handleDragLeave, handleDrop, handleFileSelect,
+  removePendingPhoto, clearPhotoForm, clearVideoForm,
+  previewEmbed, previewEditEmbed,
+  switchThumbMode, handleThumbUpload, clearThumb,
+  scrubFrame, captureFrame,
+  addVideo, addPhotos,
+  deleteAsset,
+  openEditVideo, saveEditVideo,
+  openEditPhoto, saveEditPhoto, removeEditPhoto, addMoreEditPhotos,
+  openPlayer, openPhotos,
+  openLightbox, closeLightbox, lightboxNav, lightboxBgClick,
+  openModal, closeModal, modalBgClick,
+  toast,
+});
 
 // ── TOAST ──
 function toast(msg,type='success'){
